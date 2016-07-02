@@ -25,5 +25,8 @@ end
 bot.message(with_text: '#$music') do |event|
   event.respond 'Chew has written a nifty little tutorial on how to use the music bot. Read it here: http://chewcraft.me/discord/Music/'
 end
+bot.message(with_text: '#$code') do |event|
+  event.respond 'Chewbotcca was written in Ruby. Check the source code here: https://github.com/Chewsterchew/Chewbotcca'
+end
 
 bot.run
