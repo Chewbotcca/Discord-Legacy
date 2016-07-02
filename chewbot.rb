@@ -2,13 +2,13 @@ require 'discordrb'
 
 bot = Discordrb::Bot.new token: 'MTczNTQ3NzgxMTQ1ODg2NzIw.Cll7xw.AUZgawYqS_U9DyagZ6CCf312dQE', application_id: 173547735289561088
 
-bot.message(with_text: 'Ping!') do |event|
+bot.message(with_text: '#$ping') do |event|
   event.respond 'Pong!'
 end
-bot.message(with_text: 'Who is champ?') do |event|
+bot.message(with_text: '#$who is champ') do |event|
   event.respond 'John Cena!'
 end
-bot.message(with_text: 'GotPvP Staff') do |event|
+bot.message(with_text: '#$GotPvP Staff') do |event|
   event.respond '**Owner**: Saito
 **Admins**: Hihihi565 (& developer) <> OregonDuckHAWK <> jschrods17 <> `silly_dudez`
 **Developers**: GotMilk2014
@@ -21,6 +21,9 @@ bot.message(with_text: 'GotPvP Staff') do |event|
 **Discord Helper**: <No one>
 
 (Visit link: https://docs.google.com/document/d/1IUB0ISzaFvLhgEobNkTl5hCzebrNLRnekj5RwtyEPVg/edit?usp=sharing for a "better view of it")'
+end
+bot.message(with_text: '#$music') do |event|
+  event.respond 'Chew has written a nifty little tutorial on how to use the music bot. Read it here: http://chewcraft.me/discord/Music/'
 end
 
 bot.run
