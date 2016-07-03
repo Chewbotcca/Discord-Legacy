@@ -18,7 +18,7 @@ bot.message(with_text: '#$GotPvP Staff') do |event|
 **Helpers**: `Cella_Autumn` - Creative <> `Scorp_ion` - Survival <> SleepyTrev - Skyblock <> CeylonHeart - Skyblock <> Skimtar - Factions <> xZydon11 - Factions <> ChewLeKitten - Prison1 <> LewisJordann - Prison1 <> oBlueo - Prison1 <> HerDarkness - Prison2 <> HisDarkness - Prison2 <> Dancing_Jitterz - OpPvP <> `Becky_Winter` - OpPvP <> `Dancing_Ping` - OpPvP
 **Discord Admin**: Chew (Chew Le Kitten Queen)
 **Discord Mod**: Mini (Mini Mouse) <> Urbanajlucas (Urby)
-**Discord Helper**: <No one>'
+**Discord Helper**: <No one>
 
 (Visit link: https://docs.google.com/document/d/1IUB0ISzaFvLhgEobNkTl5hCzebrNLRnekj5RwtyEPVg/edit?usp=sharing for a "better view of it")'
 end
