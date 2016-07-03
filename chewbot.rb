@@ -33,6 +33,7 @@ bot.message(with_text: '#$pinned') do |event|
   event.respond '```Pinned Messages Leaderboard:
   ChewLeKitten - 4 Pinned Messages
   Kat - 2 Pinned Messages
+  PreEminentMaster - 1 Pinned Message
   Scyth - 2 Pinned Messages
   Flowes - 1 Pinned Message
   GotPvP - 1 Pinned Message
@@ -42,7 +43,7 @@ bot.message(with_text: '#$pinned') do |event|
   KekAussi - 1 Pinned Message
   Lvito - 1 Pinned Message
   MrJoCrafter - 1 Pinned Message
-  PreEminentMaster - 1 Pinned Message
+  ShinySingularity - 1 Pinned Message
   Urbana - 1 Pinned Message```'
 end
 
