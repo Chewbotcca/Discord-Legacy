@@ -28,5 +28,19 @@ end
 bot.message(with_text: '#$code') do |event|
   event.respond 'Chewbotcca was written in Ruby. Check the source code here: https://github.com/Chewsterchew/Chewbotcca'
 end
+bot.message(with_text: '#$pinned') do |event|
+  event.respond '```Pinned Messages Leaderboard:
+  ChewLeKitten - 4 Pinned Messages
+  Kat - 2 Pinned Messages
+  Scyth - 2 Pinned Messages
+  Flowes - 1 Pinned Message
+  GotPvP - 1 Pinned Message
+  Jeefbot - 1 Pinned Message
+  MrJoCrafter - 1 Pinned Message
+  Urbana - 1 Pinned Message
+  KekAussi - 1 Pinned Message
+  jshrods - 1 Pinned Message
+  hihihih565 - 1 Pinned Message```'
+end
 
 bot.run
