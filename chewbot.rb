@@ -32,4 +32,11 @@ end
 bot.message(starting_with: '(╯°□°）╯︵ ┻━┻') do |event|
   event.respond 'Get anger management.'
 end
+bot.message(starting_with: '%^rickroll') do |event|
+  event.respond 'https://media.giphy.com/media/AXQaLoWMeSmRy/giphy.gif'
+end
+bot.message(starting_with: '%^namemc') do |event|
+  _, *namemc = event.message.content.split
+  event.respond "NameMC Search: http://namemc.com/s/#{namemc.join(' ')}"
+end
 bot.run
