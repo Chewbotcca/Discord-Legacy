@@ -52,4 +52,7 @@ end
 bot.message(starting_with: '%^memedb submit') do |event|
   event.respond 'Submit your meme for the database here: http://goo.gl/forms/BRMomYVizsY7SqOg2'
 end
+bot.message(starting_with: '%^memedb vegans') do |event|
+  event.respond 'https://gyazo.com/8d96d2ccc67b324ea2e5780166e90756 submitted by Asymmetrically'
+end
 bot.run
