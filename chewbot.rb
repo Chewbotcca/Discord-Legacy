@@ -1,6 +1,6 @@
 require 'discordrb'
 
-bot = Discordrb::Bot.new token: '[your token]]', application_id: [your application id]
+bot = Discordrb::Bot.new token: '[your token]', application_id: [your application id]
 
 bot.message(with_text: '%^ping') do |event|
   event.respond 'Pong!'
