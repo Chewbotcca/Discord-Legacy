@@ -15,9 +15,6 @@ end
 bot.message(with_text: '%^code') do |event|
   event.respond 'Chewbotcca was written in discordrb, and was made by Chew. Source code here: http://github.com/Chewsterchew/Chewbotcca'
 end
-bot.message(starting_with: 'ayy') do |event|
-  event.respond 'Speak english.'
-end
 bot.message(starting_with: '%^invite') do |event|
   event.respond 'Hello! Invite me to your server here: http://chcra.site/Chewbotcca
   Join our support here right here: https://discord.gg/Q8TazNz'
@@ -33,9 +30,6 @@ bot.message(starting_with: '%^help') do |event|
   %^memedb - Find a meme in the meme database.
   %^memedb submit - Submit a meme to the meme database.```'
 end
-bot.message(starting_with: '(╯°□°）╯︵ ┻━┻') do |event|
-  event.respond 'Get anger management.'
-end
 bot.message(starting_with: '%^namemc') do |event|
   _, *namemc = event.message.content.split
   event.respond "NameMC Search: http://namemc.com/s/#{namemc.join(' ')}"
@@ -47,7 +41,9 @@ bot.message(starting_with: '%^memedb deanmeme') do |event|
   event.respond 'http://zounce.ga/deanmemes.png'
 end
 bot.message(with_text: '%^memedb') do |event|
-  event.respond 'Check out the meme database here: [Link]'
+  event.respond 'Find the entire memedb here: http://github.com/Chewsterchew/Chewbotcca/wiki/Meme-Database
+  Pick a meme with `%^memedb [meme name]` ```Current Memes:
+  deanmeme, rickroll, vegans```'
 end
 bot.message(starting_with: '%^memedb submit') do |event|
   event.respond 'Submit your meme for the database here: http://goo.gl/forms/BRMomYVizsY7SqOg2'
