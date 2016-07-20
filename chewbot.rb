@@ -73,4 +73,3 @@ bot.message(starting_with: '%^memedb losthope') do |event|
   event.respond "http://memedb.chewcraft.me/memes/losthope.png submitted by Asymmetrically"
 end
 bot.run
-bot.run
