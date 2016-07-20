@@ -34,21 +34,43 @@ bot.message(starting_with: '%^namemc') do |event|
   _, *namemc = event.message.content.split
   event.respond "NameMC Search: http://namemc.com/s/#{namemc.join(' ')}"
 end
-bot.message(starting_with: '%^memedb rickroll') do |event|
-  event.respond 'https://media.giphy.com/media/AXQaLoWMeSmRy/giphy.gif'
-end
-bot.message(starting_with: '%^memedb deanmeme') do |event|
-  event.respond 'http://zounce.ga/deanmemes.png'
+bot.message(starting_with: '%^chew', from: "Chew", in: "#beta-testing") do |event|
+  event.respond "Event handler was activated!"
 end
 bot.message(with_text: '%^memedb') do |event|
-  event.respond 'Find the entire memedb here: http://github.com/Chewsterchew/Chewbotcca/wiki/Meme-Database
+  event.respond 'Find the entire memedb here: http://memedb.chewcraft.me
   Pick a meme with `%^memedb [meme name]` ```Current Memes:
-  deanmeme, rickroll, vegans```'
+  deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope```'
 end
 bot.message(starting_with: '%^memedb submit') do |event|
   event.respond 'Submit your meme for the database here: http://goo.gl/forms/BRMomYVizsY7SqOg2'
 end
-bot.message(starting_with: '%^memedb vegans') do |event|
-  event.respond 'https://gyazo.com/8d96d2ccc67b324ea2e5780166e90756 submitted by Asymmetrically'
+bot.message(starting_with: '%^memedb deanmeme') do |event|
+  event.respond 'http://memedb.chewcraft.me/memes/deanmeme.png'
 end
+bot.message(starting_with: '%^memedb rickroll') do |event|
+  event.respond 'http://memedb.chewcraft.me/memes/rickroll.gif'
+end
+bot.message(starting_with: '%^memedb vegans') do |event|
+  event.respond 'http://memedb.chewcraft.me/memes/vegans.png submitted by Asymmetrically'
+end
+bot.message(starting_with: '%^memedb spotad') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/spotad.jpg"
+end
+bot.message(starting_with: '%^memedb petpet') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/petpet.jpg"
+end
+bot.message(starting_with: '%^memedb nicememe') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/nicememe.gif submitted by Asymmetrically"
+end
+bot.message(starting_with: '%^memedb paycheck') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/paycheck.JPG"
+end
+bot.message(starting_with: '%^memedb pokesteak') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/pokesteak.JPG"
+end
+bot.message(starting_with: '%^memedb losthope') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/losthope.png submitted by Asymmetrically"
+end
+bot.run
 bot.run
