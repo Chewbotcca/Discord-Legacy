@@ -1,6 +1,6 @@
 require 'discordrb'
 
-bot = Discordrb::Bot.new token: '[your token]', application_id: [your application id]
+bot = Discordrb::Bot.new token: '[your bot token]', application_id: [your bot application id]
 
 bot.message(starting_with: '%^help') do |event|
   event.respond '```Command List:
@@ -39,7 +39,7 @@ end
 bot.message(with_text: '%^memedb') do |event|
   event.respond 'Find the entire memedb here: http://memedb.chewcraft.me
   Pick a meme with `%^memedb [meme name]` ```Current Memes:
-  deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope```'
+  deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop```'
 end
 bot.message(starting_with: '%^memedb submit') do |event|
   event.respond 'Submit your meme for the database here: http://goo.gl/forms/BRMomYVizsY7SqOg2'
@@ -70,6 +70,9 @@ bot.message(starting_with: '%^memedb pokesteak') do |event|
 end
 bot.message(starting_with: '%^memedb losthope') do |event|
   event.respond "http://memedb.chewcraft.me/memes/losthope.png submitted by Asymmetrically"
+end
+bot.message(starting_with: '%^memedb timetostop') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/timetostop.gif"
 end
 bot.message(starting_with: '%^stats') do |event|
   event.respond "I'm currently on #{event.bot.servers.count} servers! Add me to yours with `%^invite`"
