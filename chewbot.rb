@@ -33,13 +33,17 @@ bot.message(starting_with: '%^namemc') do |event|
   _, *namemc = event.message.content.split
   event.respond "NameMC Search: http://namemc.com/s/#{namemc.join(' ')}"
 end
-bot.message(starting_with: '%^chew', from: "Chew", in: "#beta-testing") do |event|
-  event.respond "Event handler was activated!"
+bot.message(starting_with: '%^stats') do |event|
+  event.respond "I'm currently on #{event.bot.servers.count} servers! Add me to yours with `%^invite`"
+end
+bot.message(starting_with: '%^rip') do |event|
+  _, *rip = event.message.content.split
+  event.respond "#{rip.join(' ')} got #rekt! http://ripme.xyz/#{rip.join(' ')}"
 end
 bot.message(with_text: '%^memedb') do |event|
   event.respond 'Find the entire memedb here: http://memedb.chewcraft.me
   Pick a meme with `%^memedb [meme name]` ```Current Memes:
-  deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop```'
+  deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered``'
 end
 bot.message(starting_with: '%^memedb submit') do |event|
   event.respond 'Submit your meme for the database here: http://goo.gl/forms/BRMomYVizsY7SqOg2'
@@ -74,11 +78,13 @@ end
 bot.message(starting_with: '%^memedb timetostop') do |event|
   event.respond "http://memedb.chewcraft.me/memes/timetostop.gif"
 end
-bot.message(starting_with: '%^stats') do |event|
-  event.respond "I'm currently on #{event.bot.servers.count} servers! Add me to yours with `%^invite`"
+bot.message(starting_with: '%^memedb skypetrash') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/skypetrash.gif submitted indirectly by SplitPixl"
 end
-bot.message(starting_with: '%^rip') do |event|
-  _, *rip = event.message.content.split
-  event.respond "#{rip.join(' ')} got #rekt! http://ripme.xyz/#{rip.join(' ')}"
+bot.message(starting_with: '%^memedb trap') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/trap.jpeg submitted by Mini#5311"
+end
+bot.message(starting_with: '%^memedb triggered') do |event|
+  event.respond "http://memedb.chewcraft.me/memes/triggered.gif submitted indirectly by speedo#0032"
 end
 bot.run
