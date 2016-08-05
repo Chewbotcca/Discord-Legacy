@@ -43,7 +43,7 @@ end
 bot.message(with_text: '%^memedb') do |event|
   event.respond 'Find the entire memedb here: http://memedb.chewcraft.me
   Pick a meme with `%^memedb [meme name]` ```Current Memes:
-  deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered``'
+  deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered```'
 end
 bot.message(starting_with: '%^memedb submit') do |event|
   event.respond 'Submit your meme for the database here: http://goo.gl/forms/BRMomYVizsY7SqOg2'
