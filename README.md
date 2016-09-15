@@ -1,4 +1,7 @@
 # Chewbotcca
+
+![Discord](https://discordapp.com/api/guilds/200388197396512768/widget.png)
+
 Chewbotcca is a discord bot written in discordrb.
 
 The help server is available here: https://discord.gg/Q8TazNz
