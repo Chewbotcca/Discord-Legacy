@@ -13,3 +13,5 @@ I will update this as we get along, but currently chewbot is really lame. I'm le
 Add the bot to your server with: http://chcra.site/Chewbotcca
 
 Check out the bots website page: https://bots.discord.pw/bots/200052560399171584
+
+I'd rather you not run your own instance of Chewbotcca, just add the bot to your server. But if you want to, follow the discordrb installation guides found on the discordrb GitHub page. (I'll provide a link later)
