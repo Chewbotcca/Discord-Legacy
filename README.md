@@ -4,11 +4,11 @@
 
 Chewbotcca is a discord bot written in discordrb.
 
-The help server is available here: https://discord.gg/Q8TazNz
+The help server is available here: ![Discord](https://discordapp.com/api/guilds/200388197396512768/widget.png)
 
 Command list can be found on the wiki. Still working on it though.
 
-I will update this as we get along, but currently chewbotcca is really lame. I'm learning though stay with me.
+I will update this as we get along, but currently Chewbotcca is really lame. I'm learning though stay with me.
 
 Add the bot to your server with: http://chcra.site/Chewbotcca
 
