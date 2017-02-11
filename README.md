@@ -1,6 +1,7 @@
 # Chewbotcca
 
 ![Discord](https://discordapp.com/api/guilds/200388197396512768/widget.png)
+![travis](https://travis-ci.org/Chewsterchew/Chewbotcca.svg?branch=master)
 
 Chewbotcca is a discord bot written in discordrb.
 
@@ -12,7 +13,7 @@ I will update this as we get along, but currently Chewbotcca is really lame. I'm
 
 Add the bot to your server with: http://chcra.site/Chewbotcca
 
-Check out the bots website page: https://bots.discord.pw/bots/200052560399171584
+Check out the unofficial bots website page: https://bots.discord.pw/bots/200052560399171584
 
 ## Poorly Written Installation Guide
 
