@@ -48,7 +48,7 @@ end
 
 bot.command :invite do |event|
   event.user.pm('Hello! Invite me to your server here: http://chcra.site/Chewbotcca
-  Join our support here right here: https://discord.gg/Q8TazNz')
+  Join the bot server here right here: https://discord.gg/Q8TazNz')
 end
 
 bot.command(:namemc, min_args: 1, max_args: 1) do |event|
@@ -72,62 +72,36 @@ bot.command(:rip, min_args: 1, max_args: 1) do |event|
 end
 
 bot.command(:memedb, min_args: 0, max_args: 1) do |event, list|
-  if list == "deanmeme"
-    event.respond "http://memedb.chewcraft.me/memes/deanmeme.png"
-  else 
-    if list == "rickroll"
-      event.respond "http://memedb.chewcraft.me/memes/rickroll.gif"
-    else 
-      if list == "vegans"
-        event.respond "http://memedb.chewcraft.me/memes/vegans.png"
-      else 
-        if list == "spotad"
-          event.respond "http://memedb.chewcraft.me/memes/spotad.jpg"
-        else 
-          if list == "petpet"
-            event.respond "http://memedb.chewcraft.me/memes/petpet.jpg"
-          else 
-            if list == "nicememe"
-              event.respond "http://memedb.chewcraft.me/memes/nicememe.gif"
-            else 
-              if list == "paycheck"
-                event.respond "http://memedb.chewcraft.me/memes/paycheck.JPG"
-              else 
-                if list == "pokesteak"
-                  event.respond "http://memedb.chewcraft.me/memes/pokesteak.JPG"
-                else 
-                  if list == "losthope"
-                    event.respond "http://memedb.chewcraft.me/memes/losthope.png"
-                  else 
-                    if list == "timetostop"
-                      event.respond "http://memedb.chewcraft.me/memes/timetostop.gif"
-                    else 
-                      if list == "skypetrash"
-                        event.respond "http://memedb.chewcraft.me/memes/skypetrash.gif"
-                      else 
-                        if list == "trap"
-                          event.respond "http://memedb.chewcraft.me/memes/trap.jpeg"
-                        else 
-                          if list == "triggered"
-                            event.respond "http://memedb.chewcraft.me/memes/triggered.gif"
-                          else 
-                            if list == "submit"
-                              event.respond "You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>"
-                            else 
-                              event.respond "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE). Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered`"
-                            end
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
+  if list == 'deanmeme'
+    event.respond 'http://memedb.chewcraft.me/memes/deanmeme.png'
+  elsif list == 'rickroll'
+    event.respond 'http://memedb.chewcraft.me/memes/rickroll.gif'
+  elsif list == 'vegans'
+    event.respond 'http://memedb.chewcraft.me/memes/vegans.png'
+  elsif list == 'spotad'
+    event.respond 'http://memedb.chewcraft.me/memes/spotad.jpg'
+  elsif list == 'petpet'
+    event.respond 'http://memedb.chewcraft.me/memes/petpet.jpg'
+  elsif list == 'nicememe'
+    event.respond 'http://memedb.chewcraft.me/memes/nicememe.gif'
+  elsif list == 'paycheck'
+    event.respond 'http://memedb.chewcraft.me/memes/paycheck.JPG'
+  elsif list == 'pokesteak'
+    event.respond 'http://memedb.chewcraft.me/memes/pokesteak.JPG'
+  elsif list == 'losthope'
+    event.respond 'http://memedb.chewcraft.me/memes/losthope.png'
+  elsif list == 'timetostop'
+    event.respond 'http://memedb.chewcraft.me/memes/timetostop.gif'
+  elsif list == 'skypetrash'
+    event.respond 'http://memedb.chewcraft.me/memes/skypetrash.gif'
+  elsif list == 'trap'
+    event.respond 'http://memedb.chewcraft.me/memes/trap.jpeg'
+  elsif list == 'triggered'
+    event.respond 'http://memedb.chewcraft.me/memes/triggered.gif'
+  elsif list == 'submit'
+    event.respond 'You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>'
+  else
+    event.respond 'This meme doesn\'t exist! Make sure you spell the meme name right (CASE SENSITIVE). Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered`'
   end
 end
 
