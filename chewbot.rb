@@ -1,13 +1,9 @@
 require 'discordrb'
-puts "All dependicies loaded"
 
-puts "Token loaded from file"
-bot = Discordrb::Commands::CommandBot.new token: 'your_token', client_id: your_bot_id, prefix: '%^'
-puts "Initial Startup complete, loading all commands..."
+bot = Discordrb::Commands::CommandBot.new token: 'token', client_id: id, prefix: '%^'
 
-#Help Command
 bot.command(:help, description: 'Gives help for a command.') do |event|
-  m = event.respond("I have sent you a list of commands!")
+  m = event.respond('I have sent you a list of commands!')
   event.user.pm('```Command List:
   %^ping - Replies with "Pong!"
   %^help - Shows a list of commands.
@@ -29,43 +25,37 @@ bot.command(:help, description: 'Gives help for a command.') do |event|
   m.delete
 end
 bot.command(:commands) do |event|
-  m = event.respond("I have sent you a list of only commands.")
+  m = event.respond('I have sent you a list of only commands.')
   event.user.pm('```Command List:
   %^ping, %^help, %^commands, %^info, %^invite, %^code, %^rate, %^namemc, %^memedb, %^memedb submit, %^stats, %^rip, %^namecheap, %^uinfo, %^sinfo```')
   sleep 5
   m.delete
 end
 
-#Ping
 bot.command(:ping) do |event|
   m = event.respond('Pinging...')
   m.edit "Pong! Time taken: #{Time.now - event.timestamp} seconds."
 end
 
-#Rate Command
 bot.command(:rate, min_args: 1, max_args: 1) do |event|
   _, *rating = event.message.content.split
   event.respond "#{event.user.mention} has rated `#{rating.join(' ')}`/10."
 end
 
-#Code Command
 bot.command :code do |event|
   event.respond 'Chewbotcca was written in discordrb, and was made by Chew#6216. Source code here: http://github.com/Chewsterchew/Chewbotcca'
 end
 
-#Invite Command
 bot.command :invite do |event|
   event.user.pm('Hello! Invite me to your server here: http://chcra.site/Chewbotcca
   Join our support here right here: https://discord.gg/Q8TazNz')
 end
 
-#NameMC Command
 bot.command(:namemc, min_args: 1, max_args: 1) do |event|
   _, *rating = event.message.content.split
   event.respond "NameMC Search: http://namemc.com/s/#{rating.join(' ')}"
 end
 
-#Stats Command
 bot.command :stats do |event|
   event.respond "Chewbotcca - A basic, yet functioning, discord bot.
 Author: Chew#6216 [116013677060161545]
@@ -76,77 +66,74 @@ Total User Count: #{event.bot.users.count}
 Messages Sent since last restart: #{msg}"
 end
 
-#RIP Command
 bot.command(:rip, min_args: 1, max_args: 1) do |event|
   _, *rating = event.message.content.split
   event.respond "#{rating.join(' ')} got #rekt! http://ripme.xyz/#{rating.join(' ')}"
 end
 
-#MemeDB
 bot.command(:memedb, min_args: 0, max_args: 1) do |event, list|
-if list == "deanmeme"
-  event.respond "http://memedb.chewcraft.me/memes/deanmeme.png"
-else 
-  if list == "rickroll"
-  event.respond "http://memedb.chewcraft.me/memes/rickroll.gif"
-else 
-  if list == "vegans"
-  event.respond "http://memedb.chewcraft.me/memes/vegans.png"
-else 
-  if list == "spotad"
-  event.respond "http://memedb.chewcraft.me/memes/spotad.jpg"
-else 
-  if list == "petpet"
-  event.respond "http://memedb.chewcraft.me/memes/petpet.jpg"
-else 
-  if list == "nicememe"
-  event.respond "http://memedb.chewcraft.me/memes/nicememe.gif"
-else 
-  if list == "paycheck"
-  event.respond "http://memedb.chewcraft.me/memes/paycheck.JPG"
-else 
-  if list == "pokesteak"
-  event.respond "http://memedb.chewcraft.me/memes/pokesteak.JPG"
-else 
-  if list == "losthope"
-  event.respond "http://memedb.chewcraft.me/memes/losthope.png"
-else 
-  if list == "timetostop"
-  event.respond "http://memedb.chewcraft.me/memes/timetostop.gif"
-else 
-  if list == "skypetrash"
-  event.respond "http://memedb.chewcraft.me/memes/skypetrash.gif"
-else 
-  if list == "trap"
-  event.respond "http://memedb.chewcraft.me/memes/trap.jpeg"
-else 
-  if list == "triggered"
-  event.respond "http://memedb.chewcraft.me/memes/triggered.gif"
-else 
-  if list == "submit"
-  event.respond "You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>"
-else 
-  event.respond "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE). Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered`"
-end
-end
-end
-end
-end
-end
-end
-end
-end
-end
-end
-end
-end
-end
+  if list == "deanmeme"
+    event.respond "http://memedb.chewcraft.me/memes/deanmeme.png"
+  else 
+    if list == "rickroll"
+      event.respond "http://memedb.chewcraft.me/memes/rickroll.gif"
+    else 
+      if list == "vegans"
+        event.respond "http://memedb.chewcraft.me/memes/vegans.png"
+      else 
+        if list == "spotad"
+          event.respond "http://memedb.chewcraft.me/memes/spotad.jpg"
+        else 
+          if list == "petpet"
+            event.respond "http://memedb.chewcraft.me/memes/petpet.jpg"
+          else 
+            if list == "nicememe"
+              event.respond "http://memedb.chewcraft.me/memes/nicememe.gif"
+            else 
+              if list == "paycheck"
+                event.respond "http://memedb.chewcraft.me/memes/paycheck.JPG"
+              else 
+                if list == "pokesteak"
+                  event.respond "http://memedb.chewcraft.me/memes/pokesteak.JPG"
+                else 
+                  if list == "losthope"
+                    event.respond "http://memedb.chewcraft.me/memes/losthope.png"
+                  else 
+                    if list == "timetostop"
+                      event.respond "http://memedb.chewcraft.me/memes/timetostop.gif"
+                    else 
+                      if list == "skypetrash"
+                        event.respond "http://memedb.chewcraft.me/memes/skypetrash.gif"
+                      else 
+                        if list == "trap"
+                          event.respond "http://memedb.chewcraft.me/memes/trap.jpeg"
+                        else 
+                          if list == "triggered"
+                            event.respond "http://memedb.chewcraft.me/memes/triggered.gif"
+                          else 
+                            if list == "submit"
+                              event.respond "You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>"
+                            else 
+                              event.respond "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE). Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered`"
+                            end
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end
 
-#Status Commands
 bot.command(:setstatusserver, from: 116013677060161545) do |event|
   event.bot.game = "on #{event.bot.servers.count} servers."
-  event.respond "Enabled Status."
+  event.respond 'Enabled Status.'
 end
 bot.command(:status, from: 116013677060161545) do |event|
   _, *status = event.message.content.split
@@ -154,19 +141,16 @@ bot.command(:status, from: 116013677060161545) do |event|
   event.bot.game = "#{status.join(' ')}"
 end
 
-#Namecheap
 bot.command(:namecheap, min_args: 1, max_args: 1) do |event|
   _, *rating = event.message.content.split
   event.respond "NameCheap Domain Search Results: https://www.namecheap.com/domains/registration/results.aspx?domain=#{rating.join(' ')}"
 end
 
-#MCAvatar
 bot.command(:mcavatar, min_args: 1, max_args: 1) do |event|
   _, *rating = event.message.content.split
   event.respond "Alright, here is a 3D full view of the player for the skin: #{rating.join(' ')}. https://visage.surgeplay.com/full/512/#{rating.join(' ')}.png"
 end
 
-#Info
 bot.command([:sinfo, :serverinfo]) do |event|
   m = event.respond "Looking up server info, this may take a minute..."
   m.edit "Server Stats:
@@ -198,7 +182,6 @@ Status: #{event.user.status}
 Currently Playing: #{event.user.game}"
 end
 
-#Eval (No %^info)
 bot.command(:eval, help_available: false, from: 116013677060161545) do |event, *code|
   begin
     eval code.join(' ')
@@ -207,7 +190,6 @@ bot.command(:eval, help_available: false, from: 116013677060161545) do |event, *
   end
 end
 
-#Shoo (Shutdown, no %^info)
 bot.command(:shoo, help_available: false) do |event|
  break unless event.user.id == 116013677060161545
   m = event.respond("I am shutting dowm, it's been a long run, folks!")
@@ -218,48 +200,41 @@ bot.command(:shoo, help_available: false) do |event|
 
 end
 
-#Voice Stuff, WIP
 bot.command(:connect) do |event|
- break unless event.user.id == 116013677060161545
+  break unless event.user.id == 116013677060161545
   channel = event.user.voice_channel
   next "You're not in any voice channel!" unless channel
   bot.voice_connect(channel)
   "Connected to voice channel: #{channel.name}."
-
 end
 bot.command(:songs) do |event|
   event.respond "Use `%^[song] to select a song. YOU CANNOT QUEUE A RANDOM URL, MUST BE FROM THIS DIRCTORY
 mrcena, rickroll, wearenum1"
 end
 bot.command(:mrcena) do |event|
-d
   break unless event.user.id == 116013677060161545
   event.respond "Playing song"
   voice_bot = event.voice
   voice_bot.play_file('data/music.mp3')
-
 end
 bot.command(:rickroll) do |event|
  break unless event.user.id == 116013677060161545
   voice_bot = event.voice
   voice_bot.play_file('data/rickroll.mp3')
-
 end
 bot.command(:wearenum1) do |event|
  break unless event.user.id == 116013677060161545
   voice_bot = event.voice
   voice_bot.play_file('data/wearenum1.mp3')
-
 end
 
 bot.ready do |event|
   event.bot.game = "on #{event.bot.servers.count} servers."
-  bot.send_message(272918497489846272, "Bot has restarted/reloaded or something.")
+  bot.send_message(272918497489846272, 'Bot has restarted/reloaded or something.')
 end
 
 bot.command(:cat) do |event|
  event.respond "#{JSON.parse(RestClient.get('http://random.cat/meow'))['file'].gsub('.jpg','')}"
-
 end
 
 bot.command(:catfact) do |event|
@@ -268,7 +243,7 @@ end
 
 bot.command(:info, min_args: 1, max_args: 1) do |event, com|
   if com == "ping"
-  event.respond "**Info For**: `%^ping`
+    event.respond "**Info For**: `%^ping`
 **Description**: Replies with \"Pong!\" and time in seconds.
 **Usage:** `%^ping`"
 else 
@@ -368,5 +343,4 @@ bot.server_delete do |event|
   event.bot.game = "on #{event.bot.servers.count} servers."
 end
 
-puts "Bot is ready!"
 bot.run
