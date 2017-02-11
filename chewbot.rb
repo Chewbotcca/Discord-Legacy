@@ -1,17 +1,18 @@
 require 'discordrb'
-require 'yaml'
 puts "All dependicies loaded"
 
-CONFIG = YAML.load_file('config.yaml')
 puts "Token loaded from file"
-bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: 200747094150086657, prefix: '%^'
+bot = Discordrb::Commands::CommandBot.new token: 'your_token', client_id: your_bot_id, prefix: '%^'
 puts "Initial Startup complete, loading all commands..."
 
 #Help Command
 bot.command(:help, description: 'Gives help for a command.') do |event|
+  m = event.respond("I have sent you a list of commands!")
   event.user.pm('```Command List:
   %^ping - Replies with "Pong!"
-  %^help - Shows a list of commands, if an argument is specified, it will show help for that command.
+  %^help - Shows a list of commands.
+  %^commands - Shows a list of only commands, no descriptions.
+  %^info - Type in a command (NO PREFIX) and it will give info on the command.
   %^invite - Shows a link to invite Chewbotcca to your server and a discord invite link to the help server.
   %^code - Shows a link to the GitHub Repository to Chewbotcca.
   %^rate - Rate something /10.
@@ -21,282 +22,350 @@ bot.command(:help, description: 'Gives help for a command.') do |event|
   %^stats - Shows basic stats for Chewbotcca.
   %^rip - Makes someone or something rip. No spaces, letters and numbers only.
   %^namecheap - Searches namecheap.com for a domain name. No spaces or special characters, just a normal domain search.
-  %^domainwhois - Returns a link to see the "whois" of a domain.```')
-puts "Command `help` ran by #{event.user.name} (ID: #{event.user.id})."
+  %^uinfo - Shows basic stats for the user.
+  %^sinfo - Shows basic stats for the server.
+  %^cat - Shows a random cat. meow.```')
+  sleep 5
+  m.delete
 end
-bot.message(with_text: '%^info help') do |event|
-  event.respond '**__Info for:__** `%^help`
-**Description:** PMs the user a link to this list of commands. (See %^commands for commands only)
-**Usage:** `%^info ping`'
-puts "Command `info help` ran by #{event.user.name} (ID: #{event.user.id})."
+bot.command(:commands) do |event|
+  m = event.respond("I have sent you a list of only commands.")
+  event.user.pm('```Command List:
+  %^ping, %^help, %^commands, %^info, %^invite, %^code, %^rate, %^namemc, %^memedb, %^memedb submit, %^stats, %^rip, %^namecheap, %^uinfo, %^sinfo```')
+  sleep 5
+  m.delete
 end
 
 #Ping
 bot.command(:ping) do |event|
-  m = event.respond('Pong!')
+  m = event.respond('Pinging...')
   m.edit "Pong! Time taken: #{Time.now - event.timestamp} seconds."
-puts "Command `ping` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(with_text: '%^info ping') do |event|
-  event.respond '**__Info for:__** `%^ping`
-**Description:** Replies with "Pong!" and the time taken.
-**Usage:** `%^ping`'
-puts "Command `info ping` ran by #{event.user.name} (ID: #{event.user.id})."
 end
 
 #Rate Command
-bot.message(starting_with: '%^rate') do |event|
+bot.command(:rate, min_args: 1, max_args: 1) do |event|
   _, *rating = event.message.content.split
-  event.respond "#{event.user.mention} has rated #{rating.join(' ')}/10."
-  puts "Command `rate` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(with_text: '%^info rate') do |event|
-  event.respond '**__Info for:__** `%^rate`
-**Description:** Rate something out of 10.
-**Usage:** `%^rate 10`'
-puts "Command `rate` ran by #{event.user.name} (ID: #{event.user.id})."
+  event.respond "#{event.user.mention} has rated `#{rating.join(' ')}`/10."
 end
 
 #Code Command
 bot.command :code do |event|
-  event.respond 'Chewbotcca was written in discordrb, and was made by ChewLeKitten#6216. Source code here: http://github.com/Chewsterchew/Chewbotcca'
-puts "Command `code` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(with_text: '%^info code') do |event|
-  event.respond '**__Info for:__** `%^code`
-**Description:** Shows a link to the GitHub Repository for Chewbotcca.
-**Usage:** `%^code`'
-puts "Command `info code` ran by #{event.user.name} (ID: #{event.user.id})."
+  event.respond 'Chewbotcca was written in discordrb, and was made by Chew#6216. Source code here: http://github.com/Chewsterchew/Chewbotcca'
 end
 
 #Invite Command
 bot.command :invite do |event|
   event.user.pm('Hello! Invite me to your server here: http://chcra.site/Chewbotcca
   Join our support here right here: https://discord.gg/Q8TazNz')
-puts "Command `invite` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(with_text: '%^info invite') do |event|
-  event.respond '**__Info for:__** `%^invite`
-**Description:** PMs the user a link to invite Chewbotcca to your server and a discord invite link to the help server.
-**Usage:** `%^invite`'
-puts "Command `info invite` ran by #{event.user.name} (ID: #{event.user.id})."
 end
 
 #NameMC Command
-bot.message(starting_with: '%^namemc') do |event|
-  _, *namemc = event.message.content.split
-  event.respond "NameMC Search: http://namemc.com/s/#{namemc.join(' ')}"
-puts "Command `namemc` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^info namemc') do |event|
-  event.respond '**__Info for:__** `%^namemc`
-**Description:** Shows a link to search results for a response, or if there''s one result, will show detailed info.
-**Usage:** `%^namemc ChewLeKitten` or `%^namemc play.chewcraft.me`'
-puts "Command `info namemc` ran by #{event.user.name} (ID: #{event.user.id})."
+bot.command(:namemc, min_args: 1, max_args: 1) do |event|
+  _, *rating = event.message.content.split
+  event.respond "NameMC Search: http://namemc.com/s/#{rating.join(' ')}"
 end
 
 #Stats Command
 bot.command :stats do |event|
-  event.respond "Chewbotcca - A basic functioning discord bot.
-Author: ChewLeKitten#6216 [116013677060161545]
-Library: discordrb 3.0.1
-Server Count: #{event.bot.servers.count}"
-puts "Command `stats` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^info stats') do |event|
-  event.respond '__Help for:__ `%^stats`
-**Description:** Shows basic stats for Chewbotcca.
-**Usage:** `%^stats`'
-puts "Command `info stats` ran by #{event.user.name} (ID: #{event.user.id})."
+  event.respond "Chewbotcca - A basic, yet functioning, discord bot.
+Author: Chew#6216 [116013677060161545]
+Library: discordrb 3.1.1
+Server Count: #{event.bot.servers.count}
+Total User Count: #{event.bot.users.count}
+
+Messages Sent since last restart: #{msg}"
 end
 
 #RIP Command
-bot.message(starting_with: '%^rip') do |event|
-  _, *rip = event.message.content.split
-  event.respond "#{rip.join(' ')} got #rekt! http://ripme.xyz/#{rip.join(' ')}"
-  puts "Command `rip` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^info rip') do |event|
-  event.respond '__Help for:__ `%^rip`
-**Description:** Makes someone or something rip. No spaces, letters and numbers only.
-**Usage:** `%^rip Chew`'
-puts "Command `info rip` ran by #{event.user.name} (ID: #{event.user.id})."
+bot.command(:rip, min_args: 1, max_args: 1) do |event|
+  _, *rating = event.message.content.split
+  event.respond "#{rating.join(' ')} got #rekt! http://ripme.xyz/#{rating.join(' ')}"
 end
 
 #MemeDB
-bot.message(with_text: '%^memedb') do |event|
-  event.respond 'Find the entire memedb here: http://memedb.chewcraft.me
-  Pick a meme with `%^memedb [meme name]` ```Current Memes:
-  deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered```'
-puts "Command `memedb` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(with_text: '%^info memedb') do |event|
-  event.respond '__Help for:__ `%^memedb`
-**Description:** Shows a list of the entire meme database, or if arguments are provided, searches for that meme.
-**Usage:** `%^memedb` or `%^memedb rickroll`'
-puts "Command `info memedb` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb submit') do |event|
-  event.respond 'Submit your meme for the database here: http://goo.gl/forms/BRMomYVizsY7SqOg2'
-  puts "Command `memedb submit` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb deanmeme') do |event|
-  event.respond 'http://memedb.chewcraft.me/memes/deanmeme.png'
-  puts "Command `memedb deanmeme` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb rickroll') do |event|
-  event.respond 'http://memedb.chewcraft.me/memes/rickroll.gif'
-  puts "Command `memedb rickroll` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb vegans') do |event|
-  event.respond 'http://memedb.chewcraft.me/memes/vegans.png submitted by Stalemated#4473'
-  puts "Command `memedb vegans` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb spotad') do |event|
+bot.command(:memedb, min_args: 0, max_args: 1) do |event, list|
+if list == "deanmeme"
+  event.respond "http://memedb.chewcraft.me/memes/deanmeme.png"
+else 
+  if list == "rickroll"
+  event.respond "http://memedb.chewcraft.me/memes/rickroll.gif"
+else 
+  if list == "vegans"
+  event.respond "http://memedb.chewcraft.me/memes/vegans.png"
+else 
+  if list == "spotad"
   event.respond "http://memedb.chewcraft.me/memes/spotad.jpg"
-  puts "Command `memedb spotad` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb petpet') do |event|
+else 
+  if list == "petpet"
   event.respond "http://memedb.chewcraft.me/memes/petpet.jpg"
-  puts "Command `memedb petpet` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb nicememe') do |event|
-  event.respond "http://memedb.chewcraft.me/memes/nicememe.gif submitted by Stalemated#4473"
-  puts "Command `memedb nicememe` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb paycheck') do |event|
+else 
+  if list == "nicememe"
+  event.respond "http://memedb.chewcraft.me/memes/nicememe.gif"
+else 
+  if list == "paycheck"
   event.respond "http://memedb.chewcraft.me/memes/paycheck.JPG"
-  puts "Command `memedb paycheck` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb pokesteak') do |event|
+else 
+  if list == "pokesteak"
   event.respond "http://memedb.chewcraft.me/memes/pokesteak.JPG"
-  puts "Command `memedb pokesteak` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb losthope') do |event|
-  event.respond "http://memedb.chewcraft.me/memes/losthope.png submitted by Stalemated#4473"
-  puts "Command `memedb losthope` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^memedb timetostop') do |event|
+else 
+  if list == "losthope"
+  event.respond "http://memedb.chewcraft.me/memes/losthope.png"
+else 
+  if list == "timetostop"
   event.respond "http://memedb.chewcraft.me/memes/timetostop.gif"
-  puts "Command `memedb timetostop` ran by #{event.user.name} (ID: #{event.user.id})."
+else 
+  if list == "skypetrash"
+  event.respond "http://memedb.chewcraft.me/memes/skypetrash.gif"
+else 
+  if list == "trap"
+  event.respond "http://memedb.chewcraft.me/memes/trap.jpeg"
+else 
+  if list == "triggered"
+  event.respond "http://memedb.chewcraft.me/memes/triggered.gif"
+else 
+  if list == "submit"
+  event.respond "You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>"
+else 
+  event.respond "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE). Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered`"
 end
-bot.message(starting_with: '%^memedb skypetrash') do |event|
-  event.respond "http://memedb.chewcraft.me/memes/skypetrash.gif submitted indirectly by SplitPixl#9184"
-  puts "Command `memedb skypetrash` ran by #{event.user.name} (ID: #{event.user.id})."
 end
-bot.message(starting_with: '%^memedb trap') do |event|
-  event.respond "http://memedb.chewcraft.me/memes/trap.jpeg submitted by Mini#5311"
-  puts "Command `memedb trap` ran by #{event.user.name} (ID: #{event.user.id})."
 end
-bot.message(starting_with: '%^memedb triggered') do |event|
-  event.respond "http://memedb.chewcraft.me/memes/triggered.gif submitted indirectly by speedo#0032"
-  puts "Command `memedb triggered` ran by #{event.user.name} (ID: #{event.user.id})."
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
 end
 
 #Status Commands
-bot.message(with_text: '%^statusservers', from: 116013677060161545) do |event|
+bot.command(:setstatusserver, from: 116013677060161545) do |event|
   event.bot.game = "on #{event.bot.servers.count} servers."
   event.respond "Enabled Status."
-  puts "Command `statusservers` ran by #{event.user.name} (ID: #{event.user.id})."
 end
-bot.message(with_text: '%^statusservers', from: not!(116013677060161545)) do |event|
-  event.respond "Bot Owner Only!"
-  puts "Command ran without permission! `statusservers` by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^status', from: 116013677060161545) do |event|
+bot.command(:status, from: 116013677060161545) do |event|
   _, *status = event.message.content.split
   event.respond "Status set to: #{status.join(' ')}"
   event.bot.game = "#{status.join(' ')}"
-  puts "Command `status` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^status', from: not!(116013677060161545)) do |event|
-  event.respond "Bot Owner Only!"
-  puts "Command ran without permission! `sinfo` ran by #{event.user.name} (ID: #{event.user.id})."
 end
 
 #Namecheap
-bot.message(starting_with: '%^namecheap') do |event|
-  _, *domain = event.message.content.split
-  event.respond "NameCheap Domain Search Results [only one word]: https://www.namecheap.com/domains/registration/results.aspx?domain=#{domain.join(' ')}"
-  puts "Command `namecheap` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(with_text: '%^info namecheap') do |event|
-  event.respond '__Help for:__ `%^namecheap`
-**Description:** Searches namecheap.com for a domain name. No spaces or special characters, just a normal domain search.
-**Usage:** `%^namecheap google.com`'
-puts "Command `info namecheap` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^domainwhois') do |event|
-  _, *whois = event.message.content.split
-  event.respond "Domain Whois Results [only one word]: https://www.namecheap.com/domains/whois/results.aspx?domain=#{whois.join(' ')}"
-  puts "Command `domainwhois` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(with_text: '%^info domainwhois') do |event|
-  event.respond "__Help for:__ `%^domainwhois`
-**Description:** Returns a link to see the Whois of a domain.
-**Usage:** `%^domainwhois google.com`"
-puts "Command `info domainwhois` ran by #{event.user.name} (ID: #{event.user.id})."
+bot.command(:namecheap, min_args: 1, max_args: 1) do |event|
+  _, *rating = event.message.content.split
+  event.respond "NameCheap Domain Search Results: https://www.namecheap.com/domains/registration/results.aspx?domain=#{rating.join(' ')}"
 end
 
 #MCAvatar
-bot.message(starting_with: '%^mcavatar') do |event|
-  _, *thefull = event.message.content.split
-  event.respond "Alright, here is a 3D full view of the player for the skin: #{thefull.join(' ')}. https://visage.surgeplay.com/full/512/#{thefull.join(' ')}.png"
-  puts "Command `mcavatar` ran by #{event.user.name} (ID: #{event.user.id})."
-end
-bot.message(starting_with: '%^info mcavatar') do |event|
-  event.respond "**__Info for:__** `%^mcavatar`
-**Description:** Returns a link to see a 3d view of a skin. Put a minecraft username to check it out!
-**Usage:** `%^mcavatar ChewLeKitten`"
-puts "Command `info mcavatar` ran by #{event.user.name} (ID: #{event.user.id})."
+bot.command(:mcavatar, min_args: 1, max_args: 1) do |event|
+  _, *rating = event.message.content.split
+  event.respond "Alright, here is a 3D full view of the player for the skin: #{rating.join(' ')}. https://visage.surgeplay.com/full/512/#{rating.join(' ')}.png"
 end
 
-#Sinfo
-bot.command :sinfo do |event|
-  event.respond "Server Stats (WORK IN PROGRESS)
+#Info
+bot.command([:sinfo, :serverinfo]) do |event|
+  m = event.respond "Looking up server info, this may take a minute..."
+  m.edit "Server Stats:
+
+Basic Info:
 Server Name: #{event.server.name}
 Server ID: #{event.server.id}
-Server Region: #{event.server.region}"
-puts "Command `sinfo` ran by #{event.user.name} (ID: #{event.user.id})."
+Server Region: #{event.server.region}
+Server Owner: #{event.server.owner.name}\##{event.server.owner.discrim}
+
+Members:
+Total Member Count: #{event.server.members.count}
+
+Channels:
+Total Channel Count: #{event.server.channels.count}
+Text Channels: #{event.server.text_channels.count}
+Voice Channels: #{event.server.voice_channels.count}
+
+Roles:
+Count: #{event.server.roles.count}"
 end
-bot.message(starting_with: '%^info sinfo') do |event|
-  event.respond "**__Info for:__** `%^sinfo`
-**Description:** Shows some basic server information stats.
-**Usage:** `%^sinfo`"
-puts "Command `info mcavatar` ran by #{event.user.name} (ID: #{event.user.id})."
+
+bot.command([:uinfo, :userinfo]) do |event|
+  m = event.respond "Looking up information about you, please wait..."
+  m.edit "User Info:
+
+Name\#Discrim: #{event.user.name}\##{event.user.discrim}
+Status: #{event.user.status}
+Currently Playing: #{event.user.game}"
 end
 
 #Eval (No %^info)
-bot.command(:eval, help_available: false) do |event, *code|
-  break unless event.user.id == 116013677060161545
-
+bot.command(:eval, help_available: false, from: 116013677060161545) do |event, *code|
   begin
     eval code.join(' ')
   rescue
-    'An error occured'
+    'Well, excuse me, mr nobrain, cant even eval correctly smh.'
   end
 end
 
 #Shoo (Shutdown, no %^info)
 bot.command(:shoo, help_available: false) do |event|
-  break unless event.user.id == 116013677060161545
-
+ break unless event.user.id == 116013677060161545
+  m = event.respond("I am shutting dowm, it's been a long run, folks!")
   bot.send_message(event.user.pm, 'Hey, I am shutting down!')
+  sleep 3
+  m.delete
   exit
+
 end
 
 #Voice Stuff, WIP
 bot.command(:connect) do |event|
-  break unless event.user.id == 116013677060161545
+ break unless event.user.id == 116013677060161545
   channel = event.user.voice_channel
   next "You're not in any voice channel!" unless channel
   bot.voice_connect(channel)
-  "Connected to voice channel: #{channel.name}. I won't do anything, but I'm here! (I think I'm stuck!)"
+  "Connected to voice channel: #{channel.name}."
+
+end
+bot.command(:songs) do |event|
+  event.respond "Use `%^[song] to select a song. YOU CANNOT QUEUE A RANDOM URL, MUST BE FROM THIS DIRCTORY
+mrcena, rickroll, wearenum1"
 end
 bot.command(:mrcena) do |event|
+d
   break unless event.user.id == 116013677060161545
+  event.respond "Playing song"
   voice_bot = event.voice
   voice_bot.play_file('data/music.mp3')
+
+end
+bot.command(:rickroll) do |event|
+ break unless event.user.id == 116013677060161545
+  voice_bot = event.voice
+  voice_bot.play_file('data/rickroll.mp3')
+
+end
+bot.command(:wearenum1) do |event|
+ break unless event.user.id == 116013677060161545
+  voice_bot = event.voice
+  voice_bot.play_file('data/wearenum1.mp3')
+
+end
+
+bot.ready do |event|
+  event.bot.game = "on #{event.bot.servers.count} servers."
+  bot.send_message(272918497489846272, "Bot has restarted/reloaded or something.")
+end
+
+bot.command(:cat) do |event|
+ event.respond "#{JSON.parse(RestClient.get('http://random.cat/meow'))['file'].gsub('.jpg','')}"
+
+end
+
+bot.command(:catfact) do |event|
+  event.respond "#{JSON.parse(RestClient.get('http://catfacts-api.appspot.com/api/facts'))['facts'][0]}"
+end
+
+bot.command(:info, min_args: 1, max_args: 1) do |event, com|
+  if com == "ping"
+  event.respond "**Info For**: `%^ping`
+**Description**: Replies with \"Pong!\" and time in seconds.
+**Usage:** `%^ping`"
+else 
+  if com == "help"
+  event.respond "**Info For**: `%^help`
+**Description**: PMs you a list of commands. (See `%^commands` for commands only)
+**Usage:** `%^help`"
+else 
+  if com == "commands"
+  event.respond "**Info For**: `%^commands`
+**Description**: PMs you a list of commands only, no basic descriptions are given.
+**Usage:** `%^commands`"
+else
+  if com == "info"
+  event.respond "**Info For**: `%^info`
+**Description**: When a command is specified, it gives more info on a command.
+**Usage:** `%^info help`"
+else 
+  if com == "invite"
+  event.respond "**Info For**: `%^info`
+**Description**: PMs the user a link to invite Chewbotcca to your server, as well as a discord invite link to the bot server.
+**Usage:** `%^invite`"
+else
+  if com == "code"
+  event.respond "**Info For**: `%^code`
+**Description**: Shows a link to the GitHub repository for Chewbotcca
+**Usage:** `%^code`"
+else
+  if com == "rate"
+  event.respond "**Info For**: `%^rate`
+**Description**: Rate something out of 10.
+**Usage:** `%^rate 9.2`"
+else
+  if com == "namemc"
+  event.respond "**Info For**: `%^namemc`
+**Description**: Returns a link to search results for <http://namemc.com>. If there is one result, it will show a profile.
+**Usage:** `%^namemc ChewLeKitten` or `%^namemc us.mineplex.com`"
+else
+  if com == "memedb"
+  event.respond "**Info For**: `%^memedb`
+**Description**: Shows a list of all the memes in the meme database, if arguments are provided, it \"searches\" for that meme.
+**Usage:** `%^memedb` or `%^memedb rickroll`"
+else
+  if com == "stats"
+  event.respond "**Info For**: `%^stats`
+**Description**: Shows some basic stats for Chewbotcca.
+**Usage:** `%^stats`"
+else
+  if com == "rip"
+  event.respond "**Info For**: `%^rip`
+**Description**: Returns a <http://ripme.xyz> link. 
+**Usage:** `%^rip Chew`"
+else
+  if com == "namecheap"
+  event.respond "**Info For**: `%^rip`
+**Description**: Returns a <http://namecheap.com> search results link. 
+**Usage:** `%^namemc google`"
+else
+  if com == "uinfo"
+  event.respond "**Info For**: `%^uinfo`
+**Description**: Shows some basic stats for the user.
+**Usage:** `%^uinfo`"
+else
+  if com == "sinfo"
+  event.respond "**Info For**: `%^sinfo`
+**Description**: Shows some basic stats for the server.
+**Usage:** `%^sinfo`"
+else
+  if com == "cat"
+  event.respond "**Info For**: `%^cat`
+**Description**: Shows a RANDOM CAT AWWWWWWW.
+**Usage:** `%^cat`"
+else
+  event.respond "You failed, possible causes: 1) You spelled the command wrong. 2) You used improper capitalization, make sure there are no capital letters, or 3) That command doesn\'t exist."
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
+end
+
+bot.server_create do |event|
+  event.bot.game = "on #{event.bot.servers.count} servers."
+end
+
+bot.server_delete do |event|
+  event.bot.game = "on #{event.bot.servers.count} servers."
 end
 
 puts "Bot is ready!"
