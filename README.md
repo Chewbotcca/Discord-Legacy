@@ -1,3 +1,5 @@
+# NOTE: I have quit discord for a while, the bot will NOT update. If you wish to PR some changes, feel free.
+
 # Chewbotcca
 
 ![Discord](https://discordapp.com/api/guilds/200388197396512768/widget.png)
