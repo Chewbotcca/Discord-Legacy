@@ -1,4 +1,4 @@
-# NOTE: I have quit discord for a while, the bot will NOT update. If you wish to PR some changes, feel free.
+# NOTE: I have quit discord for a while, the bot will _probably_ NOT update. If you wish to PR some changes, feel free.
 
 # Chewbotcca
 
@@ -9,11 +9,11 @@ Chewbotcca is a discord bot written in discordrb.
 
 The help server is available here: ![Discord](https://discordapp.com/api/guilds/200388197396512768/widget.png)
 
-Command list can be found on the wiki. Still working on it though.
+Command list can be found with `%^help`, use `%^info command` to find more info.
 
 I will update this as we get along, but currently Chewbotcca is really lame. I'm learning though stay with me.
 
-Add the bot to your server with: http://chcra.site/Chewbotcca
+Add the bot to your server with: http://bit.ly/Chewbotcca
 
 Check out the unofficial bots website page: https://bots.discord.pw/bots/200052560399171584
 
@@ -23,10 +23,10 @@ I'd rather you not run your own instance of Chewbotcca, just add the bot to your
 
 1) Download all files from github
 
-2) Put a bot token in the token slot (lol) in the example.config.yaml and save as config.yaml
+2) Head on over to the code.rb and put in the token and client id.
 
-3) Go into the actual bot and change client ID to whatever, go through all owner ids and make them yours (if you want)
+3) Be sure you have discordrb, rest-client, and json gems installed.
 
 4) run bot with ruby
 
-Something didn't work? Come onto the support server with the link above.
+Something didn't work? Cool beans.
