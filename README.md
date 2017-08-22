@@ -21,12 +21,25 @@ Check out the unofficial bots website page: https://bots.discord.pw/bots/2000525
 
 I'd rather you not run your own instance of Chewbotcca, just add the bot to your server, but if you insist...
 
-1) Download all files from github
+Requirements: Git and Bundler Gem. This is not the install guide for either of these so google it yourself you lazy bum.
 
-2) Head on over to the code.rb and put in the token and client id.
+1) Get the files: `git clone https://github.com/Chewsterchew/Chewbotcca.git`
 
-3) Be sure you have discordrb, rest-client, and json gems installed.
+2) GO TO THE DIRECTORY: `cd Chewbotcca`
 
-4) run bot with ruby
+3) Install the gems: `bundle install`
+
+4) Get your token, bot id, and your id and throw it into the config, also the OS.
+
+5) Rename the config to config.yaml
+
+6) `ruby chewbot.rb`
+
+Or if you like that copy-paste thing:
+```git clone https://github.com/Chewsterchew/Chewbotcca.git
+cd Chewbotcca
+bundle install```
+(get the token and stuff)
+```ruby chewbot.rb```
 
 Something didn't work? Cool beans.

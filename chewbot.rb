@@ -1,13 +1,67 @@
 require 'discordrb'
 require 'rest-client'
 require 'json'
+require 'yaml'
 puts "All dependicies loaded"
 
-bot = Discordrb::Commands::CommandBot.new token: 'your_token', client_id: bot_id, prefix: '%^'
+CONFIG = YAML.load_file('config.yaml')
+puts "Config loaded from file"
+
+bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: CONFIG['client_id'], prefix: '%^'
+
 puts "Initial Startup complete, loading all commands..."
 
+starttime = Time.now
+
+bot.command(:uptime) do |event|
+  starttimeneat = starttime.strftime('%Y.%m.%d.%H.%M')
+  timenowneat = Time.now.strftime('%Y.%m.%d.%H.%M')
+  uptime = starttimeneat-timenowneat
+  event.respond "#{uptime}"
+end
+
+bot.command(:restart, min_args: 1, max_args:1) do |event, task|
+  if (event.user.id == CONFIG['owner_id'])
+    if (CONFIG['os'] == "Windows")
+      event.respond "Restarting not supported on Windows!"
+    end
+    if (CONFIG['os'] == "Mac" || "Linux")
+      if (task == "update")
+        begin
+          event.respond "Restarting and Updating!"
+          exec('bash scripts/update.sh')
+        end
+      end
+      if (task == "help")
+        event.respond "No Problem! I have PM'd you how to restart the bot."
+        event.respond "Wait, I forgot how to PM! Please just guess for now."
+      end
+      if (task == "pushlocal")
+        begin
+          event.respond "Restarting and uploading all that fancy local code"
+          exec('bash scripts/push.sh')
+        end
+      end
+      if (task == "restartonly")
+        begin
+          event.respond "Restarting the bot without updating..."
+          exec('bash scripts/restartonly.sh')
+        end
+      end
+      if (task == "pushonly")
+        begin
+          event.respond "Restarting the bot using saved commits..."
+          exec('bash scripts/pushonly.sh')
+        end
+      end
+    end
+  else
+    event.respond "You can't restart! (If you are the owner of the bot, you did not configure properly! Otherwise, stop trying to restart the bot!)"
+  end
+end
+
 #Help Command
-bot.command(:help, description: 'Gives help for a command.') do |event|
+bot.command(:help) do |event|
   m = event.respond("I have sent you a list of commands!")
   event.user.pm('```Command List:
   %^ping - Replies with "Pong!"
@@ -38,9 +92,13 @@ bot.command(:commands) do |event|
 end
 
 #Ping
-bot.command(:ping) do |event|
-  m = event.respond('Pinging...')
-  m.edit "Pong! Time taken: #{Time.now - event.timestamp} seconds."
+bot.command(:ping) do |event, noedit|
+  if (noedit == "noedit")
+    event.respond "Pong! Time taken: #{Time.now - event.timestamp} seconds."
+  else
+    m = event.respond('Pinging...')
+    m.edit "Pong! Time taken: #{Time.now - event.timestamp} seconds."
+  end
 end
 
 #Rate Command
@@ -70,7 +128,7 @@ end
 bot.command :stats do |event|
   event.respond "Chewbotcca - A basic, yet functioning, discord bot.
 Author: Chew#6216 [116013677060161545]
-Library: discordrb 3.2.0.1
+Library: discordrb 3.2.1
 Server Count: #{event.bot.servers.count}
 Total User Count: #{event.bot.users.count}"
 end
@@ -108,7 +166,9 @@ elsif list == "skypetrash"
 elsif list == "trap"
   event.respond "http://chew.pro/Chewbotcca/memes/trap.jpeg"
 elsif list == "triggered"
-  event.respond "http://chew.pro/Chewbotcca/memes/triggered.gif"
+  event.respond "https://chew.pro/Chewbotcca/memes/triggered.gif"
+elsif list == "noot"
+  event.respond "https://chew.pro/Chewbotcca/memes/noot.gif"
 elsif list == "submit"
   event.respond "You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>"
 else
@@ -117,11 +177,11 @@ end
 end
 
 #Status Commands
-bot.command(:setstatusserver, from: 116013677060161545) do |event|
+bot.command(:setstatusserver, from: 348607473546035200) do |event|
   event.bot.game = "on #{event.bot.servers.count} servers."
   event.respond "Enabled Status."
 end
-bot.command(:status, from: 116013677060161545) do |event|
+bot.command(:status, from: 348607473546035200) do |event|
   _, *status = event.message.content.split
   event.respond "Status set to: #{status.join(' ')}"
   event.bot.game = "#{status.join(' ')}"
@@ -163,16 +223,17 @@ Count: #{event.server.roles.count}"
 end
 
 bot.command([:uinfo, :userinfo]) do |event|
-  m = event.respond "Looking up information about you, please wait..."
-  m.edit "User Info:
+  event.respond  "User Info:
 
 Name\#Discrim: #{event.user.name}\##{event.user.discrim}
+User ID: #{event.user.id}
 Status: #{event.user.status}
-Currently Playing: #{event.user.game}"
+Currently Playing: #{event.user.game}
+Your Avatar: https://cdn.discordapp.com/avatars/#{event.user.id}/#{event.user.avatar_id}.webp?size=1024"
 end
 
 #Eval (No %^info)
-bot.command(:eval, help_available: false, from: 116013677060161545) do |event, *code|
+bot.command(:eval, help_available: false, from: 348607473546035200) do |event, *code|
   begin
     eval code.join(' ')
   rescue
@@ -182,7 +243,7 @@ end
 
 #Shoo (Shutdown, no %^info)
 bot.command(:shoo, help_available: false) do |event|
-  break unless event.user.id == 116013677060161545
+  break unless event.user.id == 348607473546035200
   m = event.respond("I am shutting dowm, it's been a long run, folks!")
   bot.send_message(event.user.pm, 'Hey, I am shutting down!')
   sleep 3
@@ -216,11 +277,10 @@ end
 
 bot.ready do |event|
   event.bot.game = "on #{event.bot.servers.count} servers."
-  bot.send_message(272918497489846272, "Bot has restarted/reloaded or something.")
 end
 
 bot.command(:cat) do |event|
-  event.respond "#{JSON.parse(RestClient.get('http://random.cat/meow'))['file']}"
+  event.respond "#{["Aww!","Adorable."].sample} #{JSON.parse(RestClient.get('http://random.cat/meow'))['file']}"
 end
 
 bot.command(:catfact) do |event|

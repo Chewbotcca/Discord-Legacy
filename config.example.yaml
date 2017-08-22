@@ -1,0 +1,7 @@
+---
+# The Bot's Token
+token: insert_token
+# The Bot's Client ID
+client_id: insert_clientid
+# Your ID (Optional, for owner commands)
+owner_id: insert_ownerid
