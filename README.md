@@ -36,10 +36,17 @@ Requirements: Git and Bundler Gem. This is not the install guide for either of t
 6) `ruby chewbot.rb`
 
 Or if you like that copy-paste thing:
-```git clone https://github.com/Chewsterchew/Chewbotcca.git
+
+```
+git clone https://github.com/Chewsterchew/Chewbotcca.git
 cd Chewbotcca
-bundle install```
+bundle install
+```
+
 (get the token and stuff)
-```ruby chewbot.rb```
+
+```
+ruby chewbot.rb
+```
 
 Something didn't work? Cool beans.
