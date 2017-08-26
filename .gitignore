@@ -1,4 +1,2 @@
 config.yaml
-.rubocop.yml
-.travis.yml
 GEMFILE.lock

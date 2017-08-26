@@ -3,7 +3,6 @@
 # Chewbotcca
 
 ![Discord](https://discordapp.com/api/guilds/200388197396512768/widget.png)
-![travis](https://travis-ci.org/Chewsterchew/Chewbotcca.svg?branch=master)
 
 Chewbotcca is a discord bot written in discordrb.
 
