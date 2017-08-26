@@ -288,77 +288,87 @@ bot.command(:catfact) do |event|
 end
 
 bot.command(:info, min_args: 1, max_args: 1) do |event, com|
-  if com == "ping"
-  event.respond "**Info For**: `%^ping`
-**Description**: Replies with \"Pong!\" and time in seconds.
-**Usage:** `%^ping`"
-elsif com == "help"
-  event.respond "**Info For**: `%^help`
-**Description**: PMs you a list of commands. (See `%^commands` for commands only)
-**Usage:** `%^help`"
-elsif com == "commands"
-  event.respond "**Info For**: `%^commands`
-**Description**: PMs you a list of commands only, no basic descriptions are given.
-**Usage:** `%^commands`"
-elsif com == "info"
-  event.respond "**Info For**: `%^info`
-**Description**: When a command is specified, it gives more info on a command.
-**Usage:** `%^info help`"
-elsif com == "invite"
-  event.respond "**Info For**: `%^info`
-**Description**: PMs the user a link to invite Chewbotcca to your server, as well as a discord invite link to the bot server.
-**Usage:** `%^invite`"
-elsif com == "code"
-  event.respond "**Info For**: `%^code`
-**Description**: Shows a link to the GitHub repository for Chewbotcca
-**Usage:** `%^code`"
-elsif com == "rate"
-  event.respond "**Info For**: `%^rate`
-**Description**: Rate something out of 10.
-**Usage:** `%^rate 9.2`"
-elsif com == "namemc"
-  event.respond "**Info For**: `%^namemc`
-**Description**: Returns a link to search results for <http://namemc.com>. If there is one result, it will show a profile.
-**Usage:** `%^namemc ChewLeKitten` or `%^namemc us.mineplex.com`"
-elsif com == "memedb"
-  event.respond "**Info For**: `%^memedb`
-**Description**: Shows a list of all the memes in the meme database, if arguments are provided, it \"searches\" for that meme.
-**Usage:** `%^memedb` or `%^memedb rickroll`"
-elsif com == "stats"
-  event.respond "**Info For**: `%^stats`
-**Description**: Shows some basic stats for Chewbotcca.
-**Usage:** `%^stats`"
-elsif com == "rip"
-  event.respond "**Info For**: `%^rip`
-**Description**: Returns a <http://ripme.xyz> link.
-**Usage:** `%^rip Chew`"
-elsif com == "namecheap"
-  event.respond "**Info For**: `%^rip`
-**Description**: Returns a <http://namecheap.com> search results link.
-**Usage:** `%^namemc google`"
-elsif com == "uinfo"
-  event.respond "**Info For**: `%^uinfo`
-**Description**: Shows some basic stats for the user.
-**Usage:** `%^uinfo`"
-elsif com == "sinfo"
-  event.respond "**Info For**: `%^sinfo`
-**Description**: Shows some basic stats for the server.
-**Usage:** `%^sinfo`"
-elsif com == "cat"
-  event.respond "**Info For**: `%^cat`
-**Description**: Shows a RANDOM CAT AWWWWWWW.
-**Usage:** `%^cat`"
-elsif com == "trbmb"
-  event.respond "**Info For**: `%^trbmb`
-**Description**: Generates a random phrase. Based on http://trbmb.chew.pw.
-**Usage:** `%^trbmb`"
-elsif com == "uptime"
-  event.respond "**Info For**: `%^uptime`
-**Description**: Show bot uptime.
-**Usage:** `%^uptime`"
-else
-  event.respond "You failed, possible causes: 1) You spelled the command wrong. 2) You used improper capitalization, make sure there are no capital letters, or 3) That command doesn\'t exist."
-end
+  case com
+  when 'ping'
+    event << '**Info For**: `%^ping`'
+    event << '**Description**: Replies with "Pong!" and time in seconds'
+    event << '**Arguments**: `noedit` (Pings without editing the message)'
+    event << "**Usage:** `%^ping` or `%^ping noedit`"
+  when 'help'
+    event << '**Info For**: `%^help`'
+    event << '**Description**: PMs you a list of commands. (See `%^commands` for commands only)'
+    event << '**Usage:** `%^help`'
+  when 'commands'
+    event << '**Info For**: `%^commands`'
+    event << '**Description**: PMs you a list of commands only, no command descriptions are given.'
+    event << '**Usage:** `%^commands`'
+  when 'info'
+    event << '**Info For**: `%^info`'
+    event << '**Description**: When a command is specified, it gives more info on a command.'
+    event << '**Usage:** `%^info help`'
+  when 'invite'
+    event << '**Info For**: `%^invite`'
+    event << '**Description**: PMs the user a link to invite Chewbotcca to your server, as well as a discord invite link to the bot server.'
+    event << '**Usage:** `%^invite`'
+  when 'code'
+    event << '**Info For**: `%^code`'
+    event << '**Description**: Shows a link to the GitHub repository for Chewbotcca'
+    event << '**Usage:** `%^code`'
+  when 'rate'
+    event << '**Info For**: `%^rate`'
+    event << '**Description**: Rate something out of 10.'
+    event << '**Arguments**: Enter a string (pls numbers) after the command.'
+    event << '**Usage:** `%^rate 9.2`"'
+  when 'namemc'
+    event << '**Info For**: `%^namemc`'
+    event << '**Description**: Returns a link to search results for <http://namemc.com>. If there is one result, it will show a profile.'
+    event << '**Arguments**: Enter a string after the command to search for that.'
+    event << '**Usage:** `%^namemc ChewLeKitten` or `%^namemc us.mineplex.com`'
+  when 'memedb'
+    event << '**Info For**: `%^memedb`'
+    event << '**Description**: Shows a list of all the memes in the meme database, if arguments are provided, it "searches" for that meme.'
+    event << '**Usage:** `%^memedb` or `%^memedb rickroll`'
+  when 'stats'
+    event << '**Info For**: `%^stats`'
+    event << '**Description**: Shows some basic stats for Chewbotcca.'
+    event << '**Usage:** `%^stats`'
+  when 'rip'
+    event << '**Info For**: `%^rip`'
+    event << '**Description**: Returns a <http://ripme.xyz> link.'
+    event << '**Arguments**: Put a string after the command.'
+    event << '**Usage:** `%^rip Chew`'
+  when 'namecheap'
+    event << '**Info For**: `%^namecheap`'
+    event << '**Description**: Returns a <http://namecheap.com> search results link.'
+    event << '**Arguments**: Enter a domain or search string.'
+    event << '**Usage:** `%^namecheap google`'
+  when 'uinfo'
+    event << '**Info For**: `%^uinfo`'
+    event << '**Description**: Shows some basic stats for the user.'
+    event << '**Usage:** `%^uinfo`'
+  when 'sinfo'
+    event << '**Info For**: `%^sinfo`'
+    event << '**Description**: Shows some basic stats for the server.'
+    event << '**Usage:** `%^sinfo`'
+  when 'cat'
+    event << '**Info For**: `%^cat`'
+    event << '**Description**: Shows a RANDOM CAT AWWWWWWW.'
+    event << '**Usage:** `%^cat`'
+  when 'catfact'
+    event << '**Info For**: `%^catfact`'
+    event << '**Description**: Shows a random catfact. For example: cats meow.'
+    event << '**Usage**: `%^catfact`'
+  when 'trbmb'
+    event << '**Info For**: `%^trbmb`'
+    event << '**Description**: Generates a random phrase. Based on http://trbmb.chew.pw.'
+    event << '**Usage:** `%^trbmb`'
+  when 'uptime'
+    event << '**Info For**: `%^uptime`'
+    event << '**Description**: Show bot uptime.'
+    event << '**Usage:** `%^uptime`'
+  else
+    event.respond "You failed, possible causes: 1) You spelled the command wrong. 2) You used improper capitalization, make sure there are no capital letters, or 3) That command doesn\'t exist."
+  end
 end
 
 bot.server_create do |event|
