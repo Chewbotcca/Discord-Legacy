@@ -14,10 +14,11 @@ puts "Initial Startup complete, loading all commands..."
 starttime = Time.now
 
 bot.command(:uptime) do |event|
-  starttimeneat = starttime.strftime('%Y.%m.%d.%H.%M')
-  timenowneat = Time.now.strftime('%Y.%m.%d.%H.%M')
-  uptime = starttimeneat-timenowneat
-  event.respond "#{uptime}"
+  t = Time.now-starttime
+  mm, ss = t.divmod(60)            #=> [4515, 21]
+  hh, mm = mm.divmod(60)           #=> [75, 15]
+  dd, hh = hh.divmod(24)           #=> [3, 3]
+  event.respond "%d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss]
 end
 
 bot.command(:restart, min_args: 1, max_args:1) do |event, task|
@@ -347,6 +348,14 @@ elsif com == "cat"
   event.respond "**Info For**: `%^cat`
 **Description**: Shows a RANDOM CAT AWWWWWWW.
 **Usage:** `%^cat`"
+elsif com == "trbmb"
+  event.respond "**Info For**: `%^trbmb`
+**Description**: Generates a random phrase. Based on http://trbmb.chew.pw.
+**Usage:** `%^trbmb`"
+elsif com == "uptime"
+  event.respond "**Info For**: `%^uptime`
+**Description**: Show bot uptime.
+**Usage:** `%^uptime`"
 else
   event.respond "You failed, possible causes: 1) You spelled the command wrong. 2) You used improper capitalization, make sure there are no capital letters, or 3) That command doesn\'t exist."
 end
