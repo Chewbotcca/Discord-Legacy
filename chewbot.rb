@@ -201,8 +201,7 @@ end
 
 #Info
 bot.command([:sinfo, :serverinfo]) do |event|
-  m = event.respond "Looking up server info, this may take a minute..."
-  m.edit "Server Stats:
+  event.respond "Server Stats:
 
 Basic Info:
 Server Name: #{event.server.name}
@@ -236,8 +235,8 @@ end
 bot.command(:eval, help_available: false, from: 348607473546035200) do |event, *code|
   begin
     eval code.join(' ')
-  rescue
-    'Well, excuse me, mr nobrain, cant even eval correctly smh.'
+  rescue => e
+    "Well, excuse me, mr nobrain, cant even eval correctly smh. THE ERROR: #{e}"
   end
 end
 

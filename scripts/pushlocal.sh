@@ -4,7 +4,7 @@ do
   git add .
   git commit -m "Upload from local repository"
   git push
-  
+
   echo "Booting up the bot..."
-  ruby code.rb
+  ruby chewbot.rb
 done
