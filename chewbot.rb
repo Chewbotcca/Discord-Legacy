@@ -172,6 +172,8 @@ elsif list == "triggered"
   event.respond "https://chew.pro/Chewbotcca/memes/triggered.gif"
 elsif list == "noot"
   event.respond "https://chew.pro/Chewbotcca/memes/noot.gif"
+elsif list == "iplayedmyself"
+  event.respond "https://chew.pro/Chewbotcca/memes/iplayedmyself.png"
 elsif list == "submit"
   event.respond "You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>"
 else
