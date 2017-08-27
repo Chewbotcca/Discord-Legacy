@@ -45,7 +45,7 @@ bundle install
 (get the token and stuff)
 
 ```
-ruby chewbot.rb
+ruby run.rb
 ```
 
 Something didn't work? Cool beans.

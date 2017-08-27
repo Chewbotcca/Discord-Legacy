@@ -6,5 +6,5 @@ do
   git pull origin master
 
   echo "Booting up the bot..."
-  ruby chewbot.rb
+  ruby run.rb
 done

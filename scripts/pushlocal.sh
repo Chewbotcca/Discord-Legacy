@@ -6,5 +6,5 @@ do
   git push
 
   echo "Booting up the bot..."
-  ruby chewbot.rb
+  ruby run.rb
 done
