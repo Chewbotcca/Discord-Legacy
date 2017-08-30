@@ -7,7 +7,7 @@ For now I just wanted a simple list of commands to keep updated easier than rest
     background-image: url('https://www.w3schools.com/css/searchicon.png');
     background-position: 10px 12px;
     background-repeat: no-repeat;
-    width: 100%;
+    width: 91.7%;
     font-size: 16px;
     padding: 12px 20px 12px 40px;
     border: 1px solid #ddd;
@@ -15,7 +15,7 @@ For now I just wanted a simple list of commands to keep updated easier than rest
 }
 #blocks {
     border-collapse: collapse;
-    width: 91.7%;
+    width: 100%;
     border: 1px solid #ddd;
     font-size: 18px;
 }
@@ -39,7 +39,7 @@ function lookWords() {
 
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
+    td = tr[i].getElementsByTagName("td")[0];
     if (td) {
       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
