@@ -15,15 +15,15 @@ puts "Initial Startup complete, loading all commands..."
 
 starttime = Time.now
 
-bot.command(:uptime) do |event|
-  t = Time.now-starttime
-  mm, ss = t.divmod(60)            #=> [4515, 21]
-  hh, mm = mm.divmod(60)           #=> [75, 15]
-  dd, hh = hh.divmod(24)           #=> [3, 3]
-  event.respond "%d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss]
-end
-
 bot.command(:restart, min_args: 1, max_args:1) do |event, task|
+  task.downcase!
+  if (task == "help")
+    event << "Possible arguments"
+    event << "`pushlocal` - Pushes local repository to github. Usually not used."
+    event << "`restartonly` - Restarts bot without pulling code or anything"
+    event << "`update` - Restarts the bot and updates the bot"
+    event << "`pushonly` - Pushes code (must `git add` and `git commit`)"
+  end
   if (event.user.id == CONFIG['owner_id'])
     if (CONFIG['os'] == "Windows")
       event.respond "Restarting not supported on Windows!"
@@ -34,10 +34,6 @@ bot.command(:restart, min_args: 1, max_args:1) do |event, task|
           event.respond "Restarting and Updating!"
           exec('bash scripts/update.sh')
         end
-      end
-      if (task == "help")
-        event.respond "No Problem! I have PM'd you how to restart the bot."
-        event.respond "Wait, I forgot how to PM! Please just guess for now."
       end
       if (task == "pushlocal")
         begin
@@ -64,34 +60,8 @@ bot.command(:restart, min_args: 1, max_args:1) do |event, task|
 end
 
 #Help Command
-bot.command(:help) do |event|
-  m = event.respond("I have sent you a list of commands!")
-  event.user.pm('```Command List:
-  %^ping - Replies with "Pong!"
-  %^help - Shows a list of commands.
-  %^commands - Shows a list of only commands, no descriptions.
-  %^info - Type in a command (NO PREFIX) and it will give info on the command.
-  %^invite - Shows a link to invite Chewbotcca to your server and a discord invite link to the help server.
-  %^code - Shows a link to the GitHub Repository to Chewbotcca.
-  %^rate - Rate something /10.
-  %^namemc - Shows a link to search results for a response, or if there''s one result, will show detailed info.
-  %^memedb - Shows a list of the entire meme database.
-  %^memedb submit - Submit a meme to the meme database.
-  %^stats - Shows basic stats for Chewbotcca.
-  %^rip - Makes someone or something rip. No spaces, letters and numbers only.
-  %^namecheap - Searches namecheap.com for a domain name. No spaces or special characters, just a normal domain search.
-  %^uinfo - Shows basic stats for the user.
-  %^sinfo - Shows basic stats for the server.
-  %^cat - Shows a random cat. meow.```')
-  sleep 5
-  m.delete
-end
-bot.command(:commands) do |event|
-  m = event.respond("I have sent you a list of only commands.")
-  event.user.pm('```Command List:
-  %^ping, %^help, %^commands, %^info, %^invite, %^code, %^rate, %^namemc, %^memedb, %^memedb submit, %^stats, %^rip, %^namecheap, %^uinfo, %^sinfo```')
-  sleep 5
-  m.delete
+bot.command([:help,:commands]) do |event|
+  event.respond "You can find all my commands here: https://chew.pro/Chewbotcca/commands"
 end
 
 #Ping
@@ -105,151 +75,142 @@ bot.command(:ping) do |event, noedit|
 end
 
 #Rate Command
-bot.command(:rate, min_args: 1, max_args: 1) do |event|
-  _, *rating = event.message.content.split
-  event.respond "#{event.user.mention} has rated `#{rating.join(' ')}`/10."
-end
-
-#Code Command
-bot.command :code do |event|
-  event.respond 'Chewbotcca was written in discordrb, and was made by Chew#6216. Source code here: http://github.com/Chewsterchew/Chewbotcca'
+bot.command(:rate, min_args: 1, max_args: 1) do |event, rating|
+  event.respond "#{event.user.mention} has rated `#{rating}`/10."
 end
 
 #Invite Command
 bot.command :invite do |event|
-  event.user.pm('Hello! Invite me to your server here: http://bit.ly/Chewbotcca
-  Join our support here right here: https://discord.gg/Q8TazNz')
+  event.user.pm('Hello! Invite me to your server here: http://bit.ly/Chewbotcca')
 end
 
 #NameMC Command
-bot.command(:namemc, min_args: 1, max_args: 1) do |event|
-  _, *rating = event.message.content.split
-  event.respond "NameMC Search: http://namemc.com/s/#{rating.join(' ')}"
+bot.command(:namemc, min_args: 1, max_args: 1) do |event, mcsearch|
+  event.respond "NameMC Search: http://namemc.com/s/#{mcsearch}"
 end
 
 #Stats Command
 bot.command :stats do |event|
-  event.respond "Chewbotcca - A basic, yet functioning, discord bot.
-Author: Chew#6216 [116013677060161545]
-Library: discordrb 3.2.1
-Server Count: #{event.bot.servers.count}
-Total User Count: #{event.bot.users.count}"
+  t = Time.now-starttime
+  mm, ss = t.divmod(60)
+  hh, mm = mm.divmod(60)
+  dd, hh = hh.divmod(24)
+  event << "Chewbotcca - A basic, yet functioning, discord bot."
+  event << "Author: Chew#6216 [116013677060161545]"
+  event << "Code: <http://github.com/Chewsterchew/Chewbotcca>"
+  event << "Bot Version: Beta 1.2"
+  event << "Library: discordrb 3.2.1"
+  event << "Server Count: #{event.bot.servers.count}"
+  event << "Total User Count: #{event.bot.users.count}"
+  event << "Uptime: %d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss]
 end
 
 #RIP Command
-bot.command(:rip, min_args: 1, max_args: 1) do |event|
-  _, *rating = event.message.content.split
-  event.respond "#{rating.join(' ')} got #rekt! http://ripme.xyz/#{rating.join(' ')}"
+bot.command(:rip, min_args: 1, max_args: 1) do |event, ripwho|
+  event.respond "#{rating.join(' ')} got #rekt! http://ripme.xyz/#{ripwho}"
 end
 
 #MemeDB
-bot.command(:memedb, min_args: 0, max_args: 1) do |event, list|
-if list == "deanmeme"
-  event.respond "http://chew.pro/Chewbotcca/memes/deanmeme.png"
-elsif list == "rickroll"
-  event.respond "http://chew.pro/Chewbotcca/memes/rickroll.gif"
-elsif list == "vegans"
-  event.respond "http://chew.pro/Chewbotcca/memes/vegans.png"
-elsif list == "spotad"
-  event.respond "http://chew.pro/Chewbotcca/memes/spotad.jpg"
-elsif list == "petpet"
-  event.respond "http://chew.pro/Chewbotcca/memes/petpet.jpg"
-elsif list == "nicememe"
-  event.respond "http://chew.pro/Chewbotcca/memes/nicememe.gif"
-elsif list == "paycheck"
-  event.respond "http://chew.pro/Chewbotcca/memes/paycheck.JPG"
-elsif list == "pokesteak"
-  event.respond "http://chew.pro/Chewbotcca/memes/pokesteak.JPG"
-elsif list == "losthope"
-  event.respond "http://chew.pro/Chewbotcca/memes/losthope.png"
-elsif list == "timetostop"
-  event.respond "http://chew.pro/Chewbotcca/memes/timetostop.gif"
-elsif list == "skypetrash"
-  event.respond "http://chew.pro/Chewbotcca/memes/skypetrash.gif"
-elsif list == "trap"
-  event.respond "http://chew.pro/Chewbotcca/memes/trap.jpeg"
-elsif list == "triggered"
-  event.respond "https://chew.pro/Chewbotcca/memes/triggered.gif"
-elsif list == "noot"
-  event.respond "https://chew.pro/Chewbotcca/memes/noot.gif"
-elsif list == "iplayedmyself"
-  event.respond "https://chew.pro/Chewbotcca/memes/iplayedmyself.png"
-elsif list == "submit"
-  event.respond "You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>"
-else
-  event.respond "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE). Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered`"
-end
-end
-
-#Status Commands
-bot.command(:setstatusserver, from: 348607473546035200) do |event|
-  event.bot.game = "on #{event.bot.servers.count} servers."
-  event.respond "Enabled Status."
-end
-bot.command(:status, from: 348607473546035200) do |event|
-  _, *status = event.message.content.split
-  event.respond "Status set to: #{status.join(' ')}"
-  event.bot.game = "#{status.join(' ')}"
+bot.command(:memedb, min_args: 0, max_args: 1) do |event, meme|
+  meme.downcase!
+  case meme
+  when 'deanmeme'
+    event.respond "http://chew.pro/Chewbotcca/memes/deanmeme.png"
+  when 'rickroll'
+    event.respond "http://chew.pro/Chewbotcca/memes/rickroll.gif"
+  when 'vegans'
+    event.respond "http://chew.pro/Chewbotcca/memes/vegans.png"
+  when 'spotad'
+    event.respond "http://chew.pro/Chewbotcca/memes/spotad.jpg"
+  when 'petpet'
+    event.respond "http://chew.pro/Chewbotcca/memes/petpet.jpg"
+  when 'nicememe'
+    event.respond "http://chew.pro/Chewbotcca/memes/nicememe.gif"
+  when 'paycheck'
+    event.respond "http://chew.pro/Chewbotcca/memes/paycheck.JPG"
+  when 'pokesteak'
+    event.respond "http://chew.pro/Chewbotcca/memes/pokesteak.JPG"
+  when 'losthope'
+    event.respond "http://chew.pro/Chewbotcca/memes/losthope.png"
+  when 'timetostop'
+    event.respond "http://chew.pro/Chewbotcca/memes/timetostop.gif"
+  when 'skypetrash'
+    event.respond "http://chew.pro/Chewbotcca/memes/skypetrash.gif"
+  when 'trap'
+    event.respond "http://chew.pro/Chewbotcca/memes/trap.jpeg"
+  when 'triggered'
+    event.respond "https://chew.pro/Chewbotcca/memes/triggered.gif"
+  when 'noot'
+    event.respond "https://chew.pro/Chewbotcca/memes/noot.gif"
+  when 'iplayedmyself'
+    event.respond "https://chew.pro/Chewbotcca/memes/iplayedmyself.png"
+  when 'submit'
+    event.respond "You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>"
+  else
+    event.respond "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE). Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered, noot, iplayedmyself`"
+  end
 end
 
 #Namecheap
-bot.command(:namecheap, min_args: 1, max_args: 1) do |event|
-  _, *rating = event.message.content.split
-  event.respond "NameCheap Domain Search Results [only one word]: https://www.namecheap.com/domains/registration/results.aspx?domain=#{rating.join(' ')}"
+bot.command(:namecheap, min_args: 1, max_args: 1, usage: "In order to do a search, you must provide ONE word to search for.") do |event, lookup|
+  event.respond "NameCheap Domain Search Results: https://www.namecheap.com/domains/registration/results.aspx?domain=#{lookup}"
 end
 
 #MCAvatar
-bot.command(:mcavatar, min_args: 1, max_args: 1) do |event|
-  _, *rating = event.message.content.split
-  event.respond "Alright, here is a 3D full view of the player for the skin: #{rating.join(' ')}. https://visage.surgeplay.com/full/512/#{rating.join(' ')}.png"
+bot.command(:mcavatar, min_args: 1, max_args: 1) do |event, mcuser|
+  event.respond "Alright, here is a 3D full view of the player for the skin: #{rating.join(' ')}. https://visage.surgeplay.com/full/512/#{mcuser}.png"
 end
 
 #Info
 bot.command([:sinfo, :serverinfo]) do |event|
-  event.respond "Server Stats:
-
-Basic Info:
-Server Name: #{event.server.name}
-Server ID: #{event.server.id}
-Server Region: #{event.server.region}
-Server Owner: #{event.server.owner.name}\##{event.server.owner.discrim}
-
-Members:
-Total Member Count: #{event.server.members.count}
-
-Channels:
-Total Channel Count: #{event.server.channels.count}
-Text Channels: #{event.server.text_channels.count}
-Voice Channels: #{event.server.voice_channels.count}
-
-Roles:
-Count: #{event.server.roles.count}"
+  event << "Server Stats:"
+  event << ""
+  event << "Basic Info:"
+  event << "Server Name: #{event.server.name}"
+  event << "Server ID: #{event.server.id}"
+  event << "Server Region: #{event.server.region}"
+  event << "Server Owner: #{event.server.owner.name}\##{event.server.owner.discrim}"
+  event << ""
+  event << "Members:"
+  event << "Total Member Count: #{event.server.members.count}"
+  event << ""
+  event << "Channels:"
+  event << "Total Channel Count: #{event.server.channels.count}"
+  event << "Text Channels: #{event.server.text_channels.count}"
+  event << "Voice Channels: #{event.server.voice_channels.count}"
+  event << ""
+  event << "Roles:"
+  event << "Count: #{event.server.roles.count}"
 end
 
 bot.command([:uinfo, :userinfo]) do |event|
-  event.respond  "User Info:
-
-Name\#Discrim: #{event.user.name}\##{event.user.discrim}
-User ID: #{event.user.id}
-Status: #{event.user.status}
-Currently Playing: #{event.user.game}
-Your Avatar: https://cdn.discordapp.com/avatars/#{event.user.id}/#{event.user.avatar_id}.webp?size=1024"
+  event << "User Info:"
+  event << ""
+  event << "Name\#Discrim: #{event.user.name}\##{event.user.discrim}"
+  event << "User ID: #{event.user.id}"
+  event << "Status: ``#{event.user.status}``"
+  if (event.user.nick != nil)
+    event << "User Nickname: `#{event.user.nick}`"
+  end
+  if (event.user.game != nil)
+    event << "Currently Playing: `#{event.user.game}`"
+  end
+  event << "Your Avatar: https://cdn.discordapp.com/avatars/#{event.user.id}/#{event.user.avatar_id}.webp?size=1024"
 end
 
 #Eval (No %^info)
-bot.command(:eval, help_available: false, from: 348607473546035200) do |event, *code|
+bot.command(:eval, from: 348607473546035200) do |event, *code|
   begin
     eval code.join(' ')
   rescue => e
-    "Well, excuse me, mr nobrain, cant even eval correctly smh. THE ERROR: #{e}"
+    "Well, excuse me, mr nobrain, cant even eval correctly smh. THE ERROR: ```#{e}```"
   end
 end
 
 #Shoo (Shutdown, no %^info)
-bot.command(:shoo, help_available: false) do |event|
-  break unless event.user.id == 348607473546035200
+bot.command(:shoo) do |event|
+  break unless event.user.id == CONFIG['ownerid']
   m = event.respond("I am shutting dowm, it's been a long run, folks!")
-  bot.send_message(event.user.pm, 'Hey, I am shutting down!')
   sleep 3
   m.delete
   exit
@@ -263,20 +224,21 @@ bot.command(:connect) do |event|
   "Connected to voice channel: #{channel.name}."
 end
 bot.command(:songs) do |event|
-  event.respond "Use `%^[song] to select a song. YOU CANNOT QUEUE A RANDOM URL, MUST BE FROM THIS DIRCTORY
-mrcena, rickroll, wearenum1"
+  event << "Use `%^play [song]` to select a song. YOU CANNOT QUEUE A RANDOM URL (yet), MUST BE FROM THIS DIRCTORY"
+  event << "```mrcena, rickroll, wearenum1```"
 end
-bot.command(:mrcena) do |event|
-  voice_bot = event.voice
-  voice_bot.play_file('data/music.mp3')
-end
-bot.command(:rickroll) do |event|
-  voice_bot = event.voice
-  voice_bot.play_file('data/rickroll.mp3')
-end
-bot.command(:wearenum1) do |event|
-  voice_bot = event.voice
-  voice_bot.play_file('data/wearenum1.mp3')
+bot.command(:play) do |event, song|
+  song.downcase!
+  case song
+  when 'mrcena'
+    event.voice.play_file('data/music.mp3')
+  when 'rickroll'
+    event.voice.play_file('data/rickroll.mp3')
+  when 'wearenum1'
+    event.voice.play_file('data/wearenum1.mp3')
+  else
+    event.respond "Song doesnt exist in the database! Check database with `%^songs`"
+  end
 end
 
 bot.ready do |event|
@@ -290,10 +252,11 @@ bot.command(:cat) do |event|
 end
 
 bot.command(:catfact) do |event|
-  event.respond "#{JSON.parse(RestClient.get('http://catfacts-api.appspot.com/api/facts'))['facts'][0]}"
+  event.respond "#{JSON.parse(RestClient.get('https://catfact.ninja/fact'))['fact']}"
 end
 
 bot.command(:info, min_args: 1, max_args: 1) do |event, com|
+  com.downcase!
   case com
   when 'ping'
     event << '**Info For**: `%^ping`'
@@ -316,10 +279,6 @@ bot.command(:info, min_args: 1, max_args: 1) do |event, com|
     event << '**Info For**: `%^invite`'
     event << '**Description**: PMs the user a link to invite Chewbotcca to your server, as well as a discord invite link to the bot server.'
     event << '**Usage:** `%^invite`'
-  when 'code'
-    event << '**Info For**: `%^code`'
-    event << '**Description**: Shows a link to the GitHub repository for Chewbotcca'
-    event << '**Usage:** `%^code`'
   when 'rate'
     event << '**Info For**: `%^rate`'
     event << '**Description**: Rate something out of 10.'
@@ -378,11 +337,11 @@ bot.command(:info, min_args: 1, max_args: 1) do |event, com|
 end
 
 bot.server_create do |event|
-  event.bot.game = "on #{event.bot.servers.count} servers."
+  event.bot.game = "on #{event.bot.servers.count} servers | %^help"
 end
 
 bot.server_delete do |event|
-  event.bot.game = "on #{event.bot.servers.count} servers."
+  event.bot.game = "on #{event.bot.servers.count} servers | %^help"
 end
 
 bot.command(:trbmb) do |event|
