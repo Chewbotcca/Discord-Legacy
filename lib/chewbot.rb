@@ -9,7 +9,7 @@ puts 'All dependicies loaded'
 CONFIG = YAML.load_file('config.yaml')
 puts 'Config loaded from file'
 
-bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: CONFIG['client_id'], prefix: '%^'
+bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: CONFIG['client_id'], prefix: ["<@#{CONFIG['client_id']}> ", '%^']
 
 puts 'Initial Startup complete, loading all commands...'
 
@@ -67,10 +67,10 @@ end
 # Ping
 bot.command(:ping) do |event, noedit|
   if noedit == 'noedit'
-    event.respond "Pong! Time taken: #{Time.now - event.timestamp} seconds."
+    event.respond "Pong! Time taken: #{((Time.now - event.timestamp) * 1000).to_i} seconds."
   else
     m = event.respond('Pinging...')
-    m.edit "Pong! Time taken: #{Time.now - event.timestamp} seconds."
+    m.edit "Pong! Time taken: #{((Time.now - event.timestamp) * 1000).to_i} seconds."
   end
 end
 
@@ -98,7 +98,7 @@ bot.command :stats do |event|
   event << 'Chewbotcca - A basic, yet functioning, discord bot.'
   event << 'Author: Chew#6216 [116013677060161545]'
   event << 'Code: <http://github.com/Chewsterchew/Chewbotcca>'
-  event << 'Bot Version: Beta 1.2'
+  event << 'Bot Version: Beta 1.2.1'
   event << 'Library: discordrb 3.2.1'
   event << "Server Count: #{event.bot.servers.count}"
   event << "Total User Count: #{event.bot.users.count}"
@@ -107,7 +107,7 @@ end
 
 # RIP Command
 bot.command(:rip, min_args: 1, max_args: 1) do |event, ripwho|
-  event.respond "#{rating.join(' ')} got #rekt! http://ripme.xyz/#{ripwho}"
+  event.respond "#{ripwho} got #rekt! http://ripme.xyz/#{ripwho}"
 end
 
 # MemeDB
@@ -158,7 +158,7 @@ end
 
 # MCAvatar
 bot.command(:mcavatar, min_args: 1, max_args: 1) do |event, mcuser|
-  event.respond "Alright, here is a 3D full view of the player for the skin: #{rating.join(' ')}. https://visage.surgeplay.com/full/512/#{mcuser}.png"
+  event.respond "Alright, here is a 3D full view of the player for the skin: #{mcuser}. https://visage.surgeplay.com/full/512/#{mcuser}.png"
 end
 
 # Info
@@ -195,18 +195,19 @@ bot.command([:uinfo, :userinfo]) do |event|
 end
 
 # Eval (No %^info)
-bot.command(:eval, from: 348_607_473_546_035_200) do |_event, *code|
+bot.command(:eval) do |event, *code|
+  break unless event.user.id == CONFIG['owner_id']
   begin
-    eval code.join(' ')
+    event.respond (eval code.join(' ')).to_s
   rescue => e
-    "Well, excuse me, mr nobrain, cant even eval correctly smh. THE ERROR: ```#{e}```"
+    event.respond "Well, excuse me, mr nobrain, cant even eval correctly smh. THE ERROR: ```#{e}```"
   end
 end
 
 # Shoo (Shutdown, no %^info)
 bot.command(:shoo) do |event|
-  break unless event.user.id == CONFIG['ownerid']
-  m = event.respond("I am shutting dowm, it's been a long run, folks!")
+  break unless event.user.id == CONFIG['owner_id']
+  m = event.respond("I am shutting dowm, it's been a long run folks!")
   sleep 3
   m.delete
   exit
@@ -238,7 +239,7 @@ bot.command(:play) do |event, song|
 end
 
 bot.ready do |event|
-  event.bot.game = "on #{event.bot.servers.count} servers."
+  event.bot.game = "on #{event.bot.servers.count} servers | %^help"
 end
 
 bot.command(:cat) do |event|
@@ -251,7 +252,7 @@ bot.command(:catfact) do |event|
   event.respond (JSON.parse(RestClient.get('https://catfact.ninja/fact'))['fact']).to_s
 end
 
-bot.command(:info, min_args: 1, max_args: 1) do |event, com|
+bot.command(:info, min_args: 0, max_args: 1) do |event, com|
   com.downcase!
   case com
   when 'ping'
@@ -328,7 +329,7 @@ bot.command(:info, min_args: 1, max_args: 1) do |event, com|
     event << '**Description**: Show bot uptime.'
     event << '**Usage:** `%^uptime`'
   else
-    event.respond "You failed, possible causes: 1) You spelled the command wrong. 2) You used improper capitalization, make sure there are no capital letters, or 3) That command doesn\'t exist."
+    event.respond 'You failed, possible causes: You spelled the command wrong or that command doesn\'t exist. Use `%^help` to see commands.'
   end
 end
 
