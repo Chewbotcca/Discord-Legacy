@@ -1,4 +1,7 @@
 ---
+
+## BE SURE TO RENAME THIS FILE TO config.yaml
+
 # The Bot's Token
 token: insert_token
 # The Bot's Client ID
