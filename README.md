@@ -1,4 +1,10 @@
-# NOTE: I have quit discord for a while, the bot will _probably_ NOT update. If you wish to PR some changes, feel free.
+# NOTE: I have quit discord for ever, the bot will never update. If you wish to PR some changes, feel free.
+
+# This project is officially marked as Abandoned. Please feel free to take control. PR anything and I'll make you maintainer.
+
+# Feel free to use my IRC Bot, that I fully maintain: [ChewbotccaIRC](http://github.com/Chewsterchew/ChewbotccaIRC)
+
+# And now for your regularly scheduled readme.
 
 # Chewbotcca
 
