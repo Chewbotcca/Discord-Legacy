@@ -1,18 +1,16 @@
-# NOTE: I have quit discord for ever, the bot will never update. If you wish to PR some changes, feel free.
+# AD TIME
 
-# This project is officially marked as Abandoned. Please feel free to take control. PR anything and I'll make you maintainer.
-
-# Feel free to use my IRC Bot, that I fully maintain: [ChewbotccaIRC](http://github.com/Chewsterchew/ChewbotccaIRC)
-
-# And now for your regularly scheduled readme.
+Check out my IRC Bot: [ChewbotccaIRC](http://github.com/Chewbotcca/IRC)
 
 # Chewbotcca
 
-![Discord](https://discordapp.com/api/guilds/200388197396512768/widget.png)
+[![Build Status](https://travis-ci.org/Chewsterchew/Chewbotcca.svg?branch=master)](https://travis-ci.org/Chewsterchew/Chewbotcca)
 
-Chewbotcca is a discord bot written in discordrb.
+![Discord](https://discordapp.com/api/guilds/134445052805120001/widget.png)
 
-The help server is available here: ![Discord](https://discordapp.com/api/guilds/200388197396512768/widget.png)
+Chewbotcca is a discord bot written with discordrb.
+
+The help server is available here: ![Discord](https://discordapp.com/api/guilds/134445052805120001/widget.png)
 
 Command list can be found with `%^help`, use `%^info command` to find more info.
 
