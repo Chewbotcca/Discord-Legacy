@@ -28,7 +28,7 @@ bot.command(:restart, min_args: 1, max_args: 1) do |event, task|
     if CONFIG['os'] == 'Windows'
       event.respond 'Restarting not supported on Windows!'
     end
-    if CONFIG['os'] == 'Mac' || 'Linux'
+    if CONFIG['os'] == ('Mac' || 'Linux')
       if task == 'update'
         begin
           event.respond 'Restarting and Updating!'
@@ -102,7 +102,7 @@ bot.command :stats do |event|
   event << 'Library: discordrb 3.2.1'
   event << "Server Count: #{event.bot.servers.count}"
   event << "Total User Count: #{event.bot.users.count}"
-  event << 'Uptime: %d days, %d hours, %d minutes and %d seconds' % [dd, hh, mm, ss]
+  event << format('Uptime: %d days, %d hours, %d minutes and %d seconds', dd, hh, mm, ss)
 end
 
 # RIP Command
@@ -147,7 +147,8 @@ bot.command(:memedb, min_args: 0, max_args: 1) do |event, meme|
   when 'submit'
     event.respond 'You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>'
   else
-    event.respond "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE). Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered, noot, iplayedmyself`"
+    event << "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE)."
+    event << 'Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered, noot, iplayedmyself`'
   end
 end
 
@@ -198,7 +199,7 @@ end
 bot.command(:eval) do |event, *code|
   break unless event.user.id == CONFIG['owner_id']
   begin
-    event.respond (eval code.join(' ')).to_s
+    event.respond eval code.join(' ')
   rescue => e
     event.respond "Well, excuse me, mr nobrain, cant even eval correctly smh. THE ERROR: ```#{e}```"
   end
@@ -249,7 +250,7 @@ bot.command(:cat) do |event|
 end
 
 bot.command(:catfact) do |event|
-  event.respond (JSON.parse(RestClient.get('https://catfact.ninja/fact'))['fact']).to_s
+  event.respond JSON.parse(RestClient.get('https://catfact.ninja/fact'))['fact']
 end
 
 bot.command(:info, min_args: 0, max_args: 1) do |event, com|
@@ -342,7 +343,7 @@ bot.server_delete do |event|
 end
 
 bot.command(:trbmb) do |event|
-  event.respond JSON.parse(RestClient.get("http://api.chew.pro/trbmb"))[0]
+  event.respond JSON.parse(RestClient.get('http://api.chew.pro/trbmb'))[0]
 end
 
 puts 'Bot is ready!'
