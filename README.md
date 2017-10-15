@@ -6,11 +6,11 @@ Check out my IRC Bot: [ChewbotccaIRC](http://github.com/Chewbotcca/IRC)
 
 [![Build Status](https://travis-ci.org/Chewsterchew/Chewbotcca.svg?branch=master)](https://travis-ci.org/Chewsterchew/Chewbotcca)
 
-![Discord](https://discordapp.com/api/guilds/134445052805120001/widget.png)
+[![Discord](https://discordapp.com/api/guilds/134445052805120001/widget.png)](https://discord.gg/0kYlxgkh65QhZAjm)
 
 Chewbotcca is a discord bot written with discordrb.
 
-The help server is available here: ![Discord](https://discordapp.com/api/guilds/134445052805120001/widget.png)
+The help server is available here: [![Discord](https://discordapp.com/api/guilds/134445052805120001/widget.png)](https://discord.gg/0kYlxgkh65QhZAjm)
 
 Command list can be found with `%^help`, use `%^info command` to find more info.
 
