@@ -1,5 +1,23 @@
 Metrics/LineLength:
-  Max: 200
+  Max: 356
 
 Security/Eval:
   Enabled: false
+
+MethodLength:
+  Enabled: false
+
+Lint/RescueWithoutErrorClass:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: 2.4.1
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 80
+
+AllCops:
+  DisplayCopNames: true
