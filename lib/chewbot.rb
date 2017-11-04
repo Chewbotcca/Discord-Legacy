@@ -60,7 +60,7 @@ bot.command(:restart, min_args: 1, max_args: 1) do |event, task|
 end
 
 # Help Command
-bot.command([:help, :commands]) do |event|
+bot.command(%i[help commands]) do |event|
   event.respond 'You can find all my commands here: https://chew.pro/Chewbotcca/commands'
 end
 
@@ -163,7 +163,7 @@ bot.command(:mcavatar, min_args: 1, max_args: 1) do |event, mcuser|
 end
 
 # Info
-bot.command([:sinfo, :serverinfo]) do |event|
+bot.command(%i[sinfo serverinfo]) do |event|
   event << 'Server Stats:'
   event << ''
   event << 'Basic Info:'
@@ -184,7 +184,7 @@ bot.command([:sinfo, :serverinfo]) do |event|
   event << "Count: #{event.server.roles.count}"
 end
 
-bot.command([:uinfo, :userinfo]) do |event|
+bot.command(%i[uinfo userinfo]) do |event|
   event << 'User Info:'
   event << ''
   event << "Name\#Discrim: #{event.user.name}\##{event.user.discrim}"
