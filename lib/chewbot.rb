@@ -81,7 +81,7 @@ end
 
 # Invite Command
 bot.command :invite do |event|
-  event.user.pm('Hello! Invite me to your server here: http://bit.ly/Chewbotcca')
+  event.respond 'Hello! Invite me to your server here: http://bit.ly/Chewbotcca'
 end
 
 # NameMC Command
@@ -98,7 +98,7 @@ bot.command :stats do |event|
   event << 'Chewbotcca - A basic, yet functioning, discord bot.'
   event << 'Author: Chew#6216 [116013677060161545]'
   event << 'Code: <http://github.com/Chewsterchew/Chewbotcca>'
-  event << 'Bot Version: Beta 1.2.1'
+  event << 'Bot Version: beta 1.2.2'
   event << 'Library: discordrb 3.2.1'
   event << "Server Count: #{event.bot.servers.count}"
   event << "Total User Count: #{event.bot.users.count}"
