@@ -17,7 +17,7 @@ Starttime = Time.now
 
 Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each { |file| require file }
 
-Commands = [Restart, Help, Ping, Rate, Invite, NameMC, Stats, Rip, MemeDB, Namecheap, MCavatar, ServerInfo, UserInfo, Eval, Shoo, Connect, Songs, Play, Cat, Catfact, TRBMB, Info]
+Commands = [Restart, Help, Ping, Rate, Invite, NameMC, Stats, Rip, MemeDB, Namecheap, MCavatar, ServerInfo, UserInfo, Eval, Shoo, Connect, Songs, Play, Cat, Catfact, TRBMB, Info].freeze
 
 Commands.each do |command|
   bot.include! command
