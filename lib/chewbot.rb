@@ -24,10 +24,6 @@ Commands.each do |command|
   puts "Command #{command} successfully loaded!"
 end
 
-bot.ready do |event|
-  event.bot.game = "on #{event.bot.servers.count} servers | %^help"
-end
-
 bot.server_create do |event|
   event.bot.game = "on #{event.bot.servers.count} servers | %^help"
 end
