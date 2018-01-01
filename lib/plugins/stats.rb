@@ -8,8 +8,8 @@ module Stats
     dd, hh = hh.divmod(24)
     event << 'Chewbotcca - A basic, yet functioning, discord bot.'
     event << 'Author: Chew#6216 [116013677060161545]'
-    event << 'Code: <http://github.com/Chewsterchew/Chewbotcca>'
-    event << 'Bot Version: beta 1.2.2'
+    event << 'Code: <http://github.com/Chewbotcca/Discord>'
+    event << 'Bot Version: 1.0.0'
     event << 'Library: discordrb 3.2.1'
     event << "Server Count: #{event.bot.servers.count}"
     event << "Total User Count: #{event.bot.users.count}"
