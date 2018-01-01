@@ -2,7 +2,7 @@ module Stats
   extend Discordrb::Commands::CommandContainer
 
   command :stats do |event|
-    t = Time.now - starttime
+    t = Time.now - Starttime
     mm, ss = t.divmod(60)
     hh, mm = mm.divmod(60)
     dd, hh = hh.divmod(24)
