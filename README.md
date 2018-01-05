@@ -20,7 +20,7 @@ I will update this as we get along, but currently Chewbotcca is really lame. I'm
 
 Add the bot to your server with: http://bit.ly/Chewbotcca
 
-Check out Chewbotca on [bots.discord.pw](https://bots.discord.pw/bots/200052560399171584) and [discordbots.org](https://discordbots.org/bot/200052560399171584)
+Check out Chewbotcca on [bots.discord.pw](https://bots.discord.pw/bots/200052560399171584) and [discordbots.org](https://discordbots.org/bot/200052560399171584)
 
 ## Poorly Written Installation Guide
 
