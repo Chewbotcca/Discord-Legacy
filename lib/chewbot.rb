@@ -17,7 +17,7 @@ Starttime = Time.now
 
 Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each { |file| require file }
 
-Commands = [Restart, Help, Ping, Rate, Invite, NameMC, Stats, Rip, MemeDB, Namecheap, MCavatar, ServerInfo, UserInfo, Eval, Shoo, Connect, Songs, Play, Cat, Catfact, TRBMB, Info].freeze
+Commands = [Restart, Help, Ping, Rate, Invite, NameMC, Stats, Rip, MemeDB, Namecheap, MCavatar, ServerInfo, UserInfo, Eval, Shoo, Songs, Play, Cat, Catfact, TRBMB, Info].freeze
 
 Commands.each do |command|
   bot.include! command
@@ -30,6 +30,13 @@ end
 
 bot.server_delete do |event|
   event.bot.game = "on #{event.bot.servers.count} servers | %^help"
+end
+
+bot.command(:connect) do |event|
+  channel = event.user.voice_channel
+  next "You're not in any voice channel!" unless channel
+  bot.voice_connect(channel)
+  "Connected to voice channel: #{channel.name}."
 end
 
 puts 'Bot is ready!'
