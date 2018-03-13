@@ -40,6 +40,7 @@ bot.command(:connect) do |event|
 end
 
 bot.ready do |event|
+  sleep 10
   bot.game = "on #{event.bot.servers.count} servers | %^help"
 end
 
