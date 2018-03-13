@@ -4,9 +4,19 @@ module Eval
   command(:eval) do |event, *code|
     break unless event.user.id == CONFIG['owner_id']
     begin
-      event.respond eval code.join(' ')
-    rescue => e
-      event.respond "Well, excuse me, mr nobrain, cant even eval correctly smh. THE ERROR: ```#{e}```"
+      event.channel.send_embed do |e|
+        e.title = '**Evaluated Successfully**'
+
+        e.description = eval code.join(' ')
+        e.color = '00FF00'
+      end
+    rescue StandardError => f
+      event.channel.send_embed do |e|
+        e.title = '**Evaluation Failed!**'
+
+        e.description = f.to_s
+        e.color = 'FF0000'
+      end
     end
   end
 end
