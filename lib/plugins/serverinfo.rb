@@ -2,23 +2,20 @@ module ServerInfo
   extend Discordrb::Commands::CommandContainer
 
   command(%i[sinfo serverinfo]) do |event|
-    event << 'Server Stats:'
-    event << ''
-    event << 'Basic Info:'
-    event << "Server Name: #{event.server.name}"
-    event << "Server ID: #{event.server.id}"
-    event << "Server Region: #{event.server.region}"
-    event << "Server Owner: #{event.server.owner.name}\##{event.server.owner.discrim}"
-    event << ''
-    event << 'Members:'
-    event << "Total Member Count: #{event.server.members.count}"
-    event << ''
-    event << 'Channels:'
-    event << "Total Channel Count: #{event.server.channels.count}"
-    event << "Text Channels: #{event.server.text_channels.count}"
-    event << "Voice Channels: #{event.server.voice_channels.count}"
-    event << ''
-    event << 'Roles:'
-    event << "Count: #{event.server.roles.count}"
+
+    event.channel.send_embed do |e|
+      e.title = "Server Information"
+
+      e.add_field(name: 'Server Name:', value: event.server.name, inline: true)
+      e.add_field(name: 'Server ID:', value: event.server.id, inline: true)
+      e.add_field(name: 'Server Region:', value: event.server.region, inline: true)
+      e.add_field(name: 'Server Owner', value: "#{event.server.owner.name}\##{event.server.owner.discrim}", inline: true)
+      e.add_field(name: 'Member Count:', value: event.server.members.count, inline: true)
+      e.add_field(name: 'Total Channel Count', value: event.server.channels.count, inline: true)
+      e.add_field(name: 'Text Channels', value: event.server.text_channels.count, inline: true)
+      e.add_field(name: 'Voice Channels', value: event.server.voice_channels.count, inline: true)
+      e.add_field(name: 'Roles', value: event.server.roles.count, inline: true)
+      e.color = '00FF00'
+    end
   end
 end
