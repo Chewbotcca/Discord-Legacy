@@ -39,5 +39,9 @@ bot.command(:connect) do |event|
   "Connected to voice channel: #{channel.name}."
 end
 
+bot.ready do |event|
+  bot.game = "on #{event.bot.servers.count} servers | %^help"
+end
+
 puts 'Bot is ready!'
 bot.run
