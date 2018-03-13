@@ -2,13 +2,16 @@ module UserInfo
   extend Discordrb::Commands::CommandContainer
 
   command(%i[uinfo userinfo]) do |event|
-    event << 'User Info:'
-    event << ''
-    event << "Name\#Discrim: #{event.user.name}\##{event.user.discrim}"
-    event << "User ID: #{event.user.id}"
-    event << "Status: ``#{event.user.status}``"
-    event << "User Nickname: `#{event.user.nick}`" unless event.user.nick.nil?
-    event << "Currently Playing: `#{event.user.game}`" unless event.user.game.nil?
-    event << "Your Avatar: https://cdn.discordapp.com/avatars/#{event.user.id}/#{event.user.avatar_id}.webp?size=1024"
+    event.channel.send_embed do |e|
+      e.title = "User Info for <@#{event.user.id}>"
+      e.thumbnail = { url: "https://cdn.discordapp.com/avatars/#{event.user.id}/#{event.user.avatar_id}.webp?size=1024".to_s }
+
+      e.add_field(name: 'Name#Discrim', value: "#{event.user.name}\##{event.user.discrim}", inline: true)
+      e.add_field(name: 'User ID:', value: event.user.id, inline: true)
+      e.add_field(name: 'Status', value: event.user.status, inline: true)
+      e.add_field(name: 'Nickname', value: event.user.nick, inline: true) unless event.user.nick.nil?
+      e.add_field(name: 'Currently Playing:', value: event.user.game, inline: true) unless event.user.game.nil?
+      e.color = '00FF00'
+    end
   end
 end
