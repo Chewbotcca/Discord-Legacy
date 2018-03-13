@@ -3,7 +3,7 @@ module UserInfo
 
   command(%i[uinfo userinfo]) do |event|
     event.channel.send_embed do |e|
-      e.title = "User Info for <@#{event.user.id}>"
+      e.title = "User Info for you!"
       e.thumbnail = { url: "https://cdn.discordapp.com/avatars/#{event.user.id}/#{event.user.avatar_id}.webp?size=1024".to_s }
 
       e.add_field(name: 'Name#Discrim', value: "#{event.user.name}\##{event.user.discrim}", inline: true)
