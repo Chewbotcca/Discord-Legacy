@@ -1,8 +1,2 @@
-title: Chewbotcca
-description: a bot that i dont update?
-google_analytics: 
-show_downloads: true
-theme: jekyll-theme-cayman
-
-gems:
-  - jekyll-mentions
+title:       Chewbotcca
+description: A bot for discord, offering many features.
