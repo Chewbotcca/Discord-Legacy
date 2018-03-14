@@ -17,9 +17,11 @@ Starttime = Time.now
 
 Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each { |file| require file }
 
-Commands = [Restart, Help, Ping, Rate, Invite, NameMC, Stats, Rip, MemeDB, Namecheap, MCavatar, ServerInfo, UserInfo, Eval, Shoo, Songs, Play, Cat, Catfact, TRBMB, Info].freeze
-
-Commands.each do |command|
+Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each do |wow|
+  bob = File.readlines(wow) { |line| line.split.map(&:to_s).join }
+  command = bob[0][7..bob[0].length]
+  command.delete!("\n")
+  command = Object.const_get(command)
   bot.include! command
   puts "Command #{command} successfully loaded!"
 end
