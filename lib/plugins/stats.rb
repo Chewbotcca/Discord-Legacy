@@ -25,8 +25,8 @@ module Stats
     event.channel.send_embed do |e|
       e.title = 'Chewbotcca - A basic, yet functioning, discord bot'
 
-      e.add_field(name: 'Author', value: "Chew#0001\n[116013677060161545]", inline: true)
-      e.add_field(name: 'Code', value: '<http://github.com/Chewbotcca/Discord>', inline: true)
+      e.add_field(name: 'Author', value: '<@116013677060161545>', inline: true)
+      e.add_field(name: 'Code', value: '[View code on GitHub](http://github.com/Chewbotcca/Discord)', inline: true)
       e.add_field(name: 'Bot Version', value: botversion, inline: true) unless botversion == ''
       e.add_field(name: 'Library', value: 'discordrb 3.2.1', inline: true)
       e.add_field(name: 'Uptime', value: "#{days}#{hours}#{mins}#{secs}", inline: true)
