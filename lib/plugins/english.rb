@@ -25,7 +25,7 @@ module English
 
       e.add_field(name: 'Definition', value: definition, inline: false)
       e.add_field(name: 'Author', value: author, inline: true)
-      e.add_field(name: 'Rating', value: "**#{up} 👍 - **#{down}** 👎 (**#{ratio}%**)", inline: true)
+      e.add_field(name: 'Rating', value: "**#{up}** 👍 - **#{down}** 👎 (**#{ratio}%**)", inline: true)
       e.add_field(name: 'Example', value: example, inline: false)
       e.add_field(name: 'URL', value: url, inline: false)
       e.color = '00FF00'
