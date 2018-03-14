@@ -1,0 +1,92 @@
+#findblocks {
+  background-image: url('https://www.w3schools.com/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#blocks {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#blocks th, #blocks td {
+  text-align: left;
+  padding: 12px;
+}
+
+#block tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.btn {
+  position: relative;
+}
+
+.sub-menu {
+  visibility: hidden;
+  /* hides sub-menu */
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: auto;
+  transform: translateY(-2em);
+  z-index: -1;
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+}
+
+.btn:hover .sub-menu {
+  visibility: visible;
+  /* shows sub-menu */
+  opacity: 1;
+  z-index: 1;
+  width: auto;
+  transform: translateY(0%);
+  transition-delay: 0s, 0s, 0.3s;
+  /* this removes the transition delay so the menu will be visible while the other styles transition */
+}
+
+
+/* presentational */
+
+nav a {
+  color: #E00;
+  display: block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #F55;
+}
+
+nav ul, nav ul li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav>ul {
+  background: #EEE;
+  text-align: center;
+}
+
+nav>ul>li {
+  display: inline-block;
+  border-left: solid 1px #aaa;
+}
+
+nav>ul>li:first-child {
+  border-left: none;
+}
+
+.sub-menu {
+  background: #666;
+}
