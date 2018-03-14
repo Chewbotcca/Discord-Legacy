@@ -23,7 +23,7 @@ Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each do |wow|
   command.delete!("\n")
   command = Object.const_get(command)
   bot.include! command
-  puts "Command #{command} successfully loaded!"
+  puts "Plugin #{command} successfully loaded!"
 end
 
 bot.server_create do |event|
