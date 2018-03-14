@@ -10,4 +10,8 @@ module Cat
               end
     event.respond "#{['Aww!', 'Adorable.'].sample} #{showcat}"
   end
+
+  command(:catfact) do |event|
+    event.respond JSON.parse(RestClient.get('https://catfact.ninja/fact'))['fact']
+  end
 end
