@@ -7,7 +7,7 @@ Security/Eval:
 MethodLength:
   Enabled: false
 
-Lint/RescueWithoutErrorClass:
+Style/RescueStandardError:
   Enabled: false
 
 AllCops:
