@@ -2,9 +2,8 @@ module ServerInfo
   extend Discordrb::Commands::CommandContainer
 
   command(%i[sinfo serverinfo]) do |event|
-
     event.channel.send_embed do |e|
-      e.title = "Server Information"
+      e.title = 'Server Information'
 
       e.add_field(name: 'Server Name:', value: event.server.name, inline: true)
       e.add_field(name: 'Server ID:', value: event.server.id, inline: true)

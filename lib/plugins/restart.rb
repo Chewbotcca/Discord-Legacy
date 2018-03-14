@@ -11,9 +11,7 @@ module Restart
       event << '`pushonly` - Pushes code (must `git add` and `git commit`)'
     end
     if event.user.id == CONFIG['owner_id']
-      if CONFIG['os'] == 'Windows'
-        event.respond 'Restarting not supported on Windows!'
-      end
+      event.respond 'Restarting not supported on Windows!' if CONFIG['os'] == 'Windows'
       if CONFIG['os'] == ('Mac' || 'Linux')
         if task == 'update'
           begin

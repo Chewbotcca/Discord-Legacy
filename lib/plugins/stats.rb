@@ -8,7 +8,7 @@ module Stats
     dd, hh = hh.divmod(24)
 
     event.channel.send_embed do |e|
-      e.title = "Chewbotcca - A basic, yet functioning, discord bot"
+      e.title = 'Chewbotcca - A basic, yet functioning, discord bot'
 
       e.add_field(name: 'Author', value: "Chew#0001\n[116013677060161545]", inline: true)
       e.add_field(name: 'Code', value: '<http://github.com/Chewbotcca/Discord>', inline: true)
