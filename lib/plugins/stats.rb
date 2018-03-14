@@ -7,12 +7,23 @@ module Stats
     hh, mm = mm.divmod(60)
     dd, hh = hh.divmod(24)
 
+    commits = `git rev-list master | wc -l`.to_i
+    version = `git describe --abbrev=0 --tags`.to_s
+
+    botversion = if commits.zero? && version.zero?
+                   ''
+                 elsif version.to_i > 0 && commits.zero?
+                   version
+                 else
+                   "#{version} (Commit: #{commits})"
+                 end
+
     event.channel.send_embed do |e|
       e.title = 'Chewbotcca - A basic, yet functioning, discord bot'
 
       e.add_field(name: 'Author', value: "Chew#0001\n[116013677060161545]", inline: true)
       e.add_field(name: 'Code', value: '<http://github.com/Chewbotcca/Discord>', inline: true)
-      e.add_field(name: 'Bot Version', value: '1.0.0', inline: true)
+      e.add_field(name: 'Bot Version', value: botversion, inline: true) unless botversion == ''
       e.add_field(name: 'Library', value: 'discordrb 3.2.1', inline: true)
       e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
       e.add_field(name: 'Total User Count', value: event.bot.users.count, inline: true)
