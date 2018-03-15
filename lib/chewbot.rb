@@ -30,10 +30,14 @@ puts 'Done loading plugins! Finalizing start-up'
 
 bot.server_create do |event|
   event.bot.game = "on #{event.bot.servers.count} servers | %^help"
+  RestClient.post("https://discordbots.org/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count + '}', :Authorization => CONFIG['dbotsorg'], :'Content-Type' => :json)
+  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json)
 end
 
 bot.server_delete do |event|
   event.bot.game = "on #{event.bot.servers.count} servers | %^help"
+  RestClient.post("https://discordbots.org/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count + '}', :Authorization => CONFIG['dbotsorg'], :'Content-Type' => :json)
+  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json)
 end
 
 bot.command(:connect) do |event|
@@ -46,6 +50,8 @@ end
 bot.ready do |event|
   sleep 10
   bot.game = "on #{event.bot.servers.count} servers | %^help"
+  RestClient.post("https://discordbots.org/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count + '}', :Authorization => CONFIG['dbotsorg'], :'Content-Type' => :json)
+  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json)
 end
 
 puts 'Bot is ready!'
