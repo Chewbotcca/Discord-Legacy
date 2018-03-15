@@ -8,5 +8,3 @@ token: insert_token
 client_id: insert_clientid
 # Your ID (Optional, for owner commands)
 owner_id: insert_ownerid
-# Your Operating System (Used for restart) Possible Choices: Mac, Windows, Linux
-os: os
