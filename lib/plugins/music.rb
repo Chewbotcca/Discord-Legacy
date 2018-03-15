@@ -1,5 +1,10 @@
-module Play
+module Music
   extend Discordrb::Commands::CommandContainer
+
+  command(:songs) do |event|
+    event << 'Use `%^play [song]` to select a song. YOU CANNOT QUEUE A RANDOM URL (yet), MUST BE FROM THIS DIRCTORY'
+    event << '```mrcena, rickroll, wearenum1```'
+  end
 
   command(:play) do |event, song|
     song.downcase!
