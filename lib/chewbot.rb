@@ -11,7 +11,7 @@ puts 'Config loaded from file'
 
 bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: CONFIG['client_id'], prefix: ["<@#{CONFIG['client_id']}> ", '%^']
 
-puts 'Initial Startup complete, loading all commands...'
+puts 'Initial Startup complete, loading all plugins...'
 
 Starttime = Time.now
 
@@ -25,6 +25,8 @@ Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each do |wow|
   bot.include! command
   puts "Plugin #{command} successfully loaded!"
 end
+
+puts 'Done loading plugins! Finalizing start-up'
 
 bot.server_create do |event|
   event.bot.game = "on #{event.bot.servers.count} servers | %^help"
