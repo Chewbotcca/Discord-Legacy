@@ -1,7 +1,3 @@
-# AD TIME
-
-Check out my IRC Bot: [ChewbotccaIRC](http://github.com/Chewbotcca/IRC)
-
 # Chewbotcca
 
 [![Build Status](https://travis-ci.org/Chewbotcca/Discord.svg?branch=master)](https://travis-ci.org/Chewbotcca/Discord)
