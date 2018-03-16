@@ -1,7 +1,7 @@
 module English
   extend Discordrb::Commands::CommandContainer
 
-  command(:urban, min_args: 1, max_args: 1) do |event, word|
+  command(:urban, min_args: 1) do |event, word|
     parse = JSON.parse(RestClient.get("http://api.urbandictionary.com/v0/define?term=#{word}"))
     if parse['result_type'].to_s == 'no_results'
       event.respond "No results found for term #{Format(:bold, word)}!"
