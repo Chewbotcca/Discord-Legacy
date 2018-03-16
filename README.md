@@ -23,7 +23,7 @@ Check out Chewbotcca on [bots.discord.pw](https://bots.discord.pw/bots/200052560
 
 I'd rather you not run your own instance of Chewbotcca, just add the bot to your server, but if you insist...
 
-Requirements: Git and Bundler Gem. This is not the install guide for either of these so google it yourself you lazy bum.
+Requirements: Git and Bundler Gem. This is not the install guide for either of these so duckduckgo it yourself you lazy bum.
 
 1) Get the files: `git clone https://github.com/Chewbotcca/Discord.git`
 
