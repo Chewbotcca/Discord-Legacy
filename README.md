@@ -9,6 +9,7 @@ Check out my IRC Bot: [ChewbotccaIRC](http://github.com/Chewbotcca/IRC)
 [![Discord Bots](https://discordbots.org/api/widget/200052560399171584.svg)](https://discordbots.org/bot/200052560399171584)
 
 [![Discord](https://discordapp.com/api/guilds/134445052805120001/embed.png?style=banner3)](https://discord.gg/0kYlxgkh65QhZAjm)
+[![Discord Server](https://discordapp.com/api/guilds/200388197396512768/embed.png?style=banner3)](https://discord.gg/https://discord.gg/Q8TazNz)
 
 Chewbotcca is a discord bot written with discordrb.
 
