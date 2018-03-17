@@ -53,4 +53,12 @@ module Restart
     sleep 3
     exit
   end
+
+  command(:new) do |event|
+    event.channel.send_embed do |e|
+      e.title = 'Top 10 most recent changes (via git)'
+      e.color = '00FF00'
+      e.description = `git log master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -10`.to_s
+    end
+  end
 end
