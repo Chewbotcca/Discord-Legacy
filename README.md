@@ -21,7 +21,7 @@ Check out Chewbotcca on [bots.discord.pw](https://bots.discord.pw/bots/200052560
 
 ## Poorly Written Installation Guide
 
-I'd rather you not run your own instance of Chewbotcca, just add the bot to your server, but if you insist...
+I'd rather you not run your own instance of Chewbotcca, just [add the bot to your server](http://bit.ly/Chewbotcca), but if you insist...
 
 Requirements: Git and Bundler Gem. This is not the install guide for either of these so duckduckgo it yourself you lazy bum.
 
@@ -29,26 +29,16 @@ Requirements: Git and Bundler Gem. This is not the install guide for either of t
 
 2) GO TO THE DIRECTORY: `cd Discord`
 
-3) Install the gems: `bundle install`
+3) Run `ruby setup.rb`
 
-4) Get your token, bot id, and your id and throw it into the config, also the OS.
-
-5) Rename the config to config.yaml
-
-6) `ruby chewbot.rb`
+4) `ruby chewbot.rb`
 
 Or if you like that copy-paste thing:
 
 ```
 git clone https://github.com/Chewbotcca/Discord.git
 cd Discord
-bundle install
-```
-
-(get the token and stuff)
-
-```
-ruby run.rb
+ruby setup.rb
 ```
 
 Something didn't work? Cool beans.
