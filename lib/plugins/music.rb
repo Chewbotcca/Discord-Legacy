@@ -19,4 +19,11 @@ module Music
       event.respond 'Song doesnt exist in the database! Check database with `%^songs`'
     end
   end
+
+  command(:connect) do |event|
+    channel = event.user.voice_channel
+    next "You're not in any voice channel!" unless channel
+    Bot.voice_connect(channel)
+    "Connected to voice channel: #{channel.name}."
+  end
 end

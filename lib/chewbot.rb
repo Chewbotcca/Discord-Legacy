@@ -40,13 +40,6 @@ Bot.server_delete do |event|
   RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json) unless CONFIG['dbotspw'].nil?
 end
 
-Bot.command(:connect) do |event|
-  channel = event.user.voice_channel
-  next "You're not in any voice channel!" unless channel
-  Bot.voice_connect(channel)
-  "Connected to voice channel: #{channel.name}."
-end
-
 Bot.ready do |event|
   sleep 10
   Bot.game = "on #{event.bot.servers.count} servers | %^help"
