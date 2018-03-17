@@ -5,27 +5,31 @@ For now I just wanted a simple list of commands to keep updated easier than rest
 <input type="text" id="findblocks" onkeyup="lookWords()" placeholder="Search for Commands..">
 
 {:#blocks}
-| Command     | Description                                                                                             |
-| ----------- | ------------------------------------------------------------------------------------------------------- |
-| %^restart   | Restarts the bot. **Bot Owners Only**                                                                   |
-| %^help      | Shows a list of commands.                                                                               |
-| %^ping      | Replies with "Pong!"                                                                                    |
-| %^rate      | Rate something /10.                                                                                     |
-| %^invite    | Shows a link to invite Chewbotcca to your server and a discord invite link to the help server.          |
-| %^namemc    | Shows a link to search results for a response, or if there''s one result, will show detailed info.      |
-| %^stats     | Shows basic stats for Chewbotcca.                                                                       |
-| %^rip       | Makes someone or something rip. No spaces, letters and numbers only.                                    |
-| %^memedb    | It's the meme database, What more do you need??                                                         |
-| %^namecheap | Searches namecheap.com for a domain name. No spaces or special characters, just a normal domain search. |
-| %^mcavatar  | Shows a mcavatar for the specified user.                                                                |
-| %^sinfo     | Shows basic stats for the server.                                                                       |
-| %^uinfo     | Shows basic stats for the user.                                                                         |
-| %^eval      | Evaluate expressions in ruby. **Requires Bot Owner in config**                                          |
-| %^shoo      | Kills the bot, no restart. See `%^restart`                                                              |
-| %^connect   | Makes the bot connect to your voice channel.                                                            |
-| %^songs     | Lists `%^play`able songs.                                                                               |
-| %^play      | Plays a song from the database.                                                                         |
-| %^cat       | Shows a random cat. meow.                                                                               |
-| %^catfact   | Shows a catfact                                                                                         |
-| %^info      | Type in a command (NO PREFIX) and it will give info on the command.                                     |
-| %^trbmb     | That really blanks my blank.                                                                            |
+| Plugin     | Command     | Arguments                 | Aliases      | Description                                                                                             |
+| ---------- | ----------- | ------------------------- | ------------ | ------------------------------------------------------------------------------------------------------- |
+| Cat        | %^cat       | None                      | None         | Shows a random cat. meow.                                                                               |
+| Cat        | %^catfact   | None                      | None         | Shows a catfact                                                                                         |
+| English    | %^urban     | Word to define            | None         | Defines a word using urban dictionary                                                                   |
+| Eval       | %^eval      | Expression to eval        | None         | Evaluate expressions in ruby. **Requires Bot Owner**                                                    |
+| Help       | %^help      | None                      | %^commands   | Shows a link to a list of commands.                                                                     |
+| Info       | %^info      | Command                   | None         | Type in a command (NO PREFIX) and it will give info on the command.                                     |
+| Invite     | %^invite    | None                      | None         | Shows a link to invite Chewbotcca to your server and a discord invite link to the help server.          |
+| MemeDB     | %^memedb    | Meme to find              | None         | It's the meme database, What more do you need??                                                         |
+| Minecraft  | %^namemc    | Name to look up           | None         | Shows a link to search results for a response, or if there''s one result, will show detailed info.      |
+| Minecraft  | %^mcavatar  | MC Username               | None         | Shows a mcavatar for the specified user.                                                                |
+| Minecraft  | %^mcstatus  | None                      | None         | Shows Minecraft Statuses                                                                                |
+| Music      | %^songs     | None                      | None         | Lists `%^play`able songs.                                                                               |
+| Music      | %^play      | Song to play              | None         | Plays a song from the database.                                                                         |
+| Music      | %^connect   | None                      | None         | Makes the bot connect to your voice channel.                                                            |
+| Namecheap  | %^namecheap | URL to look up            | None         | Searches namecheap.com for a domain name. No spaces or special characters, just a normal domain search. |
+| Ping       | %^ping      | noedit if no edit         | None         | Replies with "Pong!"                                                                                    |
+| Rate       | %^rate      | Your rating               | None         | Rate something /10.                                                                                     |
+| Restart    | %^restart   | None                      | None         | Restarts the bot. **Bot Owner Only**                                                                    |
+| Restart    | %^update    | None                      | None         | Updates the bot. **Bot Owner Only**                                                                     |
+| Restart    | %^updates   | None                      | None         | Returns bot version and status. **Bot Owner Only.. Kinda**                                              |
+| Restart    | %^shoo      | None                      | None         | Kills the bot. Bye! **Bot Owner Only**                                                                  |
+| Rip        | %^rip       | Person to rip             | None         | Makes someone or something rip. No spaces, letters and numbers only.                                    |
+| ServerInfo | %^sinfo     | None                      | %^serverinfo | Shows basic stats for the server.                                                                       |
+| Stats      | %^stats     | None                      | None         | Shows basic stats for Chewbotcca.                                                                       |
+| TRBMB      | %^trbmb     | None                      | None         | Generates a TRBMB quote. Based on [TRBMB Gen](http://trbmb.chew.pw)                                     |
+| UserInfo   | %^uinfo     | Mention a user (optional) | %^userinfo   | Shows basic stats for a user.                                                                           |
