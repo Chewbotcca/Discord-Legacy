@@ -4,3 +4,12 @@ rvm:
 script:
  - rubocop
 install: gem install rubocop -v 0.53.0
+notifications:
+  webhooks:
+    urls:
+      - https://hooks.zapier.com/hooks/catch/2344678/kslj4h/
+    on_success: always
+    on_failure: always
+    on_start: always
+    on_cancel: always
+    on_error: always
