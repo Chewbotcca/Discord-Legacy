@@ -15,7 +15,7 @@ module MemeDB
     elsif meme == 'submit'
       event.respond 'You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>'
     else
-      event.respond "http://chewbotcca.co/memedb/#{meme}#{prefix}"
+      event.respond "https://chewbotcca.co/memedb/#{meme}#{prefix}"
     end
   end
 end
