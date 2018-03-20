@@ -5,7 +5,7 @@ module ServerInfo
     event.channel.send_embed do |e|
       e.title = 'Server Information'
 
-      e.thumbnail = { url: "https://cdn.discordapp.com/icons/#{event.server.id}/#{event.server.icon_id}.png?size=1024".to_s }
+      e.thumbnail = { url: event.server.icon_url.to_s }
 
       e.add_field(name: 'Server Name:', value: event.server.name, inline: true)
       e.add_field(name: 'Server ID:', value: event.server.id, inline: true)
