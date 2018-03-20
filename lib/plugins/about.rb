@@ -1,7 +1,24 @@
-module Stats
+module About
   extend Discordrb::Commands::CommandContainer
 
-  command :stats do |event|
+  command(%i[help commands]) do |event|
+    event.respond 'You can find all my commands here: <https://discord.chewbotcca.co/commands>'
+  end
+
+  command(:ping, min_args: 0, max_args: 1) do |event, noedit|
+    if noedit == 'noedit'
+      event.respond "Pong! Time taken: #{((Time.now - event.timestamp) * 1000).to_i} milliseconds."
+    else
+      m = event.respond('Pinging...')
+      m.edit "Pong! Time taken: #{((Time.now - event.timestamp) * 1000).to_i} milliseconds."
+    end
+  end
+
+  command(:invite) do |event|
+    event.respond 'Hello! Invite me to your server here: <http://bit.ly/Chewbotcca>. Join the help server here: https://discord.gg/Q8TazNz'
+  end
+
+  command(:stats) do |event|
     t = Time.now - Starttime
     mm, ss = t.divmod(60)
     hh, mm = mm.divmod(60)
