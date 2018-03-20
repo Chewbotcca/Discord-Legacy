@@ -27,3 +27,15 @@ Style/Documentation:
 
 Style/FormatStringToken:
   Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Lint/UriEscapeUnescape:
+  Enabled: false
