@@ -1,4 +1,4 @@
-module Music
+module MusicPlayer
   extend Discordrb::Commands::CommandContainer
 
   command(:songs) do |event|
