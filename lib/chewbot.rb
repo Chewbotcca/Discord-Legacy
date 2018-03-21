@@ -9,7 +9,7 @@ puts 'All dependicies loaded'
 CONFIG = YAML.load_file('config.yaml')
 puts 'Config loaded from file'
 
-Bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: CONFIG['client_id'], prefix: ["<@#{CONFIG['client_id']}> ", '%^']
+Bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'], client_id: CONFIG['client_id'], prefix: ["<@#{CONFIG['client_id']}> ", CONFIG['prefix']]
 
 puts 'Initial Startup complete, loading all plugins...'
 
