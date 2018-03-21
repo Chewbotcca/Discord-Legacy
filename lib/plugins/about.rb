@@ -2,7 +2,7 @@ module About
   extend Discordrb::Commands::CommandContainer
 
   command(%i[help commands]) do |event|
-    event.respond 'You can find all my commands here: <https://discord.chewbotcca.co/commands>'
+    event.respond 'You can find all my commands here: <https://discord.chewbotcca.co/commands>. Invite me to your server or join my help server with `%^invite`'
   end
 
   command(:ping, min_args: 0, max_args: 1) do |event, noedit|
