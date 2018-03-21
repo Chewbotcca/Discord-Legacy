@@ -39,3 +39,6 @@ Style/GuardClause:
 
 Lint/UriEscapeUnescape:
   Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
