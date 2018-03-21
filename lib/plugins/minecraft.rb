@@ -22,13 +22,17 @@ module Minecraft
       end
     end
 
-    event.channel.send_embed do |e|
-      e.title = 'Minecraft/Mojang Statuses'
+    begin
+      event.channel.send_embed do |e|
+        e.title = 'Minecraft/Mojang Statuses'
 
-      e.add_field(name: 'Working', value: green.join("\n"), inline: true) unless green.length.zero?
-      e.add_field(name: '~Shakey~', value: yellow.join("\n"), inline: true) unless yellow.length.zero?
-      e.add_field(name: 'Down!!', value: red.join("\n"), inline: true) unless red.length.zero?
-      e.color = '00FF00'
+        e.add_field(name: 'Working', value: green.join("\n"), inline: true) unless green.length.zero?
+        e.add_field(name: '~Shakey~', value: yellow.join("\n"), inline: true) unless yellow.length.zero?
+        e.add_field(name: 'Down!!', value: red.join("\n"), inline: true) unless red.length.zero?
+        e.color = '00FF00'
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
     end
   end
 

@@ -31,18 +31,22 @@ module Restart
       break
     end
     if event.user.id == CONFIG['owner_id']
-      event.channel.send_embed do |e|
-        e.title = "You are running Chewbotcca commit #{commits}"
-        if response == commits
-          e.description = 'You are running the latest commit.'
-          e.color = '00FF00'
-        elsif response < commits
-          e.description = "You are running an un-pushed commit! Are you a developer? (Most Recent: #{response})\n**Here are the 5 most recent commits.**\n#{`git log origin/master..master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -5`}"
-          e.color = 'FFFF00'
-        else
-          e.description = "You are #{response - commits} commit(s) behind! Run `%^update` to update.\n**Here are the 5 most recent commits.**\n#{`git log master..origin/master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -5`}"
-          e.color = 'FF0000'
+      begin
+        event.channel.send_embed do |e|
+          e.title = "You are running Chewbotcca commit #{commits}"
+          if response == commits
+            e.description = 'You are running the latest commit.'
+            e.color = '00FF00'
+          elsif response < commits
+            e.description = "You are running an un-pushed commit! Are you a developer? (Most Recent: #{response})\n**Here are the 5 most recent commits.**\n#{`git log origin/master..master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -5`}"
+            e.color = 'FFFF00'
+          else
+            e.description = "You are #{response - commits} commit(s) behind! Run `%^update` to update.\n**Here are the 5 most recent commits.**\n#{`git log master..origin/master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -5`}"
+            e.color = 'FF0000'
+          end
         end
+      rescue Discordrb::Errors::NoPermission
+        event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
       end
     end
   end
@@ -55,10 +59,14 @@ module Restart
   end
 
   command(:new) do |event|
-    event.channel.send_embed do |e|
-      e.title = 'Top 10 most recent changes (via git)'
-      e.color = '00FF00'
-      e.description = `git log master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -10`.to_s
+    begin
+      event.channel.send_embed do |e|
+        e.title = 'Top 10 most recent changes (via git)'
+        e.color = '00FF00'
+        e.description = `git log master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -10`.to_s
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
     end
   end
 end

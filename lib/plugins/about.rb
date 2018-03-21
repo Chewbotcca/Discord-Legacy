@@ -39,17 +39,21 @@ module About
                    "#{version} (Commit: #{commits})"
                  end
 
-    event.channel.send_embed do |e|
-      e.title = 'Chewbotcca - A basic, yet functioning, discord bot'
+    begin
+      event.channel.send_embed do |e|
+        e.title = 'Chewbotcca - A basic, yet functioning, discord bot'
 
-      e.add_field(name: 'Author', value: '<@116013677060161545>', inline: true)
-      e.add_field(name: 'Code', value: '[View code on GitHub](http://github.com/Chewbotcca/Discord)', inline: true)
-      e.add_field(name: 'Bot Version', value: botversion, inline: true) unless botversion == ''
-      e.add_field(name: 'Library', value: 'discordrb 3.2.1', inline: true)
-      e.add_field(name: 'Uptime', value: "#{days}#{hours}#{mins}#{secs}", inline: true)
-      e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
-      e.add_field(name: 'Total User Count', value: event.bot.users.count, inline: true)
-      e.color = '00FF00'
+        e.add_field(name: 'Author', value: '<@116013677060161545>', inline: true)
+        e.add_field(name: 'Code', value: '[View code on GitHub](http://github.com/Chewbotcca/Discord)', inline: true)
+        e.add_field(name: 'Bot Version', value: botversion, inline: true) unless botversion == ''
+        e.add_field(name: 'Library', value: 'discordrb 3.2.1', inline: true)
+        e.add_field(name: 'Uptime', value: "#{days}#{hours}#{mins}#{secs}", inline: true)
+        e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
+        e.add_field(name: 'Total User Count', value: event.bot.users.count, inline: true)
+        e.color = '00FF00'
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
     end
   end
 end

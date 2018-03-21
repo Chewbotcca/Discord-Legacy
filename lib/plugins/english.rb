@@ -19,16 +19,19 @@ module English
     ratio = (up.to_f / total.to_f * 100).round(2).to_s
     word = info['word'].to_s
     url = info['permalink']
+    begin
+      event.channel.send_embed do |e|
+        e.title = "Urban Dictionary defintion for **#{word}**"
 
-    event.channel.send_embed do |e|
-      e.title = "Urban Dictionary defintion for **#{word}**"
-
-      e.add_field(name: 'Definition', value: definition, inline: false)
-      e.add_field(name: 'Author', value: author, inline: true)
-      e.add_field(name: 'Rating', value: "**#{up}** 👍 - **#{down}** 👎 (**#{ratio}%**)", inline: true)
-      e.add_field(name: 'Example', value: example, inline: false)
-      e.add_field(name: 'URL', value: url, inline: false)
-      e.color = '00FF00'
+        e.add_field(name: 'Definition', value: definition, inline: false)
+        e.add_field(name: 'Author', value: author, inline: true)
+        e.add_field(name: 'Rating', value: "**#{up}** 👍 - **#{down}** 👎 (**#{ratio}%**)", inline: true)
+        e.add_field(name: 'Example', value: example, inline: false)
+        e.add_field(name: 'URL', value: url, inline: false)
+        e.color = '00FF00'
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
     end
   end
 end
