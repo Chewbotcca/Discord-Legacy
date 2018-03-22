@@ -32,7 +32,7 @@ module Music
       hours = format('%d hours, ', hh) if hh != 0
       mins = format('%d minutes, ', mm) if mm != 0
       secs = format('%d seconds', ss) if ss != 0
-      timeago = years + days + hours + mins + secs
+      timeago = "#{years}#{days}#{hours}#{mins}#{secs}"
       playing = false
     end
 
