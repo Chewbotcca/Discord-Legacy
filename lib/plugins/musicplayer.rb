@@ -7,7 +7,7 @@ module MusicPlayer
   end
 
   command(:play) do |event, song|
-    song.downcase!
+    song.downcase! unless song.nil?
     case song
     when 'mrcena'
       event.voice.play_file('data/music.mp3')
