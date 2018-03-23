@@ -38,10 +38,10 @@ module Restart
             e.description = 'You are running the latest commit.'
             e.color = '00FF00'
           elsif response < commits
-            e.description = "You are running an un-pushed commit! Are you a developer? (Most Recent: #{response})\n**Here are the 5 most recent commits.**\n#{`git log origin/master..master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -5`}"
+            e.description = "You are running an un-pushed commit! Are you a developer? (Most Recent: #{response})\n**Here are up to 5 most recent commits.**\n#{`git log origin/master..master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -5`}"
             e.color = 'FFFF00'
           else
-            e.description = "You are #{response - commits} commit(s) behind! Run `%^update` to update.\n**Here are the 5 most recent commits.**\n#{`git log master..origin/master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -5`}"
+            e.description = "You are #{response - commits} commit(s) behind! Run `%^update` to update.\n**Here are up to 5 most recent commits.**\n#{`git log master..origin/master --pretty=format:\"[%h](http://github.com/Chewbotcca/Discord/commit/%H) - %s\" -5`}"
             e.color = 'FF0000'
           end
         end
