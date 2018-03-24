@@ -6,17 +6,65 @@ module ServerInfo
       event.channel.send_embed do |e|
         e.title = 'Server Information'
 
-        e.thumbnail = { url: "https://cdn.discordapp.com/icons/#{message.guild.id}/#{message.guild.icon}.png?size=1024".to_s }
+        e.author = { name: event.server.name, icon_url: "https://cdn.discordapp.com/icons/#{event.server.id}/#{event.server.icon_id}.png?size=1024" }
 
-        e.add_field(name: 'Server Name:', value: event.server.name, inline: true)
-        e.add_field(name: 'Server ID', value: event.server.id, inline: true)
-        e.add_field(name: 'Server Region', value: event.server.region, inline: true)
+        e.thumbnail = { url: "https://cdn.discordapp.com/icons/#{event.server.id}/#{event.server.icon_id}.png?size=1024".to_s }
+
         e.add_field(name: 'Server Owner', value: event.server.owner.mention, inline: true)
+        e.add_field(name: 'Server ID', value: event.server.id, inline: true)
+
+        region = if event.server.region == 'vip-amsterdam'
+                   '<:region_amsterdam:426902668871467008> <:vip_region:426902668909477898> Amsterdam'
+                 elsif event.server.region == 'brazil'
+                   '<:region_brazil:426902668561219605> Brazil'
+                 elsif event.server.region == 'eu-central'
+                   '<:region_eu:426902669110673408> Central Europe'
+                 elsif event.server.region == 'hongkong'
+                   '<:region_hongkong:426902668636585985> Hong Kong'
+                 elsif event.server.region == 'japan'
+                   '<:region_japan:426902668578127884> Japan'
+                 elsif event.server.region == 'russia'
+                   '<:region_russia:426902668859015169> Russia'
+                 elsif event.server.region == 'singapore'
+                   '<:region_singapore:426902668951158784> Singapore'
+                 elsif event.server.region == 'sydney'
+                   '<:region_sydney:426902668934643722> Sydney'
+                 elsif event.server.region == 'us-central'
+                   '<:region_us:426902668900827146> US Central'
+                 elsif event.server.region == 'us-east'
+                   '<:region_us:426902668900827146> US East'
+                 elsif event.server.region == 'vip-us-east'
+                   '<:region_us:426902668900827146> <:vip_region:426902668909477898> US East'
+                 elsif event.server.region == 'us-south'
+                   '<:region_us:426902668900827146> US South'
+                 elsif event.server.region == 'us-west'
+                   '<:region_us:426902668900827146> US West'
+                 elsif event.server.region == 'vip-us-west'
+                   '<:region_us:426902668900827146> <:vip_region:426902668909477898> US West'
+                 elsif event.server.region == 'eu-west'
+                   '<:region_eu:426902669110673408> Western Europe'
+                 else
+                   message.guild.region
+                 end
+
+        e.add_field(name: 'Server Region', value: region, inline: true)
         e.add_field(name: 'Member Count', value: event.server.members.count, inline: true)
-        e.add_field(name: 'Total Channel Count', value: event.server.channels.count, inline: true)
-        e.add_field(name: 'Text Channels', value: event.server.text_channels.count, inline: true)
-        e.add_field(name: 'Voice Channels', value: event.server.voice_channels.count, inline: true)
-        e.add_field(name: 'Roles', value: event.server.roles.count, inline: true)
+        e.add_field(name: 'Channel Count', value: [
+          "Total: #{event.server.channels.count}",
+          "Text: #{event.server.text_channels.count}",
+          "Voice: #{event.server.voice_channels.count}",
+          "Categories: #{event.server.channels.count - event.server.text_channels.count - event.server.voice_channels.count}"
+        ].join("\n"), inline: true)
+
+        roles = []
+        event.server.roles.each { |name| roles[roles.length] = name.name }
+        roles -= ['@everyone']
+
+        if roles.length > 50
+          e.add_field(name: "Roles - #{event.server.roles.count}", value: "**(First 50)**: #{roles.join(', ')[0..50]}", inline: true)
+        else
+          e.add_field(name: "Roles - #{event.server.roles.count}", value: roles.join(', ').to_s, inline: true)
+        end
 
         e.color = '00FF00'
       end
