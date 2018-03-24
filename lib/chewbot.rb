@@ -60,7 +60,7 @@ Bot.server_delete do |event|
     e.add_field(name: 'Server ID', value: event.server.id, inline: true)
     e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
 
-    e.color = '00FF00'
+    e.color = 'FF0000'
   end
 end
 
