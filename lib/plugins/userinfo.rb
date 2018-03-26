@@ -19,18 +19,41 @@ module UserInfo
 
         e.add_field(name: 'Name#Discrim', value: "#{user.name}\##{user.discrim}", inline: true)
         e.add_field(name: 'User ID', value: user.id, inline: true)
-        e.add_field(name: 'Status', value: user.status, inline: true)
+
+        case user.status.to_s
+        when 'online'
+          status = 'Online'
+          e.color = '43B581'
+        when 'idle'
+          status = 'Idle'
+          e.color = 'FAA61A'
+        when 'dnd'
+          status = 'Do Not Disturb'
+          e.color = 'F04747'
+        when 'offline'
+          status = 'Offline'
+          e.color = '747F8D'
+        else
+          status = user.status
+          e.color = '747F8D'
+        end
+
+        e.add_field(name: 'Status', value: status, inline: true)
+
         begin
           e.add_field(name: 'Nickname', value: user.nick, inline: true) unless user.nick.nil?
         rescue StandardError
           puts 'whoopsiedaisy this guy dont got no nickname'
         end
         begin
-          e.add_field(name: 'Currently Playing', value: user.game, inline: true) unless user.game.nil?
+          if user.game == 'Spotify'
+            e.add_field(name: 'Currently Listening To', value: user.game, inline: true) unless user.game.nil?
+          else
+            e.add_field(name: 'Currently Playing', value: user.game, inline: true) unless user.game.nil?
+          end
         rescue StandardError
           puts 'whoopsiedaisy this guy dont got no current playing'
         end
-        e.color = '00FF00'
       end
     rescue Discordrb::Errors::NoPermission
       event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
