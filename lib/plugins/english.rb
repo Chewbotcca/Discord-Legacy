@@ -4,7 +4,7 @@ module English
   command(:urban, min_args: 1) do |event, word|
     parse = JSON.parse(RestClient.get("http://api.urbandictionary.com/v0/define?term=#{word}"))
     if parse['result_type'].to_s == 'no_results'
-      event.respond "No results found for term `word`!"
+      event.respond "No results found for term `#{word}`!"
       return
     end
     info = parse['list'][0]
