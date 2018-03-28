@@ -53,13 +53,6 @@ module ServerInfo
 
         e.add_field(name: 'Server Region', value: region, inline: true)
 
-        botos = 0
-        event.server.members.each do |meme|
-          botos += 1 if meme.bot_account?
-        end
-
-        e.add_field(name: 'botos', value: botos, inline: true)
-
         e.add_field(name: 'Member Count', value: event.server.members.count, inline: true)
         e.add_field(name: 'Channel Count', value: [
           "Total: #{event.server.channels.count}",
@@ -83,66 +76,8 @@ module ServerInfo
 
         e.color = '00FF00'
       end
-      message.react 'arrow_forward'
     rescue Discordrb::Errors::NoPermission
       event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
     end
-  end
-
-  ARROW_RIGHT = "\u27A1".freeze
-  ARROW_LEFT = "\u2B05".freeze
-  CROSS_MARK = "\u274c".freeze
-
-  def addrightawait(message)
-    Bot.add_await(:"right_#{message.id}", Discordrb::Events::ReactionAddEvent, emoji: ARROW_RIGHT) do |reaction_event|
-      next true unless reaction_event.message.id == message.id
-
-      page = YAML.load_file("data/pages/sinfo/#{message.id}.yaml")['page']
-      message.edit "you are on page #{page}"
-      message.delete_reaction(event.user.id, ARROW_RIGHT)
-      page += 1
-      File.open("data/pages/sinfo/#{message.id}.yaml", 'w') { |f| f.write page.to_yaml }
-      addrightawait
-    end
-  end
-
-  def addleftawait(message)
-    Bot.add_await(:"left_#{message.id}", Discordrb::Events::ReactionAddEvent, emoji: ARROW_LEFT) do |reaction_event|
-      next true unless reaction_event.message.id == message.id
-
-      page = YAML.load_file("data/pages/sinfo/#{message.id}.yaml")['page']
-      page -= 1
-      File.open("data/pages/sinfo/#{message.id}.yaml", 'w') { |f| f.write page.to_yaml }
-      message.edit "you are on page #{page}"
-      message.delete_reaction(event.user.id, ARROW_LEFT)
-      addleftawait
-    end
-  end
-
-  def adddeleteawait(message)
-    Bot.add_await(:"delete_#{message.id}", Discordrb::Events::ReactionAddEvent, emoji: CROSS_MARK) do |reaction_event|
-      next true unless reaction_event.message.id == message.id
-      File.delete("data/pages/sinfo/#{message.id}.yaml")
-      message.delete
-    end
-  end
-
-  command(:time) do |event|
-    message = event.respond 'Welcome to bob hub.'
-
-    filename = "data/pages/sinfo/#{message.id}.yaml"
-
-    File.new(filename, 'w+')
-    exconfig = YAML.load_file('data/pages/sinfo/example.yml')
-    exconfig['page'] = 0
-    File.open(filename, 'w') { |f| f.write exconfig.to_yaml }
-
-    message.react ARROW_LEFT
-    message.react ARROW_RIGHT
-    message.react CROSS_MARK
-
-    addrightawait(message)
-    addleftawait(message)
-    adddeleteawait(message)
   end
 end
