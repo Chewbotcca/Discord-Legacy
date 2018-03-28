@@ -39,4 +39,35 @@ module Minecraft
   command(:mcavatar, min_args: 1, max_args: 1) do |event, mcuser|
     event.respond "Alright, here is a 3D full view of the player for the skin: #{mcuser}. https://visage.surgeplay.com/full/512/#{mcuser}.png"
   end
+
+  command(:mcserver, min_args: 1, max_args: 1) do |event, server|
+    data = JSON.parse(RestClient.get("https://eu.mc-api.net/v3/server/ping/#{server}"))
+    event.channel.send_embed do |e|
+      e.title = "**Server Info For** `#{server}`"
+      e.thumbnail = { url: (data['favicon']).to_s }
+
+      oof = if !data['error'].nil?
+              true
+            else
+              false
+            end
+
+      online = if data['online']
+                 'Online'
+               else
+                 'Offline'
+               end
+
+      e.add_field(name: 'Error', value: data['error'], inline: true) if oof
+      e.add_field(name: 'Status', value: online, inline: true)
+      e.add_field(name: 'Players [Online/Max]', value: "#{data['players']['online']}/#{data['players']['max']}", inline: true) unless oof
+      e.add_field(name: 'Version', value: data['version']['name'], inline: true) unless oof
+
+      e.color = if data['online'] == true
+                  '00FF00'
+                else
+                  'FF0000'
+                end
+    end
+  end
 end
