@@ -52,8 +52,17 @@ module ServerInfo
                  end
 
         e.add_field(name: 'Server Region', value: region, inline: true)
+        
+        botos = 0
+        event.server.members.each do |meme|
+          botos += 1 if meme.bot_account?
+        end
 
-        e.add_field(name: 'Member Count', value: event.server.members.count, inline: true)
+        e.add_field(name: 'Member Count', value: [
+          "Total - #{event.server.members.count}",
+          "Bots - #{botos}",
+          "Users - #{event.server.members.count - botos}"
+        ].join("\n"), inline: true)
         e.add_field(name: 'Channel Count', value: [
           "Total: #{event.server.channels.count}",
           "Text: #{event.server.text_channels.count}",
