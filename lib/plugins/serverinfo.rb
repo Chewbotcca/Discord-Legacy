@@ -52,7 +52,7 @@ module ServerInfo
                  end
 
         e.add_field(name: 'Server Region', value: region, inline: true)
-        
+
         botos = 0
         event.server.members.each do |meme|
           botos += 1 if meme.bot_account?
