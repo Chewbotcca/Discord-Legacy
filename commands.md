@@ -48,6 +48,7 @@ For now I just wanted a simple list of commands to keep updated easier than rest
 | Restart     | %^updates                | None                      | None                 | Returns bot version and status. **Bot Owner Only.. Kinda**                                         |
 | Restart     | %^shoo                   | None                      | None                 | Kills the bot. Bye! **Bot Owner Only**                                                             |
 | Restart     | %^new                    | None                      | None                 | Finds 10 most recent commits                                                                       |
+| Roles       | %^createrole             | Role name                 | None                 | Create a role with a given name.
 | Rip         | %^rip                    | Person to rip             | None                 | Makes someone or something rip. No spaces, letters and numbers only.                               |
 | ServerInfo  | %^sinfo                  | None                      | %^serverinfo         | Shows basic stats for the server.                                                                  |
 | UserInfo    | %^uinfo                  | Mention a user (optional) | %^userinfo           | Shows basic stats for a user.                                                                      |
