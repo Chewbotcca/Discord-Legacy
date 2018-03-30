@@ -23,7 +23,6 @@ module UserInfo
           e.thumbnail = { url: "https://cdn.discordapp.com/avatars/#{user.id}/#{user.avatar_id}.webp?size=1024".to_s }
         end
 
-
         e.add_field(name: 'Name#Discrim', value: "#{user.name}\##{user.discrim}", inline: true)
         e.add_field(name: 'User ID', value: user.id, inline: true)
 
