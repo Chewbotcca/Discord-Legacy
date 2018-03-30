@@ -42,32 +42,36 @@ module Minecraft
 
   command(:mcserver, min_args: 1, max_args: 1) do |event, server|
     data = JSON.parse(RestClient.get("https://eu.mc-api.net/v3/server/ping/#{server}"))
-    event.channel.send_embed do |e|
-      e.title = "**Server Info For** `#{server}`"
-      e.thumbnail = { url: (data['favicon']).to_s }
+    begin
+      event.channel.send_embed do |e|
+        e.title = "**Server Info For** `#{server}`"
+        e.thumbnail = { url: (data['favicon']).to_s }
 
-      oof = if !data['error'].nil?
-              true
-            else
-              false
-            end
+        oof = if !data['error'].nil?
+                true
+              else
+                false
+              end
 
-      online = if data['online']
-                 'Online'
-               else
-                 'Offline'
-               end
+        online = if data['online']
+                   'Online'
+                 else
+                   'Offline'
+                 end
 
-      e.add_field(name: 'Error', value: data['error'], inline: true) if oof
-      e.add_field(name: 'Status', value: online, inline: true)
-      e.add_field(name: 'Players [Online/Max]', value: "#{data['players']['online']}/#{data['players']['max']}", inline: true) unless oof
-      e.add_field(name: 'Version', value: data['version']['name'], inline: true) unless oof
+        e.add_field(name: 'Error', value: data['error'], inline: true) if oof
+        e.add_field(name: 'Status', value: online, inline: true)
+        e.add_field(name: 'Players [Online/Max]', value: "#{data['players']['online']}/#{data['players']['max']}", inline: true) unless oof
+        e.add_field(name: 'Version', value: data['version']['name'], inline: true) unless oof
 
-      e.color = if data['online'] == true
-                  '00FF00'
-                else
-                  'FF0000'
-                end
+        e.color = if data['online'] == true
+                    '00FF00'
+                  else
+                    'FF0000'
+                  end
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
     end
   end
 end
