@@ -40,6 +40,19 @@ module Minecraft
     event.respond "Alright, here is a 3D full view of the player for the skin: #{mcuser}. https://visage.surgeplay.com/full/512/#{mcuser}.png"
   end
 
+  command(:uuid, min_args: 1, max_args: 1) do |event, name|
+    event.respond "The UUID for #{name} is: #{JSON.parse(RestClient.get("https://api.mojang.com/users/profiles/minecraft/#{name}"))['id']}"
+  end
+
+  command(:blacklisted, min_args: 1, max_args: 1) do |event, server|
+    data = JSON.parse(RestClient.get("https://eu.mc-api.net/v3/server/blacklisted/#{server}"))
+    if data['blacklisted'] == true
+      event.respond "The server `#{server}` is :warning: **BLACKLISTED** :warning:. Time it took to search: #{data['took']}."
+    else
+      event.respond "The server `#{server}` is NOT blacklisted. It's safe to play on!"
+    end
+  end
+
   command(:mcserver, min_args: 1, max_args: 1) do |event, server|
     data = JSON.parse(RestClient.get("https://eu.mc-api.net/v3/server/ping/#{server}"))
     begin
