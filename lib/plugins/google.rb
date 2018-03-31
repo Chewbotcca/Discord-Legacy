@@ -1,6 +1,50 @@
 module Google
   extend Discordrb::Commands::CommandContainer
 
+  command(:google, min_args: 1) do |event, *search|
+    require 'google_search_results'
+    searchurl = URI.escape("http://google.com/search?q=#{search.join(' ')}")
+    query = GoogleSearchResults.new q: search.join(' ')
+    hash_results = query.get_hash
+    res = hash_results.to_json
+    res = JSON.parse(res)
+    results = res['organic_results']
+    ponder = res['search_information']
+    error = res['error']
+    begin
+      if !error.nil?
+        event.channel.send_embed do |embed|
+          embed.title = 'Google Search Results'
+          embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "Results for #{search.join(' ')}", url: searchurl, icon_url: 'https://images-ext-1.discordapp.net/external/UsMM0mPPHEKn6WMst8WWG9qMCX_A14JL6Izzr47ucOk/http/i.imgur.com/G46fm8J.png')
+          embed.description = error
+          embed.colour = 'FF0000'
+        end
+      else
+        event.channel.send_embed do |embed|
+          embed.title = 'Google Search Results'
+
+          embed.colour = 0x20d855
+
+          embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "Results for #{search.join(' ')}", url: searchurl, icon_url: 'https://images-ext-1.discordapp.net/external/UsMM0mPPHEKn6WMst8WWG9qMCX_A14JL6Izzr47ucOk/http/i.imgur.com/G46fm8J.png')
+          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Total Results: #{ponder['total_results']} | Time Taken: #{(ponder['time_taken'].to_f * 1000).to_i} ms")
+
+          embed.description = ''
+
+          i = 0
+          while i < 5
+            g = results[i]
+            embed.description += "**[#{g['title']}](#{g['link']})**\n#{g['snippet']}\n\n" unless g.nil?
+            i += 1
+          end
+        end
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
+    rescue StandardError => e
+      puts "Google search machine broke #{e}"
+    end
+  end
+
   command(:youtube, min_args: 1) do |event, *search|
     search = search.join(' ')
     begin
