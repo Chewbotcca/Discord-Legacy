@@ -1,7 +1,18 @@
 module ServerInfo
   extend Discordrb::Commands::CommandContainer
 
-  command(%i[sinfo serverinfo]) do |event|
+  command(%i[sinfo serverinfo], min_args: 0, max_args: 1) do |event, id|
+    server = event.server
+
+    unless id.nil?
+      begin
+        server = Bot.server(id)
+      rescue Discordrb::Errors::NoPermission
+        event.respond "I am not on that server and are therefore unable to view that server's stats. Try getting them to add me by sending them this invite link: <http://bit.ly/Chewbotcca>"
+        break
+      end
+    end
+
     if event.channel.pm?
       event.respond "You silly meme, you can't do SERVERinfo in a private message!!! haha, trying to bamboozle, who got bamboozled NOW? But seriously, try running this on a server. Better yet invite me to one: <http://bit.ly/Chewbotcca>"
       next
@@ -10,42 +21,42 @@ module ServerInfo
       message = event.channel.send_embed do |e|
         e.title = 'Server Information'
 
-        e.author = { name: event.server.name, icon_url: "https://cdn.discordapp.com/icons/#{event.server.id}/#{event.server.icon_id}.png?size=1024" }
+        e.author = { name: server.name, icon_url: "https://cdn.discordapp.com/icons/#{server.id}/#{server.icon_id}.png?size=1024" }
 
-        e.thumbnail = { url: "https://cdn.discordapp.com/icons/#{event.server.id}/#{event.server.icon_id}.png?size=1024".to_s }
+        e.thumbnail = { url: "https://cdn.discordapp.com/icons/#{server.id}/#{server.icon_id}.png?size=1024".to_s }
 
-        e.add_field(name: 'Server Owner', value: event.server.owner.mention, inline: true)
-        e.add_field(name: 'Server ID', value: event.server.id, inline: true)
+        e.add_field(name: 'Server Owner', value: server.owner.mention, inline: true)
+        e.add_field(name: 'Server ID', value: server.id, inline: true)
 
-        region = if event.server.region == 'vip-amsterdam'
+        region = if server.region == 'vip-amsterdam'
                    '<:region_amsterdam:426902668871467008> <:vip_region:426902668909477898> Amsterdam'
-                 elsif event.server.region == 'brazil'
+                 elsif server.region == 'brazil'
                    '<:region_brazil:426902668561219605> Brazil'
-                 elsif event.server.region == 'eu-central'
+                 elsif server.region == 'eu-central'
                    '<:region_eu:426902669110673408> Central Europe'
-                 elsif event.server.region == 'hongkong'
+                 elsif server.region == 'hongkong'
                    '<:region_hongkong:426902668636585985> Hong Kong'
-                 elsif event.server.region == 'japan'
+                 elsif server.region == 'japan'
                    '<:region_japan:426902668578127884> Japan'
-                 elsif event.server.region == 'russia'
+                 elsif server.region == 'russia'
                    '<:region_russia:426902668859015169> Russia'
-                 elsif event.server.region == 'singapore'
+                 elsif server.region == 'singapore'
                    '<:region_singapore:426902668951158784> Singapore'
-                 elsif event.server.region == 'sydney'
+                 elsif server.region == 'sydney'
                    '<:region_sydney:426902668934643722> Sydney'
-                 elsif event.server.region == 'us-central'
+                 elsif server.region == 'us-central'
                    '<:region_us:426902668900827146> US Central'
-                 elsif event.server.region == 'us-east'
+                 elsif server.region == 'us-east'
                    '<:region_us:426902668900827146> US East'
-                 elsif event.server.region == 'vip-us-east'
+                 elsif server.region == 'vip-us-east'
                    '<:region_us:426902668900827146> <:vip_region:426902668909477898> US East'
-                 elsif event.server.region == 'us-south'
+                 elsif server.region == 'us-south'
                    '<:region_us:426902668900827146> US South'
-                 elsif event.server.region == 'us-west'
+                 elsif server.region == 'us-west'
                    '<:region_us:426902668900827146> US West'
-                 elsif event.server.region == 'vip-us-west'
+                 elsif server.region == 'vip-us-west'
                    '<:region_us:426902668900827146> <:vip_region:426902668909477898> US West'
-                 elsif event.server.region == 'eu-west'
+                 elsif server.region == 'eu-west'
                    '<:region_eu:426902669110673408> Western Europe'
                  else
                    message.guild.region
@@ -54,34 +65,34 @@ module ServerInfo
         e.add_field(name: 'Server Region', value: region, inline: true)
 
         botos = 0
-        event.server.members.each do |meme|
+        server.members.each do |meme|
           botos += 1 if meme.bot_account?
         end
 
         e.add_field(name: 'Member Count', value: [
-          "Total - #{event.server.members.count}",
+          "Total - #{server.members.count}",
           "Bots - #{botos}",
-          "Users - #{event.server.members.count - botos}"
+          "Users - #{server.members.count - botos}"
         ].join("\n"), inline: true)
         e.add_field(name: 'Channel Count', value: [
-          "Total: #{event.server.channels.count}",
-          "Text: #{event.server.text_channels.count}",
-          "Voice: #{event.server.voice_channels.count}",
-          "Categories: #{event.server.channels.count - event.server.text_channels.count - event.server.voice_channels.count}"
+          "Total: #{server.channels.count}",
+          "Text: #{server.text_channels.count}",
+          "Voice: #{server.voice_channels.count}",
+          "Categories: #{server.channels.count - server.text_channels.count - server.voice_channels.count}"
         ].join("\n"), inline: true)
 
         roles = []
-        event.server.roles.each { |name| roles[roles.length] = name.name }
+        server.roles.each { |name| roles[roles.length] = name.name }
         roles -= ['@everyone']
 
         if roles.length > 50
-          e.add_field(name: "Roles - #{event.server.roles.count}", value: "**(First 50)**: #{roles.join(', ')[0..50]}", inline: true)
+          e.add_field(name: "Roles - #{server.roles.count}", value: "**(First 50)**: #{roles.join(', ')[0..50]}", inline: true)
         else
-          e.add_field(name: "Roles - #{event.server.roles.count}", value: roles.join(', ').to_s, inline: true)
+          e.add_field(name: "Roles - #{server.roles.count}", value: roles.join(', ').to_s, inline: true)
         end
 
         e.footer = Discordrb::Webhooks::EmbedFooter.new(text: 'Server Created on')
-        e.timestamp = event.server.creation_time
+        e.timestamp = server.creation_time
 
         e.color = '00FF00'
       end
