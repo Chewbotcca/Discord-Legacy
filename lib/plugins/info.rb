@@ -2,6 +2,7 @@ module Info
   extend Discordrb::Commands::CommandContainer
 
   command(:info, min_args: 0, max_args: 1) do |event, com|
+    com = 'ewhewigfew' if com.nil?
     com.downcase!
     begin
       data = JSON.parse(RestClient.get("http://api.chew.pro/chewbotcca/discord/command/#{com}"))
