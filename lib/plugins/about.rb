@@ -1,8 +1,21 @@
 module About
   extend Discordrb::Commands::CommandContainer
 
-  command(%i[help commands]) do |event|
-    event.respond 'You can find all my commands here: <https://discord.chewbotcca.co/commands>. Invite me to your server or join my help server with `%^invite`'
+  command(%i[help commands about]) do |event|
+    begin
+      event.channel.send_embed do |embed|
+        embed.title = 'Welcome to the Chewbotcca Discord Bot'
+        embed.colour = 0xd084
+        embed.description = 'Chewbotcca is a multi-purpose, semi-functional, almost always online, discord bot!'
+
+        embed.add_field(name: 'Commands', value: 'You can find all my commands [here](http://discord.chewbotcca.co/commands)', inline: true)
+        embed.add_field(name: 'Invite me!', value: 'You can invite me to your server with [this link](http://bit.ly/Chewbotcca).', inline: true)
+        embed.add_field(name: 'Help Server', value: 'Click [me](https://discord.gg/Q8TazNz) to join the help server.', inline: true)
+        embed.add_field(name: 'More Bot Stats', value: 'Run `%^stats` to see more stats!', inline: true)
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond 'Hello, in order for me to run most commands, I need the `Embed Links` permission, may you please grant that? Thanks, appreciate ya.'
+    end
   end
 
   command(:ping, min_args: 0, max_args: 1) do |event, noedit|
@@ -24,6 +37,27 @@ module About
     RestClient.post("https://discordbots.org/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotsorg'], :'Content-Type' => :json) unless CONFIG['dbotsorg'].nil?
     RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json)
     event.respond "You got it, bucko. I set the server count everywhere to `#{event.bot.servers.count}`"
+  end
+
+  command(:mutuals) do |event|
+    array = []
+    servers = event.bot.servers.to_json
+    servers = JSON.parse(servers)
+    servers.each do |id, _bagel|
+      server = Bot.server(id)
+      array[array.length] = server.name.to_s if server.users.include?(event.user)
+    end
+    puts array
+    begin
+      event.channel.send_embed do |e|
+        e.title = 'Hey Vsauce, Michael here, what servers do we share?'
+
+        e.description = array.join("\n")
+        e.color = '00FF00'
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
+    end
   end
 
   command(:stats) do |event|
