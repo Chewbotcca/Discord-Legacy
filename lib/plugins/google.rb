@@ -2,6 +2,7 @@ module Google
   extend Discordrb::Commands::CommandContainer
 
   command(:google, min_args: 1) do |event, *search|
+    m = event.respond "<a:loading:393852367751086090> Searching google for #{search.join(' ')}"
     require 'google_search_results'
     searchurl = URI.escape("http://google.com/search?q=#{search.join(' ')}")
     query = GoogleSearchResults.new q: search.join(' ')
@@ -11,6 +12,7 @@ module Google
     results = res['organic_results']
     ponder = res['search_information']
     error = res['error']
+    m.delete
     begin
       if !error.nil?
         event.channel.send_embed do |embed|
