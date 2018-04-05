@@ -39,27 +39,6 @@ module About
     event.respond "You got it, bucko. I set the server count everywhere to `#{event.bot.servers.count}`"
   end
 
-  command(:mutuals) do |event|
-    array = []
-    servers = event.bot.servers.to_json
-    servers = JSON.parse(servers)
-    servers.each do |id, _bagel|
-      server = Bot.server(id)
-      array[array.length] = server.name.to_s if server.users.include?(event.user)
-    end
-    puts array
-    begin
-      event.channel.send_embed do |e|
-        e.title = 'Hey Vsauce, Michael here, what servers do we share?'
-
-        e.description = array.join("\n")
-        e.color = '00FF00'
-      end
-    rescue Discordrb::Errors::NoPermission
-      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
-    end
-  end
-
   command(:stats) do |event|
     t = Time.now - Starttime
     mm, ss = t.divmod(60)
