@@ -39,6 +39,23 @@ module About
     event.respond "You got it, bucko. I set the server count everywhere to `#{event.bot.servers.count}`"
   end
 
+  command(:votes) do |event|
+    votedata = YAML.load_file('../lit/votes.yml')
+    votes = votedata[event.user.id.to_s]
+    begin
+      event.channel.send_embed do |embed|
+        embed.title = 'Chewbotcca Voting'
+        embed.colour = 0xd084
+        embed.url = 'http://bit.ly/Vote4Chewbotcca'
+
+        embed.add_field(name: 'Your Vote Count', value: votes.to_s, inline: true)
+        embed.add_field(name: 'Your Current Vote Perks', value: 'None! (Yet!)', inline: true)
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
+    end
+  end
+
   command(:stats) do |event|
     t = Time.now - Starttime
     mm, ss = t.divmod(60)
