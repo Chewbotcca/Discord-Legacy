@@ -268,4 +268,10 @@
   "Arguments": "Number and fact type",
   "Aliases": "None",
   "Description": "Find a fact about numbers!"
+}, {
+  "Plugin": "About",
+  "Command": "%^votes",
+  "Arguments": "None",
+  "Aliases": "None",
+  "Description": "Find your vote count!"
 }]
