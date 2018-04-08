@@ -43,7 +43,7 @@ module Quotes
         embed.description = facto.to_s
 
         embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'Number Facts!')
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Your number didn't have a fact, so a number was approximated for you.") if facto.split(' ')[0].to_i != number && type != 4
+        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Your number didn't have a fact, so a number was approximated for you.") if facto.split(' ')[0].to_s != number && type != 4
       end
     rescue RestClient::NotFound
       event.channel.send_embed do |embed|
