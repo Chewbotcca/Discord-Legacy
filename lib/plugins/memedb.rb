@@ -2,20 +2,40 @@ module MemeDB
   extend Discordrb::Commands::CommandContainer
 
   command(:memedb, min_args: 0, max_args: 1) do |event, meme|
-    meme.downcase! unless meme.nil?
-    prefix = ''
-    prefix = '.gif' if %w[rickroll nicememe timetostop triggered noot skypetrash].include? meme
-    prefix = '.png' if %w[deanmeme vegans losthope iplayedmyself nottheadmin pineapplepringle grupingseveryone grueveryonenotif].include? meme
-    prefix = '.jpg' if %w[spotad petpet youarerobot].include? meme
-    prefix = '.JPG' if %w[paycheck pokesteak].include? meme
-    prefix = '.jpeg' if %w[trap].include? meme
-    if prefix == '' && meme != 'submit'
-      event << "This meme doesn't exist! Make sure you spell the meme name right (CASE SENSITIVE)." unless meme.nil?
-      event << 'Here is a list of the current memes: `deanmeme, rickroll, vegans, spotad, petpet, nicememe, paycheck, pokesteak, losthope, timetostop, skypetrash, trap, triggered, noot, iplayedmyself, nottheadmin, pineapplepringle, youarerobot, grupingseveryone, grueveryonenotif`'
-    elsif meme == 'submit'
+    meme = 'random' if meme.nil?
+    meme.downcase!
+    if meme == 'submit'
       event.respond 'You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>'
-    else
-      event.respond "https://chewbotcca.co/memedb/#{meme}#{prefix}"
+      break
+    end
+    memelist = JSON.parse(RestClient.get('http://chewbotcca.co/memedb/memes.json'))
+    memers = []
+    (0..memelist.length - 1).each do |i|
+      memers[memers.length] = memelist[i]['Meme']
+    end
+    memer = JSON.parse(RestClient.get("http://api.chew.pro/chewbotcca/memedb/#{meme}"))
+    if memer['meme'] == 'Invalid Meme'
+      event << "This meme doesn't exist! Make sure you spell the meme name right." unless meme.nil?
+      event << "Here is a list of the current memes: `#{memers.join(', ')}`"
+      break
+    end
+    begin
+      event.channel.send_embed do |embed|
+        embed.title = "Meme: #{memer['meme']}"
+        embed.colour = 0x8ed1fc
+        embed.url = memer['url'].to_s
+
+        embed.image = { url: memer['url'] }
+
+        embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'Meme Database')
+        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: memer['note']) unless memer['note'].nil?
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond memer['url']
+    rescue RestClient::BadRequest
+      event.respond 'There was an error retrieving the meme!'
+    rescue URI::InvalidURIError
+      event.respond "Bro that meme isn't even a meme."
     end
   end
 end
