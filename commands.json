@@ -274,4 +274,10 @@
   "Arguments": "None",
   "Aliases": "None",
   "Description": "Find your vote count!"
+}, {
+  "Plugin": "Streams",
+  "Command": "%^mixer",
+  "Arguments": "Mixer account name",
+  "Aliases": "None",
+  "Description": "Find mixer information on a given user"
 }]
