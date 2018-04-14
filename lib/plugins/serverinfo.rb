@@ -86,7 +86,7 @@ module ServerInfo
         roles -= ['@everyone']
 
         if roles.length > 50
-          e.add_field(name: "Roles - #{server.roles.count}", value: "**(First 50)**: #{roles.join(', ')[0..50]}", inline: true)
+          e.add_field(name: "Roles - #{server.roles.count}", value: "**(First 50)**: #{roles[0..49].join(', ')}", inline: true)
         else
           e.add_field(name: "Roles - #{server.roles.count}", value: roles.join(', ').to_s, inline: true)
         end
