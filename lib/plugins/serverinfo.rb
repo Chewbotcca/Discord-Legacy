@@ -69,16 +69,32 @@ module ServerInfo
           botos += 1 if meme.bot_account?
         end
 
+        members = server.members.count
+        humans = members - botos
+
+        botpercent = (botos.to_f / members.to_f * 100).round(2).to_s
+        humanpercent = (humans.to_f / members.to_f * 100).round(2).to_s
+
         e.add_field(name: 'Member Count', value: [
-          "Total - #{server.members.count}",
-          "Bots - #{botos}",
-          "Users - #{server.members.count - botos}"
+          "Total: #{members}",
+          "Bots: #{botos} - (#{botpercent}%)",
+          "Users: #{humans} - (#{humanpercent}%)"
         ].join("\n"), inline: true)
+
+        totalchans = server.channels.count
+        textchans = server.text_channels.count
+        voicechans = server.voice_channels.count
+        categories = totalchans - textchans - voicechans
+
+        textpercent = (textchans.to_f / totalchans.to_f * 100).round(2).to_s
+        voicepercent = (voicechans.to_f / totalchans.to_f * 100).round(2).to_s
+        catepercent = (categories.to_f / totalchans.to_f * 100).round(2).to_s
+
         e.add_field(name: 'Channel Count', value: [
-          "Total: #{server.channels.count}",
-          "Text: #{server.text_channels.count}",
-          "Voice: #{server.voice_channels.count}",
-          "Categories: #{server.channels.count - server.text_channels.count - server.voice_channels.count}"
+          "Total: #{totalchans}",
+          "Text: #{textchans} - (#{textpercent}%)",
+          "Voice: #{voicechans} - (#{voicepercent}%)",
+          "Categories: #{categories} - (#{catepercent}%)"
         ].join("\n"), inline: true)
 
         roles = []
