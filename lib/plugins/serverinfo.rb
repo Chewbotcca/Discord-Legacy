@@ -18,7 +18,7 @@ module ServerInfo
       next
     end
     begin
-      message = event.channel.send_embed do |e|
+      event.channel.send_embed do |e|
         e.title = 'Server Information'
 
         e.author = { name: server.name, icon_url: "https://cdn.discordapp.com/icons/#{server.id}/#{server.icon_id}.png?size=1024" }
@@ -59,27 +59,31 @@ module ServerInfo
                  elsif server.region == 'eu-west'
                    '<:region_eu:426902669110673408> Western Europe'
                  else
-                   message.guild.region
+                   server.region
                  end
 
         e.add_field(name: 'Server Region', value: region, inline: true)
 
-        botos = 0
-        server.members.each do |meme|
-          botos += 1 if meme.bot_account?
+        if server.member_count > 500
+          e.add_field(name: 'Member Count', value: "Total: #{server.member_count}", inline: true)
+        else
+          botos = 0
+          server.members.each do |meme|
+            botos += 1 if meme.bot_account?
+          end
+
+          members = server.member_count
+          humans = members - botos
+
+          botpercent = (botos.to_f / members.to_f * 100).round(2).to_s
+          humanpercent = (humans.to_f / members.to_f * 100).round(2).to_s
+
+          e.add_field(name: 'Member Count', value: [
+            "Total: #{members}",
+            "Bots: #{botos} - (#{botpercent}%)",
+            "Users: #{humans} - (#{humanpercent}%)"
+          ].join("\n"), inline: true)
         end
-
-        members = server.members.count
-        humans = members - botos
-
-        botpercent = (botos.to_f / members.to_f * 100).round(2).to_s
-        humanpercent = (humans.to_f / members.to_f * 100).round(2).to_s
-
-        e.add_field(name: 'Member Count', value: [
-          "Total: #{members}",
-          "Bots: #{botos} - (#{botpercent}%)",
-          "Users: #{humans} - (#{humanpercent}%)"
-        ].join("\n"), inline: true)
 
         totalchans = server.channels.count
         textchans = server.text_channels.count
