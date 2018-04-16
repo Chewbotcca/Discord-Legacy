@@ -49,8 +49,8 @@ module English
       end
     rescue Discordrb::Errors::NoPermission
       event.respond "OOps! I can't send the embed. Can I please have the 'Embed Links' permission? Thanks, appreciate ya."
-      # rescue StandardError
-      #  event.respond 'Word not found! Check your local spell-checker!'
+    rescue NoMethodError
+      event.respond 'Word not found! Check your local spell-checker!'
     end
   end
 end
