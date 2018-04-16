@@ -8,7 +8,23 @@ module UserInfo
         user = Bot.user(userid)
       else
         user = event.user
+        userid = event.user.id
       end
+
+      begin
+        data = JSON.parse(RestClient.get("https://discordbots.org/api/users/#{userid}"))
+      rescue RestClient::NotFound
+        dontbother = true
+      end
+
+      unless dontbother
+        dbl = if !data['error'].nil?
+                false
+              else
+                true
+              end
+      end
+
       event.channel.send_embed do |e|
         e.title = if mention.nil?
                     'User Info for you!'
@@ -59,6 +75,22 @@ module UserInfo
           end
         rescue StandardError
           puts 'whoopsiedaisy this guy dont got no current playing'
+        end
+
+        if dbl
+          social = data['social']
+
+          github = social['github']
+          instagram = social['instagram']
+          reddit = social['reddit']
+          twitter = social['twitter']
+          youtube = social['youtube']
+
+          e.add_field(name: 'GitHub', value: "[#{github}](http://github.com/#{github})", inline: true) unless github == ''
+          e.add_field(name: 'Instagram', value: "[@#{instagram}](http://instagram.com/#{instagram})", inline: true) unless instagram == ''
+          e.add_field(name: '<:reddit:314349923103670272> Reddit', value: "[u/#{reddit}](http://reddit.com/u/#{reddit})", inline: true) unless reddit == ''
+          e.add_field(name: '<:twitter:314349922877046786> Twitter', value: "[@#{twitter}](http://twitter.com/#{twitter})", inline: true) unless twitter == ''
+          e.add_field(name: '<:youtube:314349922885566475> YouTube', value: "[#{youtube}](http://youtube.com/#{youtube})", inline: true) unless youtube == ''
         end
       end
     rescue Discordrb::Errors::NoPermission
