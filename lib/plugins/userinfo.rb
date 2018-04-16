@@ -77,7 +77,7 @@ module UserInfo
           puts 'whoopsiedaisy this guy dont got no current playing'
         end
 
-        if dbl
+        if dbl && !data['social'].nil?
           social = data['social']
 
           github = social['github']
