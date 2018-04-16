@@ -34,4 +34,23 @@ module English
       event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
     end
   end
+
+  command(:define) do |event, word|
+    grabbedword = JSON.parse(RestClient.get("http://api.wordnik.com/v4/word.json/#{word}/definitions?limit=1&includeRelated=true&useCanonical=false&includeTags=false&api_key=#{CONFIG['wordnik']}"))
+    begin
+      event.channel.send_embed do |embed|
+        embed.title = "Definition for #{word}"
+        embed.colour = 0xd084
+        embed.description = (grabbedword[0]['text']).to_s
+
+        embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'Dictionary', icon_url: 'http://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/1024/dictionary-icon.png')
+
+        embed.add_field(name: 'Part of Speech', value: (grabbedword[0]['partOfSpeech']).to_s, inline: true)
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "OOps! I can't send the embed. Can I please have the 'Embed Links' permission? Thanks, appreciate ya."
+      # rescue StandardError
+      #  event.respond 'Word not found! Check your local spell-checker!'
+    end
+  end
 end
