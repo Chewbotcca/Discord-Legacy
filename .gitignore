@@ -4,3 +4,4 @@ data/logs/*.txt
 !data/logs/default.txt
 data/servers/*.yaml
 !data/servers/server.example.yaml
+lib/plugins/beta.rb
