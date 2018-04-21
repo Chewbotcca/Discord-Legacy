@@ -80,4 +80,16 @@ module Misc
     args = args.split(',')
     event.respond args.sample
   end
+
+  command(:namecheap, min_args: 1, max_args: 1, usage: 'In order to do a search, you must provide ONE word to search for.') do |event, lookup|
+    event.respond "Namecheap Domain Search Results: https://www.namecheap.com/domains/registration/results.aspx?domain=#{lookup}"
+  end
+
+  command(:rip, min_args: 1, max_args: 1) do |event, ripwho|
+    event.respond "#{ripwho} got #rekt! http://ripme.xyz/#{ripwho}"
+  end
+
+  command(:rate, min_args: 1, max_args: 1) do |event, rating|
+    event.respond "#{event.user.mention} has rated `#{rating}`/10."
+  end
 end
