@@ -2,3 +2,5 @@ config.yaml
 GEMFILE.lock
 data/logs/*.txt
 !data/logs/default.txt
+data/servers/*.yaml
+!data/servers/server.example.yaml
