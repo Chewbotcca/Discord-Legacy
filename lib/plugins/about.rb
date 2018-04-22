@@ -34,7 +34,7 @@ module About
   command(:forceupdateservercount) do |event|
     next unless event.user.id == CONFIG['owner_id']
     event.bot.game = "on #{event.bot.servers.count} servers | %^help"
-    RestClient.post("https://discordbots.org/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotsorg'], :'Content-Type' => :json) unless CONFIG['dbotsorg'].nil?
+    DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
     RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json)
     event.respond "You got it, bucko. I set the server count everywhere to `#{event.bot.servers.count}`"
   end
