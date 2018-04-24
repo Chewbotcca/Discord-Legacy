@@ -12,13 +12,13 @@ module UserInfo
       end
 
       begin
-        data = JSON.parse(RestClient.get("https://discordbots.org/api/users/#{userid}"))
+        dbluser = DBL.loaduser(userid)
       rescue RestClient::NotFound
         dontbother = true
       end
 
       unless dontbother
-        dbl = if !data['error'].nil?
+        dbl = if !dbluser.data['error'].nil?
                 false
               else
                 true
@@ -77,14 +77,12 @@ module UserInfo
           puts 'whoopsiedaisy this guy dont got no current playing'
         end
 
-        if dbl && !data['social'].nil?
-          social = data['social']
-
-          github = social['github']
-          instagram = social['instagram']
-          reddit = social['reddit']
-          twitter = social['twitter']
-          youtube = social['youtube']
+        if dbl && dbluser.social?
+          github = dbluser.github
+          instagram = dbluser.instagram
+          reddit = dbluser.reddit
+          twitter = dbluser.twitter
+          youtube = dbluser.youtube
 
           e.add_field(name: 'GitHub', value: "[#{github}](http://github.com/#{github})", inline: true) unless github == ''
           e.add_field(name: 'Instagram', value: "[@#{instagram}](http://instagram.com/#{instagram})", inline: true) unless instagram == ''
