@@ -5,13 +5,13 @@ module ServerInfo
     id = Bot.parse_mention(mention.to_s).id.to_i
 
     begin
-      data = JSON.parse(RestClient.get("https://discordbots.org/api/bots/#{id}"))
+      boat = DBL.loadbot(id)
     rescue RestClient::NotFound
       event.respond 'Apperantly I got a 404 error. Does that bot exist?'
       break
     end
 
-    error = data['error']
+    error = boat.data['error']
 
     begin
       if !error.nil?
@@ -26,23 +26,23 @@ module ServerInfo
         event.channel.send_embed do |e|
           e.title = 'Bot Information'
 
-          author = "#{data['username']}\##{data['discriminator']}"
+          author = "#{boat.username}\##{boat.tag}"
 
-          certified = if data['certifiedBot']
+          certified = if boat.certified?
                         'https://cdn.discordapp.com/emojis/392249976639455232.png?v=1'.to_s
                       else
-                        "https://cdn.discordapp.com/avatars/#{id}/#{data['avatar']}.webp?size=1024".to_s
+                        boat.avatar_img
                       end
 
           e.author = { name: author, icon_url: certified }
 
-          e.thumbnail = { url: "https://cdn.discordapp.com/avatars/#{id}/#{data['avatar']}.webp?size=1024".to_s }
+          e.thumbnail = { url: boat.avatar_img.to_s }
 
-          e.description = data['shortdesc']
+          e.description = boat.shortdesc
 
           owners = []
 
-          data['owners'].each do |meme|
+          boat.owners.each do |meme|
             u = Bot.user(meme.to_i)
             owners[owners.length] = u.distinct.to_s
           end
@@ -50,18 +50,18 @@ module ServerInfo
           e.add_field(name: 'Bot Owners', value: owners.join("\n"), inline: true)
           e.add_field(name: 'Bot ID', value: id, inline: true)
 
-          e.add_field(name: 'Server Count', value: data['server_count'].to_s, inline: true) unless data['server_count'].nil?
+          e.add_field(name: 'Server Count', value: boat.server.to_s, inline: true) unless boat.server.nil?
 
-          e.add_field(name: 'Prefix', value: "`#{data['prefix']}`", inline: true)
+          e.add_field(name: 'Prefix', value: "`#{boat.prefix}`", inline: true)
 
-          e.add_field(name: 'Library', value: data['lib'], inline: true)
+          e.add_field(name: 'Library', value: boat.lib, inline: true)
 
           e.add_field(name: 'Points', value: [
-            "This Month: #{data['monthlyPoints']}",
-            "All Time: #{data['points']}"
+            "This Month: #{boat.monthlyvotes}",
+            "All Time: #{boat.votes}"
           ].join("\n"), inline: true)
 
-          tags = data['tags']
+          tags = boat.tags
 
           if tags.empty?
             e.add_field(name: 'Tags', value: 'None', inline: true)
@@ -72,10 +72,10 @@ module ServerInfo
           links = []
           links += ["[Bot Page](https://discordbots.org/bot/#{id})"]
           links += ["[Vote](https://discordbots.org/bot/#{id}/vote)"]
-          links += ["[Invite](#{data['invite']})"] unless data['invite'] == ''
-          links += ["[GitHub](#{data['github']})"] unless data['github'] == ''
-          links += ["[Website](#{data['website']})"] unless data['website'] == ''
-          links += ["[Support](http://discord.gg/#{data['support']})"] unless data['support'].nil?
+          links += ["[Invite](#{boat.invite})"] unless boat.invite == ''
+          links += ["[GitHub](#{boat.github})"] unless boat.github == ''
+          links += ["[Website](#{boat.website})"] unless boat.website == ''
+          links += ["[Support](#{boat.support_link})"] unless boat.support.nil?
 
           e.add_field(name: 'Links', value: links.join("\n"), inline: true)
 
