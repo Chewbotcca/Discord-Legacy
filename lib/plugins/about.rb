@@ -94,4 +94,27 @@ module About
       event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
     end
   end
+
+  command(:lib) do |event|
+    gems = `gem list`.split("\n")
+    libs = ['dblruby', 'discordrb', 'rest-client', 'json', 'yaml', 'nokogiri']
+    versions = []
+    libs.each do |name|
+      version = gems[gems.index { |s| s.include?(name) }].split(' ')[1]
+      versions[versions.length] = version.delete('(').delete(',').delete(')')
+    end
+    begin
+      event.channel.send_embed do |e|
+        e.title = 'Chewbotcca - Open Source Libraries'
+
+        (0..libs.length - 1).each do |i|
+          url = "http://rubygems.org/gems/#{libs[i]}/versions/#{versions[i]}"
+          e.add_field(name: libs[i], value: "[#{versions[i]}](#{url})", inline: true)
+        end
+        e.color = '00FF00'
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
+    end
+  end
 end
