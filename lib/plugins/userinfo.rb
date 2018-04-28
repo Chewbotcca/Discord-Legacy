@@ -13,7 +13,7 @@ module UserInfo
 
       begin
         dbluser = DBL.loaduser(userid)
-      rescue RestClient::NotFound
+      rescue DBLRuby::Errors::InvalidUser
         dontbother = true
       end
 

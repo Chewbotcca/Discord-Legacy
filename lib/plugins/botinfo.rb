@@ -6,7 +6,7 @@ module ServerInfo
 
     begin
       boat = DBL.loadbot(id)
-    rescue RestClient::NotFound
+    rescue DBLRuby::Errors::InvalidUser
       event.respond 'Apperantly I got a 404 error. Does that bot exist?'
       break
     end
