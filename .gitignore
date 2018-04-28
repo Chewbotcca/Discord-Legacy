@@ -5,3 +5,4 @@ data/logs/*.txt
 data/servers/*.yaml
 !data/servers/server.example.yaml
 lib/plugins/beta.rb
+node_modules/
