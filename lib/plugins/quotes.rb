@@ -9,6 +9,41 @@ module Quotes
     event.respond "#{acro} stands for: #{JSON.parse(RestClient.get(URI.escape("http://api.chew.pro/acronym/#{acro}")))['phrase']}"
   end
 
+  command(:quote, min_args: 1, max_args: 2) do |event, mesid, chanid = nil|
+    mes = if chanid.nil?
+            event.channel.message(mesid)
+          else
+            chan = Bot.channel(chanid)
+            chan.message(mesid)
+          end
+
+    begin
+      event.channel.send_embed do |embed|
+        embed.title = 'Quote'
+        embed.colour = 0x29a548
+        embed.description = mes.content
+        embed.timestamp = mes.timestamp
+
+        user = Bot.user(mes.author.id)
+
+        begin
+          RestClient.get("https://cdn.discordapp.com/avatars/#{user.id}/#{user.avatar_id}.gif?size=1024")
+          avatar = "https://cdn.discordapp.com/avatars/#{user.id}/#{user.avatar_id}.gif?size=1024".to_s
+        rescue StandardError
+          avatar = "https://cdn.discordapp.com/avatars/#{user.id}/#{user.avatar_id}.webp?size=1024".to_s
+        end
+
+        # avatar = 'https://cdn.discordapp.com/embed/avatars/0.png'
+
+        embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: mes.author.distinct, icon_url: avatar)
+
+        embed.add_field(name: 'Channel', value: chan.mention, inline: true) unless chanid.nil?
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond 'I love quotes! But to quote I need Embed Links permission.'
+    end
+  end
+
   command(:numberfact, min_args: 1, max_args: 2) do |event, *args|
     number = args[0].to_s
     type = (args[1].to_s unless args.length == 1)
