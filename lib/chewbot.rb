@@ -68,11 +68,20 @@ Bot.server_delete do |event|
   end
 end
 
-Bot.ready do |event|
-  sleep 10
-  Bot.game = "on #{event.bot.servers.count} servers | %^help"
-  DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
-  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json) unless CONFIG['dbotspw'].nil?
+STATUS = [
+  'with the bois (not to assume genders)',
+  'a nice game of hide and seek',
+  'with друг',
+  'no u',
+  'Spotify, wait I\'m a bOT',
+  'Minecraft, of course',
+  'CS:GO (not fourtnight lol)'
+].freeze
+
+Bot.ready do |_event|
+  Bot.game = "#{STATUS.sample} | %^help"
+  sleep 180
+  redo
 end
 
 puts 'Bot is ready!'
