@@ -3,7 +3,7 @@ module Restart
 
   command(:restart) do |event|
     unless event.user.id == CONFIG['owner_id']
-      event.respond "You can't update! (If you are the owner of the bot, you did not configure properly! Otherwise, stop trying to update the bot!)"
+      event.respond "You can't restart! (If you are the owner of the bot, you did not configure properly! Otherwise, stop trying to update the bot!)"
       break
     end
     event.respond 'Restarting the bot without updating...'
