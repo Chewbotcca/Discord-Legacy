@@ -75,6 +75,21 @@ module Misc
     end
   end
 
+  command(:roll, min_args: 0, max_args: 1) do |event, args = '1d6'|
+    commandcut = args
+    argumentarray = commandcut.split('d')
+    dicerolled = argumentarray[0].to_i
+    dicetype = argumentarray[1].to_i
+    random = dicerolled * rand(1..dicetype)
+    event.channel.send_embed do |e|
+      e.title = 'Dice Roll'
+
+      e.add_field(name: 'Dice Rolled', value: dicerolled, inline: true)
+      e.add_field(name: 'Dice Type', value: "#{dicetype}-sided dice", inline: true)
+      e.add_field(name: 'Total', value: random, inline: true)
+    end
+  end
+
   command(:choose, min_args: 1) do |event, *args|
     args = args.join(' ')
     args = args.split(',')
