@@ -43,3 +43,6 @@ Metrics/BlockLength:
 
 Metrics/ModuleLength:
   Enabled: false
+
+Lint/UnreachableCode:
+  Enabled: false
