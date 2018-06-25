@@ -11,6 +11,7 @@ Style/RescueStandardError:
   Enabled: false
 
 AllCops:
+  DisplayCopNames: true
   TargetRubyVersion: 2.4.1
 
 Style/FrozenStringLiteralComment:
@@ -18,9 +19,6 @@ Style/FrozenStringLiteralComment:
 
 Metrics/BlockLength:
   Max: 80
-
-AllCops:
-  DisplayCopNames: true
 
 Style/Documentation:
   Enabled: false
