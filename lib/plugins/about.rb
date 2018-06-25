@@ -35,7 +35,7 @@ module About
     next unless event.user.id == CONFIG['owner_id']
     event.bot.game = "on #{event.bot.servers.count} servers | %^help"
     DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
-    RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json)
+    RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', Authorization: CONFIG['dbotspw'], 'Content-Type': :json)
     event.respond "You got it, bucko. I set the server count everywhere to `#{event.bot.servers.count}`"
   end
 
@@ -72,7 +72,7 @@ module About
 
     botversion = if commits.zero? && version.zero?
                    ''
-                 elsif version.to_i > 0 && commits.zero?
+                 elsif version.to_i.positive? && commits.zero?
                    version
                  else
                    "#{version} (Commit: #{commits})"
