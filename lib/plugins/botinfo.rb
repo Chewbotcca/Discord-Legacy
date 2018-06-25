@@ -79,8 +79,8 @@ module ServerInfo
 
           e.add_field(name: 'Links', value: links.join("\n"), inline: true)
 
-          # e.footer = Discordrb::Webhooks::EmbedFooter.new(text: 'Bot added on')
-          # e.timestamp = Date.parse(data['date']).to_s
+          e.footer = Discordrb::Webhooks::EmbedFooter.new(text: 'Bot added on')
+          e.timestamp = boat.time
 
           e.color = '00FF00'
         end
