@@ -48,7 +48,7 @@ module Quotes
     number = args[0].to_s
     type = (args[1].to_s unless args.length == 1)
 
-    type.downcase! unless type.nil?
+    type&.downcase!
     if type == 'trivia' || type.nil?
       type = 1
     elsif type == 'math'
