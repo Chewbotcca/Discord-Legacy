@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'dblruby', '>= 0.6.0'
+gem 'dblruby', '>= 0.7.1'
 gem 'discordrb', '~> 3.2', '>= 3.2.0.1'
 gem 'nokogiri'
 gem 'rest-client'
