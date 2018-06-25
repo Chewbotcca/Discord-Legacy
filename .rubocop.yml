@@ -17,9 +17,6 @@ AllCops:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Metrics/BlockLength:
-  Max: 80
-
 Style/Documentation:
   Enabled: false
 
