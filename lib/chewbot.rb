@@ -35,7 +35,7 @@ puts 'Done loading plugins! Finalizing start-up'
 Bot.server_create do |event|
   event.bot.game = "on #{event.bot.servers.count} servers | %^help"
   DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
-  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json)
+  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', Authorization: CONFIG['dbotspw'], 'Content-Type': :json)
   Bot.channel(427_152_376_357_584_896).send_embed do |e|
     e.title = 'I did a join'
 
@@ -56,7 +56,7 @@ end
 Bot.server_delete do |event|
   event.bot.game = "on #{event.bot.servers.count} servers | %^help"
   DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
-  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', :Authorization => CONFIG['dbotspw'], :'Content-Type' => :json) unless CONFIG['dbotspw'].nil?
+  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', Authorization: CONFIG['dbotspw'], 'Content-Type': :json) unless CONFIG['dbotspw'].nil?
   Bot.channel(427_152_376_357_584_896).send_embed do |e|
     e.title = 'I did a leave'
 
