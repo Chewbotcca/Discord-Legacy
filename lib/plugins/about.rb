@@ -50,6 +50,7 @@ module About
 
         embed.add_field(name: 'Your Vote Count', value: votes.to_s, inline: true)
         embed.add_field(name: 'Your Current Vote Perks', value: 'None! (Yet!)', inline: true)
+        embed.add_field(name: 'Voted in last 24h?', value: DBL.stats.verifyvote(event.user.id))
       end
     rescue Discordrb::Errors::NoPermission
       event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
