@@ -49,7 +49,11 @@ module About
         embed.url = 'http://bit.ly/Vote4Chewbotcca'
 
         embed.add_field(name: 'Your Vote Count', value: votes.to_s, inline: true)
-        embed.add_field(name: 'Your Current Vote Perks', value: 'None! (Yet!)', inline: true)
+        if Bot.server(200388197396512768).members.include? event.user
+          embed.add_field(name: 'Your Current Vote Perks', value: 'None! (Yet!)', inline: true)
+        else
+          embed.add_field(name: 'Your Current Vote Perks', value: 'Sorry, but you need to be on the [Chewbotcca help server](https://discord.gg/Q8TazNz) to get sweet perks.', inline: true)
+        end
         embed.add_field(name: 'Voted in last 24h?', value: DBL.stats.verifyvote(event.user.id))
       end
     rescue Discordrb::Errors::NoPermission
