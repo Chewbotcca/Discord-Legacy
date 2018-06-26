@@ -49,7 +49,7 @@ module About
         embed.url = 'http://bit.ly/Vote4Chewbotcca'
 
         embed.add_field(name: 'Your Vote Count', value: votes.to_s, inline: true)
-        if Bot.server(200388197396512768).members.include? event.user
+        if Bot.server(200_388_197_396_512_768).members.include? event.user
           embed.add_field(name: 'Your Current Vote Perks', value: 'None! (Yet!)', inline: true)
         else
           embed.add_field(name: 'Your Current Vote Perks', value: 'Sorry, but you need to be on the [Chewbotcca help server](https://discord.gg/Q8TazNz) to get sweet perks.', inline: true)
