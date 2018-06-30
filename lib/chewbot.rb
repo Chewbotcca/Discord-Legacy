@@ -5,7 +5,7 @@ require 'json'
 require 'yaml'
 require 'nokogiri'
 require 'open-uri'
-puts 'All dependicies loaded'
+puts 'All dependencies loaded'
 
 CONFIG = YAML.load_file('config.yaml')
 puts 'Config loaded from file'
