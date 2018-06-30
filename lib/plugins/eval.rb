@@ -20,7 +20,7 @@ module Eval
         e.description = evaluated
         e.color = '00FF00'
       end
-    rescue StandardError => f
+    rescue StandardError, SyntaxError => f
       event.channel.send_embed do |e|
         e.title = '**Evaluation Failed!**'
 
