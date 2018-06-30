@@ -68,14 +68,23 @@ Bot.server_delete do |event|
   end
 end
 
+def uptime
+  t = Time.now - Starttime
+  mm, ss = t.divmod(60)
+  hh, mm = mm.divmod(60)
+  dd, hh = hh.divmod(24)
+  days = format('%d days, ', dd) if dd != 0
+  hours = format('%d hours, ', hh) if hh != 0
+  mins = format('%d minutes, ', mm) if mm != 0
+  secs = format('%d seconds', ss) if ss != 0
+  "#{days}#{hours}#{mins}#{secs}"
+end
+
 STATUS = [
-  'with the bois (not to assume genders)',
-  'a nice game of hide and seek',
-  'with друг',
-  'no u',
-  'Spotify, wait I\'m a bOT',
-  'Minecraft, of course',
-  'CS:GO (not fourtnight lol)'
+  'Leave feedback with %^feedback',
+  'Need help? Try %^help',
+  "Vote with %^votes! Current Vote Count: #{DBL.loadbot(CONFIG['client_id']).votes}",
+  "I have been online for: #{uptime}"
 ].freeze
 
 Bot.ready do |_event|
