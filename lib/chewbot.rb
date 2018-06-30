@@ -80,12 +80,20 @@ def uptime
   "#{days}#{hours}#{mins}#{secs}"
 end
 
-STATUS = [
-  'Leave feedback with %^feedback',
-  'Need help? Try %^help',
-  "Vote with %^votes! Current Vote Count: #{DBL.loadbot(CONFIG['client_id']).votes}",
-  "I have been online for: #{uptime}"
-].freeze
+begin
+  STATUS = [
+    'Leave feedback with %^feedback',
+    'Need help? Try %^help',
+    "Vote with %^votes! Current Vote Count: #{DBL.loadbot(CONFIG['client_id']).votes}",
+    "I have been online for: #{uptime}"
+  ].freeze
+rescue DBLRuby::Errors::InvalidBot
+  STATUS = [
+    'Leave feedback with %^feedback',
+    'Need help? Try %^help',
+    "I have been online for: #{uptime}"
+  ].freeze
+end
 
 Bot.ready do |_event|
   Bot.game = "#{STATUS.sample} | %^help"
