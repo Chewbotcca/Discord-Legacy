@@ -1,6 +1,24 @@
 module Roles
   extend Discordrb::Commands::CommandContainer
 
+  command(:role, min_args: 2) do |event, type, *args|
+    case type
+    when 'create'
+      name = args.join(' ')
+      Bot.execute_command(:createrole, event, name)
+    when 'add', 'assign'
+      user = args[0]
+      name = args[1..-1]
+      Bot.execute_command(:assignrole, event, [user, name])
+    when 'remove'
+      user = args[0]
+      name = args[1..-1]
+      Bot.execute_command(:removerole, event, [user, name])
+    else
+      event.respond 'Invalid type!'
+    end
+  end
+
   command(:createrole, min_args: 1, required_permissions: [:manage_roles], permission_message: 'My dude, you do not have permission to manage roles!') do |event, *rolename|
     rolename = rolename.join(' ')
     begin
