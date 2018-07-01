@@ -86,18 +86,12 @@ def uptime
   "#{days}#{hours}#{mins}#{secs}"
 end
 
-begin
-  STATUS = [
-    'Leave feedback with %^feedback',
-    'Need help? Try %^help',
-    "Vote with %^votes! Current Vote Count: #{DBL.loadbot(CONFIG['client_id']).votes}"
-  ].freeze
-rescue DBLRuby::Errors::InvalidBot
-  STATUS = [
-    'Leave feedback with %^feedback',
-    'Need help? Try %^help'
-  ].freeze
-end
+STATUS = [
+  'Leave feedback with %^feedback',
+  'Need help? Try',
+  'Vote with %^votes!',
+  'Lost? Join our support server with %^invite'
+].freeze
 
 Bot.ready do |_event|
   Bot.game = "#{STATUS.sample} | %^help"
