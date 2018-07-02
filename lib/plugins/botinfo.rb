@@ -82,7 +82,7 @@ module ServerInfo
           e.footer = Discordrb::Webhooks::EmbedFooter.new(text: 'Bot added on')
           e.timestamp = boat.time
 
-          e.color = '00FF00'
+          e.color = '43B581'
         end
       end
     rescue Discordrb::Errors::NoPermission
