@@ -93,7 +93,7 @@ module About
         e.add_field(name: 'Uptime', value: "#{days}#{hours}#{mins}#{secs}", inline: true)
         e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
         e.add_field(name: 'Total User Count', value: event.bot.users.count, inline: true)
-        e.color = '00FF00'
+        e.color = 0xd084
       end
     rescue Discordrb::Errors::NoPermission
       event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
@@ -116,7 +116,7 @@ module About
           url = "http://rubygems.org/gems/#{libs[i]}/versions/#{versions[i]}"
           e.add_field(name: libs[i], value: "[#{versions[i]}](#{url})", inline: true)
         end
-        e.color = '00FF00'
+        e.color = 0xd084
       end
     rescue Discordrb::Errors::NoPermission
       event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
