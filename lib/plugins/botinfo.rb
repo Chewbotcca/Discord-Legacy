@@ -1,7 +1,18 @@
 module ServerInfo
   extend Discordrb::Commands::CommandContainer
 
-  command(%i[binfo botinfo], min_args: 1, max_args: 1) do |event, mention|
+  command(%i[binfo botinfo], min_args: 2) do |event, mention, list = 'dbl'|
+    case list
+    when 'dbl'
+      Bot.execute_command(:dblinfo, event, mention)
+    when 'listcord'
+      Bot.execute_command(:listcordinfo, event, mention)
+    else
+      event.respond 'Invalid list!'
+    end
+  end
+
+  command(:dblinfo, min_args: 1) do |event, mention|
     id = Bot.parse_mention(mention.to_s).id.to_i
 
     begin
@@ -87,6 +98,72 @@ module ServerInfo
       end
     rescue Discordrb::Errors::NoPermission
       event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
+    end
+  end
+
+  command(%i[listcordinfo listcord lcbot], min_args: 1) do |event, mention|
+    id = Bot.parse_mention(mention.to_s).id.to_i
+
+    begin
+      boat = LC.loadbot(id)
+    rescue RestClient::ResourceNotFound
+      event.respond 'Apparently I got a 404 error. Does that bot exist?'
+      break
+    end
+
+    error = boat.error
+
+    begin
+      if boat.error?
+        event.channel.send_embed do |e|
+          e.title = 'Error'
+
+          e.description = error
+
+          e.color = 'FF0000'
+        end
+      else
+        event.channel.send_embed do |e|
+          e.title = 'Bot Information'
+
+          author = boat.distinct
+
+          e.author = { name: author, icon_url: boat.avatar_img }
+
+          e.thumbnail = { url: boat.avatar_img.to_s }
+
+          e.description = boat.description
+
+          owners = []
+
+          boat.owners.each do |meme|
+            u = Bot.user(meme.to_i)
+            owners[owners.length] = u.distinct.to_s
+          end
+
+          e.add_field(name: 'Bot Owners', value: owners.join("\n"), inline: true)
+          e.add_field(name: 'Bot ID', value: id, inline: true)
+
+          e.add_field(name: 'Server Count', value: boat.server.to_s, inline: true) unless boat.server.nil?
+
+          e.add_field(name: 'Votes', value: boat.votes, inline: true)
+
+          e.add_field(name: 'Invites', value: boat.invites, inline: true)
+
+          links = []
+          links += ["[Bot Page](https://listcord.com/bot/#{id})"]
+          links += ["[Vote](https://discordbots.org/bot/#{id})"]
+          links += ["[Invite](#{boat.invite})"] unless boat.invite == ''
+          links += ["[Website](#{boat.website})"] unless boat.website == ''
+          links += ["[Support](#{boat.support_link})"] unless boat.support.nil?
+
+          e.add_field(name: 'Links', value: links.join("\n"), inline: true)
+
+          e.color = '43B581'
+        end
+      end
+    rescue Discordrb::Errors::NoPermission
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appreciate ya."
     end
   end
 end
