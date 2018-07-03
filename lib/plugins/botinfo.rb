@@ -1,4 +1,4 @@
-module ServerInfo
+module BotInfo
   extend Discordrb::Commands::CommandContainer
 
   command(%i[binfo botinfo], min_args: 2) do |event, mention, list = 'dbl'|
