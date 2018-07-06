@@ -2,7 +2,12 @@ module RubyGems
   extend Discordrb::Commands::CommandContainer
 
   command(%i[rgem gem rubygem rubyg gems], min_args: 1, max_args: 1) do |event, gem|
-    data = JSON.parse(RestClient.get("https://rubygems.org/api/v1/gems/#{gem}.json"))
+    begin
+      data = JSON.parse(RestClient.get("https://rubygems.org/api/v1/gems/#{gem}.json"))
+    rescue RestClient::NotFound
+      event.respond 'Invalid ruby gem!'
+      break
+    end
     rank = JSON.parse(RestClient.get("http://bestgems.org/api/v1/gems/#{gem}/total_ranking.json"))[0]['total_ranking']
 
     begin
