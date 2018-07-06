@@ -39,7 +39,8 @@ module English
     end
   end
 
-  command(:define) do |event, word|
+  command(:define) do |event, *word|
+    word = word.join(' ')
     grabbedword = JSON.parse(RestClient.get("http://api.wordnik.com/v4/word.json/#{word}/definitions?limit=1&includeRelated=true&useCanonical=false&includeTags=false&api_key=#{CONFIG['wordnik']}"))
     begin
       event.channel.send_embed do |embed|
