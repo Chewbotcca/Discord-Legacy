@@ -1,7 +1,7 @@
 module BotInfo
   extend Discordrb::Commands::CommandContainer
 
-  command(%i[binfo botinfo], min_args: 2) do |event, mention, list = 'dbl'|
+  command(%i[binfo botinfo], min_args: 1) do |event, mention, list = 'dbl'|
     case list
     when 'dbl'
       Bot.execute_command(:dblinfo, event, mention)
