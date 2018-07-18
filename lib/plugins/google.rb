@@ -79,6 +79,7 @@ module Google
     upload = upload.split('-')
     totallikes = intdislike + intlike
     percent = (intlike / totallikes.to_f * 100).round(2)
+    dispercent = (intdislike / totallikes.to_f * 100).round(2)
     case upload[1]
     when '01'
       month = 'January'
@@ -115,13 +116,16 @@ module Google
         e.add_field(name: 'Uploader', value: info['channelTitle'], inline: true)
         e.add_field(name: 'Duration', value: length, inline: true)
         e.add_field(name: 'Views', value: views, inline: true)
-        e.add_field(name: 'Rating', value: "**#{likes}** 👍 - **#{dislike}** 👎 (**#{percent}%**)", inline: true)
+        e.add_field(name: 'Rating', value: [
+          "<:ytup:469274644982267905> **#{likes}** *(#{percent}%)*",
+          "<:ytdown:469274880416940042> **#{dislike}** *(#{dispercent}%)*"
+        ].join("\n"), inline: true)
         e.add_field(name: 'Uploaded on', value: "#{month} #{upload[2]}, #{upload[0]}", inline: true)
         e.add_field(name: 'Video URL', value: urlpls, inline: true)
-        e.color = '00FF00'
+        e.color = 'FF0001'
       end
     rescue Discordrb::Errors::NoPermission
-      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
+      event.respond 'In order for me to send some YouTube stats, I am going to need Embed Links, can you provide those?.'
     end
   end
 end
