@@ -101,5 +101,5 @@ Bot.ready do |_event|
   redo
 end
 
-puts "Bot is ready!"
+puts 'Bot is ready!'
 Bot.run
