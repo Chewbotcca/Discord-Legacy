@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/Chewbotcca/Discord.svg?branch=master)](https://travis-ci.org/Chewbotcca/Discord)
 
 [![ListCord](https://nuggetbot.com/listcord/embed.svg?id=200052560399171584)](https://listcord.com/bot/200052560399171584)
-
 [![Discord Bots](https://discordbots.org/api/widget/200052560399171584.svg)](https://discordbots.org/bot/200052560399171584)
 
 [![Discord](https://discordapp.com/api/guilds/134445052805120001/embed.png?style=banner3)](https://discord.gg/0kYlxgkh65QhZAjm)
