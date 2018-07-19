@@ -86,18 +86,20 @@ def uptime
   "#{days}#{hours}#{mins}#{secs}"
 end
 
+pre = CONFIG['prefix']
+
 STATUS = [
-  'Leave feedback with %^feedback',
+  "Leave feedback with #{pre}feedback",
   'Need help? Try',
-  'Vote with %^votes!',
-  'Lost? Join our support server with %^invite'
+  "Vote with #{pre}votes!",
+  "Lost? Join our support server with #{pre}invite"
 ].freeze
 
 Bot.ready do |_event|
-  Bot.game = "#{STATUS.sample} | %^help"
+  Bot.game = "#{STATUS.sample} | #{pre}help"
   sleep 180
   redo
 end
 
-puts 'Bot is ready!'
+puts "Bot is ready!"
 Bot.run
