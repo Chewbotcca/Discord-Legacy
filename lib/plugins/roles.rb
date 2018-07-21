@@ -6,6 +6,9 @@ module Roles
     when 'create'
       name = args.join(' ')
       Bot.execute_command(:createrole, event, name)
+    when 'delete'
+      name = args.join(' ')
+      Bot.execute_command(:deleterole, event, name)
     when 'add', 'assign'
       user = args[0]
       name = args[1..-1]
@@ -25,6 +28,17 @@ module Roles
       role = event.server.create_role
       role.name = rolename
       event.respond "I have successfully created the role `#{rolename}`!"
+    rescue Discordrb::Errors::NoPermission
+      event.respond "I do not have permission to 'manage roles', can you please provide those, thanks, appreciate ya"
+    end
+  end
+
+  command(:deleterole, min_args: 1, required_permissions: [:manage_roles], permission_message: 'My dude, you do not have permission to manage roles!') do |event, *rolename|
+    rolename = rolename.join(' ')
+    begin
+      therole = event.server.roles.find { |role| role.name == rolename }
+      therole.delete
+      event.respond "I have successfully deleted the role `#{rolename}`!"
     rescue Discordrb::Errors::NoPermission
       event.respond "I do not have permission to 'manage roles', can you please provide those, thanks, appreciate ya"
     end
