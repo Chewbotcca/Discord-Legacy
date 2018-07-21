@@ -1,7 +1,7 @@
 module Moderation
   extend Discordrb::Commands::CommandContainer
 
-  command(:ban, required_permissions: [:ban_members], permission_message: 'imma keep it real with u chief! You need permission to ban members, come on bro we all do.', min_args: 1, max_args: 1, usage: 'please mention a user <3') do |event, mention, days = 0|
+  command(:ban, required_permissions: [:ban_members], permission_message: 'imma keep it real with u chief! You need permission to ban members, come on bro we all do.', min_args: 2, max_args: 2, usage: 'please mention a user <3') do |event, mention, days = 0|
     if event.message.mentions.empty?
       event.respond 'Sorry, but you need to mention the person you want to ban'
       next
