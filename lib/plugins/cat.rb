@@ -24,7 +24,7 @@ module Cat
     end
   end
 
-  command(:cat) do |event|
+  command(:dog) do |event|
     begin
       showdog = JSON.parse(RestClient.get('https://random.dog/woof.json'))['url']
     rescue RestClient::Forbidden
