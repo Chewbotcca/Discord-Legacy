@@ -14,9 +14,6 @@ puts 'Config loaded from file'
 DBL = DBLRuby.new(CONFIG['dbotsorg'], CONFIG['client_id'])
 puts 'Properly Instantiated DBL!'
 
-LC = ListCordRB.new(CONFIG['listcord'], CONFIG['client_id'])
-puts 'Properly Instantiated ListCord!'
-
 Bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'],
                                           client_id: CONFIG['client_id'],
                                           prefix: ["<@#{CONFIG['client_id']}> ", CONFIG['prefix']]
@@ -40,7 +37,6 @@ puts 'Done loading plugins! Finalizing start-up'
 
 Bot.server_create do |event|
   DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
-  LC.stats.servers = event.bot.servers.count unless CONFIG['listcord'].nil?
   RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', Authorization: CONFIG['dbotspw'], 'Content-Type': :json)
   Bot.channel(427_152_376_357_584_896).send_embed do |e|
     e.title = 'I did a join'
@@ -61,7 +57,6 @@ end
 
 Bot.server_delete do |event|
   DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
-  LC.stats.servers = event.bot.servers.count unless CONFIG['listcord'].nil?
   RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', Authorization: CONFIG['dbotspw'], 'Content-Type': :json) unless CONFIG['dbotspw'].nil?
   Bot.channel(427_152_376_357_584_896).send_embed do |e|
     e.title = 'I did a leave'
