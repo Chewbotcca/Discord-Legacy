@@ -7,7 +7,8 @@ require 'nokogiri'
 require 'open-uri'
 puts 'All dependencies loaded'
 
-puts "Let's start that bot!"
+puts "Starting bot on shard #{ARGV[0]}!"
+
 CONFIG = YAML.load_file('config.yaml')
 puts 'Config loaded from file'
 
