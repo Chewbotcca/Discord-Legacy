@@ -16,6 +16,9 @@ puts 'Properly Instantiated DBL!'
 
 Bot = Discordrb::Commands::CommandBot.new token: CONFIG['token'],
                                           client_id: CONFIG['client_id'],
-                                          prefix: ["<@#{CONFIG['client_id']}> ", CONFIG['prefix']]
+                                          prefix: ["<@#{CONFIG['client_id']}> ", CONFIG['prefix']],
+                                          num_shards: CONFIG['shards'],
+                                          shard_id: ARGV[0].to_i,
+                                          ignore_bots: true
 
 require_relative 'lib/chewbot'
