@@ -8,7 +8,7 @@ module MemeDB
       event.respond 'You can submit a meme here: <http://goo.gl/forms/BRMomYVizsY7SqOg2>'
       break
     end
-    memelist = JSON.parse(RestClient.get('http://chewbotcca.co/memedb/memes.json'))
+    memelist = JSON.parse(RestClient.get('http://chewbotcca.github.io/memedb/memes.json'))
     memers = []
     (0..memelist.length - 1).each do |i|
       memers[memers.length] = memelist[i]['Meme']
