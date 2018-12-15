@@ -36,7 +36,7 @@ module About
     end
     servers.push ''
     servers.push "Total: #{counts.sum}"
-    servers.push "Average: #{counts.average}"
+    servers.push "Average: #{counts.sum / counts.length.to_f}"
     begin
       event.channel.send_embed do |e|
         e.title = 'Chewbotcca Server Stats!'
