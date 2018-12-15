@@ -20,7 +20,7 @@ Bots = Array.new(CONFIG['shards'], nil)
 Bots.length.times do |amount|
   Bots[amount] = Discordrb::Commands::CommandBot.new(token: CONFIG['token'],
                                                      client_id: CONFIG['client_id'],
-                                                     prefix: prefixes,
+                                                     prefix: ["<@#{CONFIG['client_id']}> ", '%^'],
                                                      ignore_bots: true,
                                                      num_shards: CONFIG['shards'],
                                                      shard_id: amount.to_i,
