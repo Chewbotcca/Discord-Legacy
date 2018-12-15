@@ -6,7 +6,7 @@ module ServerInfo
 
     unless id.nil?
       begin
-        server = Bot.server(id)
+        server = event.bot.server(id)
       rescue Discordrb::Errors::NoPermission
         event.respond "I am not on that server and are therefore unable to view that server's stats. Try getting them to add me by sending them this invite link: <http://bit.ly/Chewbotcca>"
         break

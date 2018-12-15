@@ -2,52 +2,23 @@ puts 'Initial Startup complete, loading all plugins...'
 
 Starttime = Time.now
 
-Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each { |file| require file }
-
-Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each do |wow|
-  bob = File.readlines(wow) { |line| line.split.map(&:to_s).join }
-  command = bob[0][7..bob[0].length]
-  command.delete!("\n")
-  command = Object.const_get(command)
-  Bot.include! command
-  puts "Plugin #{command} successfully loaded!"
+def loadpls
+  Bots.each(&:clear!)
+  Dir["#{File.dirname(__FILE__)}/plugins/*.rb"].each do |wow|
+    load wow
+    require wow
+    bob = File.readlines(wow) { |line| line.split.map(&:to_s).join }
+    command = bob[0][7..bob[0].length]
+    command.delete!("\n")
+    command = Object.const_get(command)
+    Bots.each do |bot|
+      bot.include! command
+    end
+    puts "Plugin #{command} successfully loaded!"
+  end
 end
 
 puts 'Done loading plugins! Finalizing start-up'
-
-Bot.server_create do |event|
-  DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
-  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', Authorization: CONFIG['dbotspw'], 'Content-Type': :json)
-  Bot.channel(427_152_376_357_584_896).send_embed do |e|
-    e.title = 'I did a join'
-
-    e.add_field(name: 'Server Name', value: event.server.name, inline: true)
-    e.add_field(name: 'Server ID', value: event.server.id, inline: true)
-    e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
-    e.add_field(name: 'User Count', value: event.server.members.count, inline: true)
-
-    userid = CONFIG['owner_id'].to_i
-    user = Bot.user(userid)
-
-    e.add_field(name: 'Are you on it?', value: event.server.members.include?(user), inline: true)
-
-    e.color = '00FF00'
-  end
-end
-
-Bot.server_delete do |event|
-  DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
-  RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', Authorization: CONFIG['dbotspw'], 'Content-Type': :json) unless CONFIG['dbotspw'].nil?
-  Bot.channel(427_152_376_357_584_896).send_embed do |e|
-    e.title = 'I did a leave'
-
-    e.add_field(name: 'Server Name', value: event.server.name, inline: true)
-    e.add_field(name: 'Server ID', value: event.server.id, inline: true)
-    e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
-
-    e.color = 'FF0000'
-  end
-end
 
 def uptime
   t = Time.now - Starttime
@@ -61,20 +32,71 @@ def uptime
   "#{days}#{hours}#{mins}#{secs}"
 end
 
-pre = CONFIG['prefix']
+loadpls
 
-STATUS = [
-  "Leave feedback with #{pre}feedback",
-  'Need help? Try',
-  "Vote with #{pre}votes!",
-  "Lost? Join our support server with #{pre}invite"
-].freeze
+Bots.each do |bot|
+  bot.command(:reload) do |event|
+    break unless event.user.id == CONFIG['owner_id']
 
-Bot.ready do |_event|
-  Bot.game = "#{STATUS.sample} | #{pre}help"
-  sleep 180
-  redo
+    loadpls
+    event.respond 'Reloaded sucessfully!'
+  end
+
+  bot.server_create do |event|
+    ServerManager.post(event.bot.servers.count, event.bot.shard_key[0])
+    event.bot.channel(427_152_376_357_584_896).send_embed do |e|
+      e.title = 'I did a join'
+
+      e.add_field(name: 'Server Name', value: event.server.name, inline: true)
+      e.add_field(name: 'Server ID', value: event.server.id, inline: true)
+      e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
+      e.add_field(name: 'Shard', value: event.bot.shard_key[0].to_s, inline: true)
+      e.add_field(name: 'User Count', value: event.server.members.count, inline: true)
+
+      e.color = '00FF00'
+    end
+  end
+
+  bot.server_delete do |event|
+    ServerManager.post(event.bot.servers.count, event.bot.shard_key[0])
+    event.bot.channel(427_152_376_357_584_896).send_embed do |e|
+      e.title = 'I did a leave'
+
+      e.add_field(name: 'Server Name', value: event.server.name, inline: true)
+      e.add_field(name: 'Server ID', value: event.server.id, inline: true)
+      e.add_field(name: 'Server Count', value: event.bot.servers.count, inline: true)
+      e.add_field(name: 'Shard', value: event.bot.shard_key[0].to_s, inline: true)
+
+      e.color = 'FF0000'
+    end
+  end
+
+  # Bot.message(contains: /'hq, '/) do |event|
+  #  Commands.add
+  #  puts "Command ran by #{event.user.distinct} (#{event.user.id}): #{event.message.content}"
+  #  nil
+  # end
+
+  puts 'Done loading plugins! Finalizing start-up'
+
+  STATUS = [
+    'Leave feedback with %^feedback',
+    'Need help? Try',
+    'Lost? Join our support server with %^invite'
+  ].freeze
+
+  bot.ready do |_event|
+    bot.game = "#{STATUS.sample} | %^help"
+    sleep 180
+    redo
+  end
+
+  puts 'Bot is ready!'
 end
 
-puts 'Bot is ready!'
-Bot.run
+Bots.each do |bot|
+  bot.run(:async)
+end
+
+loop do
+end

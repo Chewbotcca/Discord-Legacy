@@ -4,8 +4,8 @@ module UserInfo
   command(%i[uinfo userinfo], max_args: 1) do |event, mention|
     begin
       if !mention.nil?
-        userid = Bot.parse_mention(mention.to_s).id.to_i
-        user = Bot.user(userid)
+        userid = event.bot.parse_mention(mention.to_s).id.to_i
+        user = event.bot.user(userid)
       else
         user = event.user
         userid = event.user.id
@@ -92,7 +92,7 @@ module UserInfo
         end
       end
     rescue Discordrb::Errors::NoPermission
-      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appreciate ya."
     end
   end
 end

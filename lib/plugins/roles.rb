@@ -5,18 +5,18 @@ module Roles
     case type
     when 'create'
       name = args.join(' ')
-      Bot.execute_command(:createrole, event, name)
+      event.bot.execute_command(:createrole, event, name)
     when 'delete'
       name = args.join(' ')
-      Bot.execute_command(:deleterole, event, name)
+      event.bot.execute_command(:deleterole, event, name)
     when 'add', 'assign'
       user = args[0]
       name = args[1..-1]
-      Bot.execute_command(:assignrole, event, [user, name])
+      event.bot.execute_command(:assignrole, event, [user, name])
     when 'remove'
       user = args[0]
       name = args[1..-1]
-      Bot.execute_command(:removerole, event, [user, name])
+      event.bot.execute_command(:removerole, event, [user, name])
     else
       event.respond 'Invalid type!'
     end
@@ -45,7 +45,7 @@ module Roles
   end
 
   command(:assignrole, min_args: 2, required_permissions: [:manage_roles], permission_message: 'My dude, you do not have permission to manage roles!') do |event, mention, *rolename|
-    id = Bot.parse_mention(mention.to_s).id.to_i
+    id = event.bot.parse_mention(mention.to_s).id.to_i
     user = event.server.member(id)
     rolename = rolename.join(' ')
     begin
@@ -58,7 +58,7 @@ module Roles
   end
 
   command(:removerole, min_args: 2, required_permissions: [:manage_roles], permission_message: 'My dude, you do not have permission to manage roles!') do |event, mention, *rolename|
-    id = Bot.parse_mention(mention.to_s).id.to_i
+    id = event.bot.parse_mention(mention.to_s).id.to_i
     user = event.server.member(id)
     rolename = rolename.join(' ')
     begin

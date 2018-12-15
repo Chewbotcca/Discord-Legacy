@@ -24,7 +24,7 @@ module Quotes
         embed.description = mes.content
         embed.timestamp = mes.timestamp
 
-        user = Bot.user(mes.author.id)
+        user = event.bot.user(mes.author.id)
 
         begin
           RestClient.get("https://cdn.discordapp.com/avatars/#{user.id}/#{user.avatar_id}.gif?size=1024")

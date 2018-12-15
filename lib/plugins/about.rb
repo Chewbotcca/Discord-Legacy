@@ -33,32 +33,9 @@ module About
 
   command(:forceupdateservercount) do |event|
     next unless event.user.id == CONFIG['owner_id']
-    event.bot.game = "on #{event.bot.servers.count} servers | %^help"
-    DBL.stats.updateservercount(event.bot.servers.count) unless CONFIG['dbotsorg'].nil?
+
     RestClient.post("https://bots.discord.pw/api/bots/#{CONFIG['client_id']}/stats", '{"server_count":' + event.bot.servers.count.to_s + '}', Authorization: CONFIG['dbotspw'], 'Content-Type': :json)
     event.respond "You got it, bucko. I set the server count everywhere to `#{event.bot.servers.count}`"
-  end
-
-  command(:votes) do |event|
-    votedata = YAML.load_file('../lit/votes.yml')
-    votes = votedata[event.user.id.to_s]
-    begin
-      event.channel.send_embed do |embed|
-        embed.title = 'Chewbotcca Voting'
-        embed.colour = 0xd084
-        embed.url = 'http://bit.ly/Vote4Chewbotcca'
-
-        embed.add_field(name: 'Your Vote Count', value: votes.to_s, inline: true)
-        if Bot.server(200_388_197_396_512_768).members.include? event.user
-          embed.add_field(name: 'Your Current Vote Perks', value: 'None! (Yet!)', inline: true)
-        else
-          embed.add_field(name: 'Your Current Vote Perks', value: 'Sorry, but you need to be on the [Chewbotcca help server](https://discord.gg/Q8TazNz) to get sweet perks.', inline: true)
-        end
-        embed.add_field(name: 'Voted in last 24h?', value: DBL.stats.verifyvote(event.user.id))
-      end
-    rescue Discordrb::Errors::NoPermission
-      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
-    end
   end
 
   command(:stats) do |event|
@@ -102,7 +79,7 @@ module About
 
   command(:lib) do |event|
     gems = `gem list`.split("\n")
-    libs = ['dblruby', 'discordrb', 'rest-client', 'json', 'yaml', 'nokogiri']
+    libs = ['discordrb', 'rest-client', 'json', 'yaml', 'nokogiri']
     versions = []
     libs.each do |name|
       version = gems[gems.index { |s| s.include?(name) }].split(' ')[1]

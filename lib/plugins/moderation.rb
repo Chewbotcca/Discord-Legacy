@@ -7,7 +7,7 @@ module Moderation
       next
     end
 
-    user = Bot.parse_mention(mention.to_s).id
+    user = event.bot.parse_mention(mention.to_s).id
     days = if days <= 0
              0
            elsif days.positive? && days <= 1

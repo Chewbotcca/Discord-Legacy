@@ -6,7 +6,7 @@ module ChannelInfo
 
     unless id.nil?
       begin
-        channel = Bot.channel(id)
+        channel = event.bot.channel(id)
       rescue Discordrb::Errors::NoPermission
         event.respond "I am not able to retrieve that channel's stats. Am I on the server with that channel?"
         break

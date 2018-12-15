@@ -3,7 +3,7 @@ module Feedback
 
   command(:feedback, min_args: 1) do |event, *feedback|
     feedback = feedback.join(' ')
-    Bot.channel(429_282_806_175_236_126).send_embed do |embed|
+    event.bot.channel(429_282_806_175_236_126).send_embed do |embed|
       embed.title = 'New Feedback!'
       embed.colour = '6166A8'
       embed.description = feedback.to_s
