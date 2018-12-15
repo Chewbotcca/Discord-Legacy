@@ -11,11 +11,7 @@ module UserInfo
         userid = event.user.id
       end
 
-      begin
-        dbluser = DBL.loaduser(userid)
-      rescue DBLRuby::Errors::InvalidUser
-        dontbother = true
-      end
+      dontbother = true
 
       unless dontbother
         dbl = if !dbluser.data['error'].nil?
