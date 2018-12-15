@@ -3,23 +3,27 @@ module Restart
 
   command(:restart) do |event|
     unless event.user.id == CONFIG['owner_id']
-      event.respond "You can't restart! (If you are the owner of the bot, you did not configure properly! Otherwise, stop trying to update the bot!)"
+      event.respond "Sorry kiddo, you can't restart the bot!"
       break
     end
-    event.respond 'Restarting the bot without updating...'
+    event.respond 'Restarting the bot...'
     sleep 1
-    exec("ruby run.rb #{Bot.shard_key[0]}")
+    exec('ruby run.rb')
   end
 
   command(:update) do |event|
     unless event.user.id == CONFIG['owner_id']
-      event.respond "You can't update! (If you are the owner of the bot, you did not configure properly! Otherwise, stop trying to update the bot!)"
+      event.respond "Imma keep it real with u chief! You can't update the bot."
       return
     end
-    event.respond 'Restarting and Updating!'
-    sleep 1
-    `git pull`
-    exec('ruby run.rb')
+    m = event.respond 'Updating...'
+    changes = `git pull`
+    m.edit('', Discordrb::Webhooks::Embed.new(
+                 title: '**Updated Successfully**',
+
+                 description: changes,
+                 color: 0x7ED321
+               ))
   end
 
   command(:updates) do |event|
@@ -53,6 +57,7 @@ module Restart
 
   command(:shoo) do |event|
     break unless event.user.id == CONFIG['owner_id']
+
     event.send_temporary_message('I am shutting dowm, it\'s been a long run folks!', 3)
     sleep 3
     exit
