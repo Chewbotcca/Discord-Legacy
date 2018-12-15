@@ -34,6 +34,12 @@ end
 
 loadpls
 
+STATUS = [
+  'Leave feedback with %^feedback',
+  'Need help? Try',
+  'Lost? Join our support server with %^invite'
+].freeze
+
 Bots.each do |bot|
   bot.command(:reload) do |event|
     break unless event.user.id == CONFIG['owner_id']
@@ -78,12 +84,6 @@ Bots.each do |bot|
   # end
 
   puts 'Done loading plugins! Finalizing start-up'
-
-  STATUS = [
-    'Leave feedback with %^feedback',
-    'Need help? Try',
-    'Lost? Join our support server with %^invite'
-  ].freeze
 
   bot.ready do |_event|
     bot.game = "#{STATUS.sample} | %^help"
