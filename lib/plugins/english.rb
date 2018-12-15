@@ -2,8 +2,8 @@ module English
   extend Discordrb::Commands::CommandContainer
 
   command(:urban, min_args: 1) do |event, *word|
-    event.respond 'Urban dictionary command temporarily disabled due to nsfw content and whatnot. It will return after the release of `discordrb` 3.3.0. Which is SOON I SWEAR. Try `%^define` for your dictionary needs. Note that the new %^urban will only be available in NSFW channels. Thanks!'
-    break
+    break unless event.channel.nsfw?
+
     word = word.join(' ')
     url = URI.escape("http://api.urbandictionary.com/v0/define?term=#{word}")
     parse = JSON.parse(RestClient.get(url))
@@ -35,7 +35,7 @@ module English
         e.color = '00FF00'
       end
     rescue Discordrb::Errors::NoPermission
-      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appriciate ya."
+      event.respond "SYSTEM ERRor, I CANNot SEND THE EMBED, EEEEE. Can I please have the 'Embed Links' permission? Thanks, appreciate ya."
     end
   end
 
